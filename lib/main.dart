@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_native_splash/flutter_native_splash.dart';
-// import 'root_screen.dart';
-// import 'core/constants/app_colors.dart';
-// import 'features/ads&jobs/presentation/bloc/add_job_bloc/add_job_bloc.dart';
-// import 'features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-// import 'features/categories/presentation/bloc/categories/categories_bloc.dart';
-// import 'features/categories/presentation/bloc/subservice/subservice_bloc.dart';
-// import 'features/locations/presentation/bloc/getLocations/get_locations_bloc.dart';
-// import 'injection_countainer.dart' as di;
+import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_themes.dart';
+
 
 String? token;
 int? globalFoundationId;
@@ -32,7 +25,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return GetMaterialApp(
+      title: 'Name',
+      debugShowCheckedModeBanner: false,
+      theme: AppThemes.themeEnglish,
+      getPages: AppPagesRoutes.appPages,
+      initialRoute: "/",
+    );
     // return MultiBlocProvider(
     //   providers: [
     //     BlocProvider(
