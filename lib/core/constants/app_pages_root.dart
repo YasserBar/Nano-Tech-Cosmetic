@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/features/ads/screens/Ads_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/screens/choose_gard_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/screens/forget_password_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/screens/reset_password_screen.dart';
@@ -22,6 +23,7 @@ abstract class AppPagesRoutes {
   static const String chooseGardScreen = "/chooseGardScreen";
 
   static const String mainScreen = "/mainScreen";
+  static const String adsScreen = "/adsScreen";
   static const String myCartScreen = "/myCartScreen";
   static const String myOrderScreen = "/myOrderScreen";
   static const String orderDetailsScreen = "/orderDetailsScreen";
@@ -75,6 +77,11 @@ abstract class AppPagesRoutes {
     GetPage(
       name: orderDetailsScreen,
       page: () => const OrderDetailsScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: adsScreen,
+      page: () => const AdsScreen(),
       transition: Transition.fadeIn,
     ),
   ];
