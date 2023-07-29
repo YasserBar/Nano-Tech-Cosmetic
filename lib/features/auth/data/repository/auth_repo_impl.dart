@@ -20,6 +20,7 @@ import 'package:nano_tech_cosmetic/features/auth/domain/entities/reset_password_
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/verify_otp_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/repository/auth_repo.dart';
+import 'package:nano_tech_cosmetic/main.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final AuthRemoteDataSource remoteDataSource;
@@ -39,6 +40,7 @@ class AuthRepoImpl implements AuthRepo {
     if (await networkInfo.isConnected) {
       try {
         final UserModel userModel = await remoteDataSource.login(loginModel);
+        globalUser = userModel;
         localDataSource.cacheUser(userModel);
         return Right(userModel);
       } catch (e) {
@@ -168,6 +170,7 @@ class AuthRepoImpl implements AuthRepo {
       try {
         final UserModel userModel =
             await remoteDataSource.verifyOTP(verifyOTPModel);
+        globalUser = userModel;
         localDataSource.cacheUser(userModel);
         return Right(userModel);
       } catch (e) {
