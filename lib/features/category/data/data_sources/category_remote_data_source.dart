@@ -2,24 +2,24 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:nano_tech_cosmetic/core/constants/app_routes.dart';
-import 'package:nano_tech_cosmetic/features/ad/data/models/ad_model.dart';
 import 'package:nano_tech_cosmetic/core/helpers/header.dart';
 import 'package:nano_tech_cosmetic/core/helpers/switch_status_code.dart';
+import 'package:nano_tech_cosmetic/features/category/data/models/category_model.dart';
 import 'package:nano_tech_cosmetic/main.dart';
 
-abstract class AdRemoteDataSource {
-  Future<List<AdModel>> displayAds(int page);
+abstract class CategoryRemoteDataSource {
+  Future<List<CategoryModel>> showAllCategory(int page);
 }
 
-class AdRemoteDataSourceImplWithHttp extends AdRemoteDataSource {
+class CategoryRemoteDataSourceImplWithHttp extends CategoryRemoteDataSource {
   final http.Client client;
 
-  AdRemoteDataSourceImplWithHttp({required this.client});
+  CategoryRemoteDataSourceImplWithHttp({required this.client});
 
   @override
-  Future<List<AdModel>> displayAds(int page) async {
+  Future<List<CategoryModel>> showAllCategory(int page) async {
     final response = await client.get(
-        Uri.parse(AppRoutes.baseUrl + AppRoutes.displayAds).replace(
+        Uri.parse(AppRoutes.baseUrl + AppRoutes.showAllCategory).replace(
             queryParameters: {"page": page}
                 .map((key, value) => MapEntry(key, value.toString()))),
         headers: setHeadersWithTokenAndLang());
@@ -28,10 +28,11 @@ class AdRemoteDataSourceImplWithHttp extends AdRemoteDataSource {
       globalMessage = bodyJson['message'];
       switchStatusCode(response);
       final dataJson = bodyJson["data"]["data"];
-      final List<AdModel> listAdModel = dataJson
-          .map<AdModel>((jsonAdModel) => AdModel.fromJson(jsonAdModel))
+      final List<CategoryModel> listCategoryModel = dataJson
+          .map<CategoryModel>(
+              (jsonCategoryModel) => CategoryModel.fromJson(jsonCategoryModel))
           .toList();
-      return Future.value(listAdModel);
+      return Future.value(listCategoryModel);
     } catch (e) {
       rethrow;
     }
