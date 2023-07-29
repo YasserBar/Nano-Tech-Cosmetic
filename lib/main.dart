@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_themes.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dart';
 
 
-String? token;
-int? globalFoundationId;
-bool? isActive;
-
-late BuildContext globalContext;
+User? globalUser;
+String? globalMessage;
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setPreferredOrientations(
-      // [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // await di.init();
   runApp(const MyApp());
@@ -32,34 +30,5 @@ class MyApp extends StatelessWidget {
       getPages: AppPagesRoutes.appPages,
       initialRoute: "/",
     );
-    // return MultiBlocProvider(
-    //   providers: [
-    //     BlocProvider(
-    //       create: (_) => di.sl<AuthBloc>(),
-    //     ),
-    //     BlocProvider<AddJobBloc>(create: (_) => di.sl<AddJobBloc>()),
-    //     BlocProvider<GetLocationsBloc>(
-    //       create: (_) => di.sl<GetLocationsBloc>(),
-    //     ),
-    //     BlocProvider<SubServiceBloc>(
-    //       create: (_) => di.sl<SubServiceBloc>(),
-    //     ),
-    //     BlocProvider<CategoriesBloc>(
-    //       create: (_) => di.sl<CategoriesBloc>()
-    //         ..add(
-    //           const GetAllCategoriesEvent(),
-    //         ),
-    //     ),
-    //   ],
-    //   child: MaterialApp(
-    //     home: const RootScreen(),
-    //     debugShowCheckedModeBanner: false,
-    //     title: 'Upkeep+',
-    //     theme: ThemeData(
-    //       scaffoldBackgroundColor: backgroundColor,
-    //       primaryColor: primaryColor,
-    //     ),
-    //   ),
-    // );
   }
 }

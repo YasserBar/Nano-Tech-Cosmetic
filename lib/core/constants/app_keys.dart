@@ -1,9 +1,9 @@
+// ignore_for_file: constant_identifier_names
+
 class AppKeys {
-//  const String CACHED_RESPONSE = "CACHED_RESPONSE";
+  static const String CACHED_USER = "CACHED_USER";
 
-// const String CACHED_Email = "CACHED_Email";
-
-// const String CUSTOMER = "CUSTOMER";
-
-// const String FIRST_TIME = "firstTime";
+  static const String CACHED_AUTH = "CACHED_AUTH";
+  
+  static const String CACHED_ROLL = "CACHED_ROLL";
 }
