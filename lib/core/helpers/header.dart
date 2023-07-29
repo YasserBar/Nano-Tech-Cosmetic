@@ -1,11 +1,15 @@
-// setHeadersWithToken(String token) => {
-//       'Content-type': 'application/json',
-//       'Accept': 'application/json',
-//       'auth-token': token,
-//       'ln': 'ar',
-//     };
-// setHeaders() => {
-//       'Content-type': 'application/json',
-//       'Accept': 'application/json',
-//       'ln': 'ar',
-//     };
+setHeadersWithTokenAndLang() => {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      // 'Authorization': 'Bearer $token',//TODO===========token
+      // 'lang': 'ar',//TODO===========lang
+    };
+setHeadersWithToken() => {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      // 'Authorization': 'Bearer $token',//TODO===========token
+    };
+setHeaders() => {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };

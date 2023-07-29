@@ -1,15 +1,15 @@
 
 import 'package:get/get.dart';
-import 'package:nano_tech_cosmetic/features/auth/screens/choose_gard_screen.dart';
-import 'package:nano_tech_cosmetic/features/auth/screens/forget_password_screen.dart';
-import 'package:nano_tech_cosmetic/features/auth/screens/reset_password_screen.dart';
-import 'package:nano_tech_cosmetic/features/auth/screens/signin_screen.dart';
-import 'package:nano_tech_cosmetic/features/auth/screens/signup_screen.dart';
-import 'package:nano_tech_cosmetic/features/auth/screens/verify_code_screen.dart';
-import 'package:nano_tech_cosmetic/features/main_screen/screens/main_srcreen.dart';
-import 'package:nano_tech_cosmetic/features/orders/screens/my_cart_screen.dart';
-import 'package:nano_tech_cosmetic/features/orders/screens/my_order_screen.dart';
-import 'package:nano_tech_cosmetic/features/orders/screens/order_details_screen.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/screens/choose_gard_screen.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/screens/forget_password_screen.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/screens/reset_password_screen.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/screens/signin_screen.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/screens/signup_screen.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/screens/verify_code_screen.dart';
+import 'package:nano_tech_cosmetic/core/screens/main_srcreen.dart';
+import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_cart_screen.dart';
+import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
+import 'package:nano_tech_cosmetic/features/order/presentation/screens/order_details_screen.dart';
 
 abstract class AppPagesRoutes {
   // Auth
