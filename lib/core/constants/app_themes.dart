@@ -61,7 +61,7 @@ abstract class AppThemes {
       ),
       bodyMedium: GoogleFonts.acme(
         fontSize: 16,
-        color: AppColors.black,
+        color: AppColors.gray,
         letterSpacing: 0.5,
         fontWeight: FontWeight.w700,
       ),

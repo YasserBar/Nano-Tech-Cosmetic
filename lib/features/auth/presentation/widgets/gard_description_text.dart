@@ -25,8 +25,7 @@ class GardDescriptionText extends StatelessWidget {
           Text(
             text,
             maxLines: 3,
-            style: const TextStyle(
-              color: AppColors.black60,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
               fontSize: 18,
             ),
           ),

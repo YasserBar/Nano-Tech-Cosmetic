@@ -8,8 +8,15 @@ import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_but
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/gard_card.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/gard_description_text.dart';
 
-class ChooseGardScreen extends StatelessWidget {
+class ChooseGardScreen extends StatefulWidget {
   const ChooseGardScreen({super.key});
+
+  @override
+  State<ChooseGardScreen> createState() => _ChooseGardScreenState();
+}
+
+class _ChooseGardScreenState extends State<ChooseGardScreen> {
+  bool isCustomer=true,isSalon=false,isCompany=false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,26 +50,47 @@ class ChooseGardScreen extends StatelessWidget {
                           AppAssets.logo,
                         ),
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GardCard(
                             selectedIcon: AppAssets.customerFill,
                             unSelectedIcon: AppAssets.customerOutlined,
                             label: "Customer",
-                            isSelected: true,
+                            isSelected: isCustomer,
+                            onSelected: (p0) {
+                              setState(() {
+                                isCustomer=p0;
+                                isSalon=!p0;
+                                isCompany=!p0;
+                              });
+                            },
                           ),
                           GardCard(
                             selectedIcon: AppAssets.salonFill,
                             unSelectedIcon: AppAssets.salonOutlined,
                             label: "Salon",
-                            isSelected: false,
+                            isSelected: isSalon,
+                            onSelected: (p0) {
+                              setState(() {
+                                isCustomer=!p0;
+                                isSalon=p0;
+                                isCompany=!p0;
+                              });
+                            },
                           ),
                           GardCard(
                             selectedIcon: AppAssets.companyFill,
                             unSelectedIcon: AppAssets.companyOutlined,
                             label: "Company",
-                            isSelected: false,
+                            isSelected: isCompany,
+                            onSelected: (p0) {
+                              setState(() {
+                                isCustomer=!p0;
+                                isSalon=!p0;
+                                isCompany=p0;
+                              });
+                            },
                           ),
                         ],
                       ),

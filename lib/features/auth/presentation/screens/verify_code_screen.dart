@@ -15,14 +15,20 @@ class VerifyCodeScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              "We send verify code to majeLESPd@gmail.com",
+            Text(
+              "We send verify code to",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                color: AppColors.gray,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontSize: 20,
+                  ),
+            ),
+            Text(
+              "majed@gmail.com",
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(fontSize: 19, color: AppColors.secondary),
             ),
             const SizedBox(
               height: 25,

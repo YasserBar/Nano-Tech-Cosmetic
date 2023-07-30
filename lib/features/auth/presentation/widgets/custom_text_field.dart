@@ -7,6 +7,7 @@ class CustomTextField extends StatefulWidget {
   final bool isTextArea;
   final TextInputType inputType;
   final TextEditingController? controller;
+  final void Function()? onTap;
 
   const CustomTextField({
     Key? key,
@@ -14,7 +15,7 @@ class CustomTextField extends StatefulWidget {
     this.isObscureText = false,
     this.isTextArea = false,
     this.inputType = TextInputType.text,
-    this.controller,
+    this.controller, this.onTap,
   }) : super(key: key);
 
   @override
@@ -42,6 +43,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         TextFormField(
           controller: widget.controller,
+          onTap: widget.onTap,
           decoration: InputDecoration(
             filled: false,
             suffixIcon: widget.isObscureText
@@ -76,6 +78,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           obscureText: widget.isObscureText && ! isVisibleText,
           maxLines: widget.isTextArea ? 7 : 1,
           minLines: widget.isTextArea ? 5 : 1,
+          readOnly: widget.onTap!=null,
         ),
       ],
     );
