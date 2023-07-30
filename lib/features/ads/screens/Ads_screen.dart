@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/features/ads/widgets/ad_card.dart';
-import 'package:nano_tech_cosmetic/features/orders/widgets/order_product_card.dart';
 
 class AdsScreen extends StatelessWidget {
   const AdsScreen({Key? key}) : super(key: key);
