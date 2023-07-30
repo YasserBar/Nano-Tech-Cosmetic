@@ -68,8 +68,8 @@ abstract class AppThemes {
       // Text, NavBarItems
       bodySmall: GoogleFonts.roboto(
         fontSize: 16,
-        color: AppColors.black,
-        fontWeight: FontWeight.w700,
+        color: AppColors.gray,
+        fontWeight: FontWeight.w800,
       ),
       labelLarge: GoogleFonts.acme(
         fontSize: 18,
