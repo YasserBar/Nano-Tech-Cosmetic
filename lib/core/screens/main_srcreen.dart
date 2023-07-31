@@ -7,6 +7,7 @@ import 'package:nano_tech_cosmetic/core/screens/home_screen.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offers_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_cart_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
+import 'package:nano_tech_cosmetic/features/prodect/presentation/widgets/search_product_delegate.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -54,7 +55,12 @@ class _MainScreenState extends State<MainScreen> {
                 AppAssets.logoAppBar,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: SearchProductDelegate(),
+                  );
+                },
                 icon: const Icon(
                   Icons.search,
                   color: AppColors.white,
@@ -80,14 +86,14 @@ class _MainScreenState extends State<MainScreen> {
             ),
             child: ListView(
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(
+                Padding(
+                  padding: const EdgeInsets.symmetric(
                     vertical: 20,
                     horizontal: 10,
                   ),
                   child: Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 30,
                         backgroundColor: AppColors.primary,
                         child: Text(
@@ -97,12 +103,15 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
                         "Kumar Baker",
-                        style: TextStyle(fontSize: 22),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(fontSize: 22),
                       ),
                     ],
                   ),
@@ -113,11 +122,10 @@ class _MainScreenState extends State<MainScreen> {
                     children: [
                       const Row(
                         children: [
-                          Flexible(
+                          Expanded(
                             flex: 1,
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "Birthdate:",
@@ -137,11 +145,10 @@ class _MainScreenState extends State<MainScreen> {
                               ],
                             ),
                           ),
-                          Flexible(
+                          Expanded(
                             flex: 1,
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "20-8-1995",
@@ -164,7 +171,7 @@ class _MainScreenState extends State<MainScreen> {
                         ],
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 35,
                       ),
                       Row(
                         children: [
@@ -174,8 +181,8 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           const Text(
                             "Syria, Damascus, Kusor",
-                            style: TextStyle(
-                                color: AppColors.gray, fontSize: 18),
+                            style:
+                                TextStyle(color: AppColors.gray, fontSize: 18),
                           ),
                         ],
                       ),
@@ -190,8 +197,8 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           const Text(
                             "Kumnahd@gmail.com",
-                            style: TextStyle(
-                                color: AppColors.gray, fontSize: 18),
+                            style:
+                                TextStyle(color: AppColors.gray, fontSize: 18),
                           ),
                         ],
                       ),
@@ -244,8 +251,8 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           const Text(
                             "KumarBaker@tele",
-                            style: TextStyle(
-                                color: AppColors.gray, fontSize: 18),
+                            style:
+                                TextStyle(color: AppColors.gray, fontSize: 18),
                           ),
                         ],
                       ),
@@ -260,8 +267,8 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           const Text(
                             "KumarBaker@face",
-                            style: TextStyle(
-                                color: AppColors.gray, fontSize: 18),
+                            style:
+                                TextStyle(color: AppColors.gray, fontSize: 18),
                           ),
                         ],
                       ),
@@ -276,8 +283,8 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           const Text(
                             "KumarBaker@twit",
-                            style: TextStyle(
-                                color: AppColors.gray, fontSize: 18),
+                            style:
+                                TextStyle(color: AppColors.gray, fontSize: 18),
                           ),
                         ],
                       ),
@@ -337,9 +344,6 @@ class _MainScreenState extends State<MainScreen> {
                   indent: 20,
                   endIndent: 20,
                 ),
-                Expanded(
-                  child: SvgPicture.asset(AppAssets.logoDrawer),
-                )
               ],
             ),
           ),

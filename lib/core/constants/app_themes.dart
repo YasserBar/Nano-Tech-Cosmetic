@@ -27,24 +27,24 @@ abstract class AppThemes {
         letterSpacing: 1,
         color: AppColors.materialPrimary.shade800,
       ),
-      headlineSmall: GoogleFonts.sniglet(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1,
-        color: AppColors.materialPrimary.shade800,
-      ),
-      titleLarge: GoogleFonts.calistoga(
-        fontSize: 22,
+      headlineSmall: GoogleFonts.calistoga(
+        fontSize: 26,
         fontWeight: FontWeight.w800,
         letterSpacing: 1,
         color: AppColors.white,
+      ),
+      titleLarge: GoogleFonts.roboto(
+        fontSize: 20,
+        fontWeight: FontWeight.w800,
+        letterSpacing: 1,
+        color: AppColors.gray,
       ),
       // AppBar
       titleMedium: GoogleFonts.roboto(
         fontSize: 16,
         fontWeight: FontWeight.w800,
         letterSpacing: 1,
-        color: AppColors.black,
+        color: AppColors.gray,
       ),
       // TextField
       titleSmall: GoogleFonts.calistoga(

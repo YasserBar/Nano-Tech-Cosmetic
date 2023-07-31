@@ -20,17 +20,19 @@ class MyCartScreen extends StatelessWidget {
             color: AppColors.primary,
             backgroundColor: AppColors.white,
             onRefresh: () async {},
-            child: ListView(
-              padding: const EdgeInsets.all(15),
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(
+                vertical: AppDimensions.appbarBodyPadding,
+                horizontal: AppDimensions.sidesBodyPadding,
+              ),
               physics: const BouncingScrollPhysics(),
-              children: List.generate(
-                  10,
-                  (index) => const CartProductCard(
-                        image: AppAssets.image1,
-                        name: "Cream Mini",
-                        price: "250",
-                        rating: 1,
-                      )),
+              itemCount: 10,
+              itemBuilder: (context, index) => const CartProductCard(
+                image: AppAssets.image1,
+                name: "Cream Mini",
+                price: "250",
+                rating: 1,
+              ),
             ),
           ),
         ),
@@ -53,9 +55,9 @@ class MyCartScreen extends StatelessWidget {
                     Text(
                       "240.000 D.I",
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontSize: 26,
-                        color: AppColors.primary,
-                      ),
+                            fontSize: 26,
+                            color: AppColors.primary,
+                          ),
                     )
                   ],
                 ),
