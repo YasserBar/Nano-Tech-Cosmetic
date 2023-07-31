@@ -11,13 +11,14 @@ class OrderCard extends StatelessWidget {
   final OrderStatus status;
   final void Function()? onTap;
 
-  const OrderCard({Key? key,
+  const OrderCard({
+    Key? key,
     required this.price,
     required this.response,
     required this.date,
     required this.status,
-    this.onTap,})
-      : super(key: key);
+    this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +53,10 @@ class OrderCard extends StatelessWidget {
                 children: [
                   Text(
                     "$price D.I",
-                    style: const TextStyle(
-                      color: AppColors.primary,
-                      fontSize: 22,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontSize: 22,
+                          color: AppColors.primary,
+                        ),
                   ),
                   Text(
                     date,
@@ -66,7 +67,9 @@ class OrderCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 5,),
+              const SizedBox(
+                height: 5,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -82,10 +85,10 @@ class OrderCard extends StatelessWidget {
                   SvgPicture.asset(status == OrderStatus.waiting
                       ? AppAssets.waitingOrder
                       : status == OrderStatus.processing
-                      ? AppAssets.processOrder
-                      : status == OrderStatus.rejecting
-                      ? AppAssets.rejectOrder
-                      : AppAssets.doneOrder)
+                          ? AppAssets.processOrder
+                          : status == OrderStatus.rejecting
+                              ? AppAssets.rejectOrder
+                              : AppAssets.doneOrder)
                 ],
               ),
             ],

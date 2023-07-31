@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/widgets/secondary_appbar.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/widgets/order_product_card.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
@@ -13,69 +12,39 @@ class OrderDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: PreferredSize(
-        preferredSize: Size(Get.width, Get.height * 0.09),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10)
-              .copyWith(bottom: 0),
-          decoration: const BoxDecoration(boxShadow: [
-            BoxShadow(
-              color: AppColors.primary,
-              offset: Offset(0, 2),
-              spreadRadius: 10,
-              blurRadius: 10,
-            )
-          ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: AppColors.white,
-                  )),
-              Text(
-                "Order Details",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const Icon(
-                Icons.search,
-                color: AppColors.transparent,
-                size: 35,
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: const SecondaryAppbar(title: "Order Details"),
       body: Column(
         children: [
           Container(
             height: AppDimensions.bodyHeightWithoutNav * 0.3,
-            padding: const EdgeInsets.all(20),
-            child: const Column(
+            padding: const EdgeInsets.symmetric(
+              vertical: AppDimensions.appbarBodyPadding+5,
+              horizontal: AppDimensions.sidesBodyPadding,
+            ),
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Total",
                       style: TextStyle(color: AppColors.gray, fontSize: 20),
                     ),
                     Text(
                       "240.000 D.I",
-                      style: TextStyle(color: AppColors.primary, fontSize: 25),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontSize: 26,
+                            color: AppColors.primary,
+                          ),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -89,10 +58,10 @@ class OrderDetailsScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -112,27 +81,20 @@ class OrderDetailsScreen extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 20, thickness: 2, indent: 15, endIndent: 15),
+          const Divider(height: 0, thickness: 2, indent: 15, endIndent: 15),
           SizedBox(
-            height: AppDimensions.bodyHeightWithoutNav * 0.7 -30,
-            child: RefreshIndicator(
-              color: AppColors.primary,
-              backgroundColor: AppColors.white,
-              onRefresh: () async {
-                Get.toNamed(AppPagesRoutes.myOrderScreen);
-              },
-              child: ListView(
-                padding: const EdgeInsets.all(15),
-                physics: const BouncingScrollPhysics(),
-                children: List.generate(
-                    10,
-                    (index) => const OrderProductCard(
-                          image: AppAssets.image1,
-                          name: "Cream Mini",
-                          price: "250",
-                          count: 3,
-                        )),
-              ),
+            height: AppDimensions.bodyHeightWithoutNav * 0.7 - 30,
+            child: ListView(
+              padding: const EdgeInsets.all(15),
+              physics: const BouncingScrollPhysics(),
+              children: List.generate(
+                  10,
+                  (index) => const OrderProductCard(
+                        image: AppAssets.image1,
+                        name: "Cream Mini",
+                        price: "250",
+                        count: 3,
+                      )),
             ),
           ),
         ],
