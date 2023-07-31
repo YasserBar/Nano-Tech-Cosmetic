@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/core/widgets/secondary_appbar.dart';
-import 'package:nano_tech_cosmetic/features/category/presentation/bloc/category_bloc.dart';
-import 'package:nano_tech_cosmetic/features/category/presentation/bloc/category_event.dart';
-import 'package:nano_tech_cosmetic/features/category/presentation/bloc/category_state.dart';
-import 'package:nano_tech_cosmetic/features/category/presentation/widgets/category_card.dart';
+import 'package:nano_tech_cosmetic/features/ad/presentation/bloc/ad_bloc.dart';
+import 'package:nano_tech_cosmetic/features/ad/presentation/bloc/ad_event.dart';
+import 'package:nano_tech_cosmetic/features/ad/presentation/bloc/ad_state.dart';
+import 'package:nano_tech_cosmetic/features/ad/presentation/widgets/ad_card.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
-class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({Key? key}) : super(key: key);
+class AdsScreen extends StatefulWidget {
+  const AdsScreen({Key? key}) : super(key: key);
 
   @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
+  State<AdsScreen> createState() => _AdsScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
+class _AdsScreenState extends State<AdsScreen> {
   @override
   void initState() {
-    BlocProvider.of<CategoryBloc>(context).add(
-      const ShowAllCategoriesEvent(),
-    );
+    BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
     super.initState();
   }
 
@@ -34,12 +30,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: const SecondaryAppbar(title: "Categories"),
+      appBar: const SecondaryAppbar(title: "All Ads"),
       body: BlocProvider(
-        create: (context) => di.sl<CategoryBloc>(),
-        child: BlocConsumer<CategoryBloc, CategoryState>(
+        create: (context) => di.sl<AdBloc>(),
+        child: BlocConsumer<AdBloc, AdState>(
           listener: (context, state) {
-            if (state is FailureCategoryState) {
+            if (state is FailureAdState) {
               WidgetsUtils.showSnackBar(
                 title: "Failure",
                 message: state.message,
@@ -48,9 +44,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             }
           },
           builder: (context, state) {
-            if (state is LoadedCategoriesState) {
+            if (state is LoadedAdsState) {
               return RefreshIndicator(
-                onRefresh: () async {},
+                onRefresh: () async {
+                  BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
+                },
                 child: GridView.builder(
                   padding: const EdgeInsets.symmetric(
                     vertical: AppDimensions.appbarBodyPadding,
@@ -58,16 +56,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   ),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 1,
+                      childAspectRatio: 0.8,
                       mainAxisSpacing: 15,
                       crossAxisSpacing: 15),
                   physics: const BouncingScrollPhysics(),
-                  itemCount: state.loaded ? state.categories!.length : 0,
-                  itemBuilder: (context, index) => CategoryCard(
-                    category: state.categories![index],
-                    onTap: () {
-                      Get.toNamed(AppPagesRoutes.productsScreen);
-                    },
+                  itemCount: state.loaded ? state.ads?.length : 0,
+                  itemBuilder: (context, index) => AdCard(
+                    ad: state.ads![index],
                   ),
                 ),
               );

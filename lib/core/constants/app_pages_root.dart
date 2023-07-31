@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/screens/main_srcreen.dart';
-import 'package:nano_tech_cosmetic/features/ads/screens/Ads_screen.dart';
+import 'package:nano_tech_cosmetic/features/ad/presentation/screens/Ads_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/choose_gard_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/reset_password_screen.dart';
@@ -40,7 +40,7 @@ abstract class AppPagesRoutes {
     ),
     GetPage(
       name: forgetPasswordScreen,
-      page: () => const ForgetPasswordScreen(),
+      page: () => ForgetPasswordScreen(),
       transition: Transition.fadeIn,
     ),
     GetPage(
@@ -50,7 +50,7 @@ abstract class AppPagesRoutes {
     ),
     GetPage(
       name: resetPasswordScreen,
-      page: () => const ResetPasswordScreen(),
+      page: () => ResetPasswordScreen(),
       transition: Transition.size,
     ),
     GetPage(

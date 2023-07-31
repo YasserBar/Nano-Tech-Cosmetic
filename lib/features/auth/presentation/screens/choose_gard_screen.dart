@@ -3,7 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/enum_roll.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/gard_card.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/gard_description_text.dart';
@@ -16,7 +18,7 @@ class ChooseGardScreen extends StatefulWidget {
 }
 
 class _ChooseGardScreenState extends State<ChooseGardScreen> {
-  bool isCustomer=true,isSalon=false,isCompany=false;
+  bool isCustomer = true, isSalon = false, isCompany = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +62,9 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                             isSelected: isCustomer,
                             onSelected: (p0) {
                               setState(() {
-                                isCustomer=p0;
-                                isSalon=!p0;
-                                isCompany=!p0;
+                                isCustomer = p0;
+                                isSalon = !p0;
+                                isCompany = !p0;
                               });
                             },
                           ),
@@ -73,9 +75,9 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                             isSelected: isSalon,
                             onSelected: (p0) {
                               setState(() {
-                                isCustomer=!p0;
-                                isSalon=p0;
-                                isCompany=!p0;
+                                isCustomer = !p0;
+                                isSalon = p0;
+                                isCompany = !p0;
                               });
                             },
                           ),
@@ -86,9 +88,9 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                             isSelected: isCompany,
                             onSelected: (p0) {
                               setState(() {
-                                isCustomer=!p0;
-                                isSalon=!p0;
-                                isCompany=p0;
+                                isCustomer = !p0;
+                                isSalon = !p0;
+                                isCompany = p0;
                               });
                             },
                           ),
@@ -116,7 +118,16 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                         child: CustomButtonAuth(
                           text: "Next",
                           onPressed: () {
-                            Get.toNamed(AppPagesRoutes.signUpScreen);
+                            Get.toNamed(
+                              AppPagesRoutes.signUpScreen,
+                              arguments: {
+                                AppKeys.ROLL: isCustomer
+                                    ? Roll.customer
+                                    : isSalon
+                                        ? Roll.salon
+                                        : Roll.company
+                              },
+                            );
                           },
                         ),
                       ),

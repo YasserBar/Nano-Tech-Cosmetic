@@ -43,11 +43,11 @@ abstract class AppColors {
   static const Color warning2 = Color(0xFFE2C000);
   static const Color warning3 = Color(0xFFC2A200);
 
-  static const Color success1 = Color(0xFF45CC6D);
+  static const Color success1 = Color(0xFF5EFB58);
   static const Color success2 = Color(0xFF14AA50);
   static const Color success3 = Color(0xFF0E9250);
 
-  static const Color info1 = Color(0xFF4482D8);
+  static const Color info1 = Color(0xFF7CB1FF);
   static const Color info2 = Color(0xFF1153BF);
   static const Color info3 = Color(0xFF0C40A4);
 }

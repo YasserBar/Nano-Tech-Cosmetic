@@ -103,7 +103,7 @@ class AuthRemoteDataSourceImplWithHttp extends AuthRemoteDataSource {
 
   @override
   Future<Unit> register(RegisterModel registerModel, Roll roll) async {
-    final String rootRegister;
+    final String rootRegister ;
     switch (roll) {
       case Roll.customer:
         rootRegister = AppRoutes.registerUser;
@@ -112,6 +112,9 @@ class AuthRemoteDataSourceImplWithHttp extends AuthRemoteDataSource {
         rootRegister = AppRoutes.registerSalon;
         break;
       case Roll.company:
+        rootRegister = AppRoutes.registerCompany;
+        break;
+      case Roll.guest:
         rootRegister = AppRoutes.registerCompany;
         break;
     }

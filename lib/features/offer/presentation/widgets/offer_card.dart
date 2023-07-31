@@ -1,21 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/features/offer/domain/entities/offer_entity.dart';
 
 class OfferCard extends StatelessWidget {
-  final String image;
-  final String name;
-  final String price;
-  final String content;
-  final double rating;
+  final Offer offer;
 
-  const OfferCard(
-      {Key? key,
-      required this.image,
-      required this.name,
-      required this.price,
-      required this.rating,
-      required this.content})
-      : super(key: key);
+  const OfferCard({Key? key, required this.offer}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +47,7 @@ class OfferCard extends StatelessWidget {
                         left: Radius.circular(15),
                       ),
                       image: DecorationImage(
-                        image: AssetImage(image),
+                        image: CachedNetworkImageProvider(offer.imageUrl!),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -71,13 +62,13 @@ class OfferCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        name,
+                        offer.title,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontSize: 20,
-                        ),
+                              fontSize: 20,
+                            ),
                       ),
                       Text(
-                        "$price D.I",
+                        "${offer.price} D.I",
                         style: const TextStyle(
                           color: AppColors.primary,
                           fontSize: 18,
@@ -113,7 +104,7 @@ class OfferCard extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        content,
+                        offer.description,
                       ),
                     ],
                   ),
