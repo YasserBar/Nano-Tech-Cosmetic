@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
@@ -31,7 +33,9 @@ class ResetPasswordScreen extends StatelessWidget {
             ),
             CustomButtonAuth(
               text: "Reset",
-              onPressed: (){},
+              onPressed: (){
+                Get.toNamed(AppPagesRoutes.mainScreen);
+              },
             ),
           ],
         ),

@@ -26,10 +26,10 @@ class GardCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(15),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: AppColors.secondary2,
-              offset: Offset(0, 3),
+              color: isSelected ? AppColors.secondary2 : AppColors.secondary2,
+              offset: isSelected ? const Offset(0, 5) : const Offset(0, 1),
               blurRadius: 4,
               spreadRadius: 3,
             ),
@@ -43,10 +43,9 @@ class GardCard extends StatelessWidget {
             ),
             Text(
               label,
-              style: const TextStyle(
-                color: AppColors.gray,
-                fontSize: 18
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 18,
+                  ),
             ),
           ],
         ),

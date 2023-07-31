@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 
-class CartProductCard extends StatelessWidget {
+class ProductCard extends StatelessWidget {
   final String image;
   final String name;
   final String price;
   final double rating;
 
-  const CartProductCard(
+  const ProductCard(
       {Key? key,
       required this.image,
       required this.name,
@@ -46,34 +46,18 @@ class CartProductCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        height: 85,
-                        width: 85,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.horizontal(
-                            left: Radius.circular(15),
-                          ),
-                          image: DecorationImage(
-                            image: AssetImage(image),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                  Container(
+                    height: 85,
+                    width: 85,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.horizontal(
+                        left: Radius.circular(15),
                       ),
-                      Positioned(
-                        bottom: -4,
-                        right: -4,
-                        child: Container(
-                          height: 20,
-                          width: 20,
-                          decoration: const BoxDecoration(
-                              color: AppColors.primary2,
-                              shape: BoxShape.circle),
-                        ),
+                      image: DecorationImage(
+                        image: AssetImage(image),
+                        fit: BoxFit.cover,
                       ),
-                    ],
+                    ),
                   ),
                   const VerticalDivider(
                     thickness: 1,
@@ -131,27 +115,12 @@ class CartProductCard extends StatelessWidget {
                 ],
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
                     onTap: () {},
                     child: const Icon(
-                      Icons.add_box,
-                      color: AppColors.success1,
-                    ),
-                  ),
-                  const Text(
-                    "3",
-                    style: TextStyle(
-                      color: AppColors.secondary,
-                      fontSize: 16,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: const Icon(
-                      Icons.indeterminate_check_box_rounded,
-                      color: AppColors.danger1,
+                      Icons.add_shopping_cart_outlined,
                     ),
                   ),
                 ],

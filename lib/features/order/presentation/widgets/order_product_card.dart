@@ -45,11 +45,18 @@ class OrderProductCard extends StatelessWidget {
               Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  Image.asset(
-                    image,
+                  Container(
                     height: 85,
                     width: 85,
-                    fit: BoxFit.cover,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.horizontal(
+                        left: Radius.circular(15),
+                      ),
+                      image: DecorationImage(
+                        image: AssetImage(image),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   Positioned(
                     bottom: -4,
@@ -76,8 +83,9 @@ class OrderProductCard extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      style: const TextStyle(
-                          color: AppColors.gray, fontSize: 20),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 20
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

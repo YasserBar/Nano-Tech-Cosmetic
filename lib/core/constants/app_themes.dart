@@ -8,8 +8,7 @@ abstract class AppThemes {
     splashColor: AppColors.materialPrimary.shade200,
     canvasColor: AppColors.materialPrimary.shade50,
     iconTheme: const IconThemeData(
-      color: AppColors.white,
-      size: 35,
+      color: AppColors.gray,
     ),
     colorScheme: ColorScheme.fromSwatch(
       primarySwatch: AppColors.materialPrimary,
@@ -28,24 +27,24 @@ abstract class AppThemes {
         letterSpacing: 1,
         color: AppColors.materialPrimary.shade800,
       ),
-      headlineSmall: GoogleFonts.sniglet(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1,
-        color: AppColors.materialPrimary.shade800,
-      ),
-      titleLarge: GoogleFonts.calistoga(
-        fontSize: 22,
+      headlineSmall: GoogleFonts.calistoga(
+        fontSize: 26,
         fontWeight: FontWeight.w800,
         letterSpacing: 1,
         color: AppColors.white,
+      ),
+      titleLarge: GoogleFonts.roboto(
+        fontSize: 20,
+        fontWeight: FontWeight.w800,
+        letterSpacing: 1,
+        color: AppColors.gray,
       ),
       // AppBar
       titleMedium: GoogleFonts.roboto(
         fontSize: 16,
         fontWeight: FontWeight.w800,
         letterSpacing: 1,
-        color: AppColors.black,
+        color: AppColors.gray,
       ),
       // TextField
       titleSmall: GoogleFonts.calistoga(
@@ -54,22 +53,23 @@ abstract class AppThemes {
         letterSpacing: 1,
         color: AppColors.materialPrimary.shade700,
       ),
-      bodyLarge: GoogleFonts.roboto(
+      bodyLarge: GoogleFonts.acme(
         fontSize: 18,
-        color: AppColors.black,
-        fontWeight: FontWeight.w800,
+        color: AppColors.gray,
+        letterSpacing: 1,
+        fontWeight: FontWeight.w700,
       ),
-      bodyMedium: GoogleFonts.acme(
+      bodyMedium: GoogleFonts.roboto(
         fontSize: 16,
-        color: AppColors.black,
+        color: AppColors.gray,
         letterSpacing: 0.5,
         fontWeight: FontWeight.w700,
       ),
       // Text, NavBarItems
       bodySmall: GoogleFonts.roboto(
         fontSize: 16,
-        color: AppColors.black,
-        fontWeight: FontWeight.w700,
+        color: AppColors.gray,
+        fontWeight: FontWeight.w800,
       ),
       labelLarge: GoogleFonts.acme(
         fontSize: 18,

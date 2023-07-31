@@ -1,15 +1,18 @@
 
 import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/screens/main_srcreen.dart';
+import 'package:nano_tech_cosmetic/features/ads/screens/Ads_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/choose_gard_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/forget_password_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/signin_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/signup_screen.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/verify_code_screen.dart';
-import 'package:nano_tech_cosmetic/core/screens/main_srcreen.dart';
+import 'package:nano_tech_cosmetic/features/category/presentation/screens/categories_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_cart_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/order_details_screen.dart';
+import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/products_screen.dart';
 
 abstract class AppPagesRoutes {
   // Auth
@@ -22,14 +25,17 @@ abstract class AppPagesRoutes {
   static const String chooseGardScreen = "/chooseGardScreen";
 
   static const String mainScreen = "/mainScreen";
+  static const String adsScreen = "/adsScreen";
   static const String myCartScreen = "/myCartScreen";
   static const String myOrderScreen = "/myOrderScreen";
   static const String orderDetailsScreen = "/orderDetailsScreen";
+  static const String categoriesScreen = "/categoriesScreen";
+  static const String productsScreen = "/productsScreen";
 
   static List<GetPage<dynamic>> appPages = [
     GetPage(
       name: signInScreen,
-      page: () => const SignInScreen(),
+      page: () => SignInScreen(),
       transition: Transition.fadeIn,
     ),
     GetPage(
@@ -75,6 +81,21 @@ abstract class AppPagesRoutes {
     GetPage(
       name: orderDetailsScreen,
       page: () => const OrderDetailsScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: adsScreen,
+      page: () => const AdsScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: categoriesScreen,
+      page: () => const CategoriesScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: productsScreen,
+      page: () => const ProductsScreen(),
       transition: Transition.fadeIn,
     ),
   ];
