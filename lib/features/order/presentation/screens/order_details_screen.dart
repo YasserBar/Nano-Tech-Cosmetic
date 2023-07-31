@@ -18,7 +18,7 @@ class OrderDetailsScreen extends StatelessWidget {
           Container(
             height: AppDimensions.bodyHeightWithoutNav * 0.3,
             padding: const EdgeInsets.symmetric(
-              vertical: AppDimensions.appbarBodyPadding+5,
+              vertical: AppDimensions.appbarBodyPadding+5 ,
               horizontal: AppDimensions.sidesBodyPadding,
             ),
             child: Column(
