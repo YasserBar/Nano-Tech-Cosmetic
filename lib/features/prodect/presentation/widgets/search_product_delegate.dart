@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
+import 'package:nano_tech_cosmetic/features/prodect/domain/entities/product_entity.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/widgets/product_card.dart';
 
 class SearchProductDelegate extends SearchDelegate {
-  SearchProductDelegate() : super(searchFieldLabel: 'Find Product');
+  List<Product> products;
+
+  SearchProductDelegate({required this.products})
+      : super(searchFieldLabel: 'Find Product');
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -42,12 +46,9 @@ class SearchProductDelegate extends SearchDelegate {
         horizontal: AppDimensions.sidesBodyPadding,
       ),
       physics: const BouncingScrollPhysics(),
-      itemCount: 15,
-      itemBuilder: (context, index) => const ProductCard(
-        image: AppAssets.image1,
-        name: "Cream Mini",
-        price: "250",
-        rating: 1,
+      itemCount: products.length,
+      itemBuilder: (context, index) => ProductCard(
+        product: products[index],
       ),
     );
   }

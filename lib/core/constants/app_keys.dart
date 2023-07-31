@@ -6,4 +6,8 @@ class AppKeys {
   static const String CACHED_AUTH = "CACHED_AUTH";
   
   static const String CACHED_ROLL = "CACHED_ROLL";
+
+  static const String EMAIL = "EMAIL";
+
+  static const String ROLL = "ROLL";
 }

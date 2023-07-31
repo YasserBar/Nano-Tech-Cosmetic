@@ -1,13 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/features/category/domain/entities/category_entity.dart';
 
 class CategoryCard extends StatelessWidget {
-  final String image;
-  final String name;
+  final Category category;
   final void Function()? onTap;
 
-  const CategoryCard(
-      {Key? key, required this.image, required this.name, this.onTap})
+  const CategoryCard({Key? key, required this.category, this.onTap})
       : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class CategoryCard extends StatelessWidget {
                     top: Radius.circular(15),
                   ),
                   image: DecorationImage(
-                    image: AssetImage(image),
+                    image: CachedNetworkImageProvider(category.imageUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -57,7 +57,7 @@ class CategoryCard extends StatelessWidget {
               SizedBox(
                 width: 140,
                 child: Text(
-                  "Electrical",
+                  category.name,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

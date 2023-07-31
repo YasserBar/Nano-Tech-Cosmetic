@@ -58,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
                 onPressed: () {
                   showSearch(
                     context: context,
-                    delegate: SearchProductDelegate(),
+                    delegate: SearchProductDelegate(products: []),
                   );
                 },
                 icon: const Icon(
