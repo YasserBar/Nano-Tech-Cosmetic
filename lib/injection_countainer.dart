@@ -1,7 +1,19 @@
 import 'package:get_it/get_it.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:internet_connection_checker/internet_connection_checker.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:nano_tech_cosmetic/core/helpers/network_info.dart';
+import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
+import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_remote_data_source.dart';
+import 'package:nano_tech_cosmetic/features/auth/data/repository/auth_repo_impl.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/repository/auth_repo.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/usecases/login_usecase.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/usecases/logout_usecase.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/usecases/register_usecase.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/usecases/resendOTP_usecase.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/usecases/resetPassword_usecase.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/usecases/verifyOTP_uasecase.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
 
@@ -32,42 +44,34 @@ Future<void> init() async {
 //   sl.registerLazySingleton<AdsAndJobsRemoteDataSource>(
 //       () => AdsAndJobsRemoteDataSourceImplWithHttp(client: sl()));
 
-// //! Feature - auth
-// // Bloc
-//   sl.registerFactory(() => AuthBloc(
-//         loginCustomerUsecase: sl(),
-//         loginProviderUsecase: sl(),
-//         forgetPasswordUsecase: sl(),
-//         signupUsecase: sl(),
-//         resendPinUsecase: sl(),
-//         verifyPinForgetUsecase: sl(),
-//         verifyPinSignupUsecase: sl(),
-//       ));
-//   sl.registerFactory(() => ChangePasswordLogoutBloc(
-//         logoutUsecase: sl(),
-//         changePasswordUsecase: sl(),
-//       ));
+//! Feature - auth
+// Bloc
+  sl.registerFactory(() => AuthBloc(
+    loginUsecase:sl(),
+    logoutUsecase:sl(),
+    registerUsecase:sl(),
+    resendOTPUsecase:sl(),
+    resetPasswordUsecase:sl(),
+    verifyOTPUsecase:sl(),
+      ));
 
-// // Usecases
-//   sl.registerLazySingleton(() => ChangePasswordUsecase(sl()));
-//   sl.registerLazySingleton(() => ForgetPasswordUsecase(sl()));
-//   sl.registerLazySingleton(() => LoginCustomerUsecase(sl()));
-//   sl.registerLazySingleton(() => LoginProviderUsecase(sl()));
-//   sl.registerLazySingleton(() => LogoutUsecase(sl()));
-//   sl.registerLazySingleton(() => ResendPinUsecase(sl()));
-//   sl.registerLazySingleton(() => SignupUsecase(sl()));
-//   sl.registerLazySingleton(() => VerifyPinForgetUsecase(sl()));
-//   sl.registerLazySingleton(() => VerifyPinSignupUsecase(sl()));
+// Usecases
+  sl.registerLazySingleton(() => LoginUsecase(sl()));
+  sl.registerLazySingleton(() => LogoutUsecase(sl()));
+  sl.registerLazySingleton(() => RegisterUsecase(sl()));
+  sl.registerLazySingleton(() => ResendOTPUsecase(sl()));
+  sl.registerLazySingleton(() => ResetPasswordUsecase(sl()));
+  sl.registerLazySingleton(() => VerifyOTPUsecase(sl()));
 
-// // Repository
-//   sl.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(
-//       remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
-
-// // Datasources
-//   sl.registerLazySingleton<AuthRemoteDataSource>(
-//       () => AuthRemoteDataSourceImplWithHttp(client: sl()));
-//   sl.registerLazySingleton<AuthLocalDataSource>(
-//       () => AuthLocalDataSourceImplWithSharedPreferences(pref: sl()));
+// Repository
+  sl.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(
+      remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
+  
+// Datasources
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImplWithHttp(client: sl()));
+  sl.registerLazySingleton<AuthLocalDataSource>(
+      () => AuthLocalDataSourceImplWithSharedPreferences(pref: sl()));
 
 // //! Feature - category
 // // Bloc
@@ -176,18 +180,18 @@ Future<void> init() async {
 //   sl.registerLazySingleton<SuggestionsRemoteDataSource>(
 //       () => SuggestionsRemoteDataSourceImplWithHttp(client: sl()));
 
-// //? ========================================
+//? ========================================
 
-// //! Core
+//! Core
 
-//   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
-// //? ========================================
+//? ========================================
 
-// //! External
+//! External
 
-//   final SharedPreferences pref = await SharedPreferences.getInstance();
-//   sl.registerLazySingleton<SharedPreferences>(() => pref);
-//   sl.registerLazySingleton(() => http.Client());
-// sl.registerLazySingleton(() => InternetConnectionChecker());
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+  sl.registerLazySingleton<SharedPreferences>(() => pref);
+  sl.registerLazySingleton(() => http.Client());
+sl.registerLazySingleton(() => InternetConnectionChecker());
 }

@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/helpers/pickers.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  bool isMail = true;
 
   @override
   Widget build(BuildContext context) {
@@ -21,30 +30,39 @@ class SignUpScreen extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.only(top: 25),
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        CustomTextField(
+                        const CustomTextField(
                           labelText: "First name",
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
-                        CustomTextField(
+                        const CustomTextField(
                           labelText: "Last name",
                         ),
-                        SizedBox(
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        const CustomTextField(
+                          labelText: "Address",
+                        ),
+                        const SizedBox(
                           height: 25,
                         ),
                         CustomTextField(
-                          labelText: "Address",
+                          labelText: "Birth date",
+                          onTap: () {
+                            Pickers.choseDate(context);
+                          },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
@@ -65,46 +83,68 @@ class SignUpScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Checkbox(
-                              value: false,
-                              side: const BorderSide(
-                                color: AppColors.secondary,
-                                width: 2,
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              isMail=true;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Checkbox(
+                                value: isMail,
+                                side: const BorderSide(
+                                  color: AppColors.secondary,
+                                  width: 2,
+                                ),
+                                onChanged: (val) {
+                                  setState(() {
+                                    isMail=true;
+                                  });
+                                },
                               ),
-                              onChanged: (val) {},
-                            ),
-                            const Text(
-                              "Male",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: AppColors.gray,
-                                fontWeight: FontWeight.w600,
+                              const Text(
+                                "Male",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColors.gray,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         const Spacer(),
-                        Row(
-                          children: [
-                            Checkbox(
-                              value: false,
-                              side: const BorderSide(
-                                color: AppColors.secondary,
-                                width: 2,
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              isMail=false;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Checkbox(
+                                value: !isMail,
+                                side: const BorderSide(
+                                  color: AppColors.secondary,
+                                  width: 2,
+                                ),
+                                onChanged: (val) {
+                                  setState(() {
+                                    isMail=false;
+                                  });
+                                },
                               ),
-                              onChanged: (val) {},
-                            ),
-                            const Text(
-                              "Female",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: AppColors.gray,
-                                fontWeight: FontWeight.w600,
+                              const Text(
+                                "Female",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColors.gray,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         const Spacer(),
                       ],
@@ -115,6 +155,9 @@ class SignUpScreen extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        SizedBox(
+                          height: 15,
+                        ),
                         CustomTextField(
                           labelText: "Email",
                           inputType: TextInputType.emailAddress,
@@ -179,7 +222,9 @@ class SignUpScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: CustomButtonAuth(
                 text: "Sign up",
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(AppPagesRoutes.mainScreen);
+                },
               ),
             ),
           ],
