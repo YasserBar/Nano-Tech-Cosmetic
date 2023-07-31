@@ -2,6 +2,11 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:nano_tech_cosmetic/core/helpers/network_info.dart';
+import 'package:nano_tech_cosmetic/features/ad/data/data_sources/Ad_remote_data_source.dart';
+import 'package:nano_tech_cosmetic/features/ad/data/repository/ad_repo_impl.dart';
+import 'package:nano_tech_cosmetic/features/ad/domain/repository/ad_repo.dart';
+import 'package:nano_tech_cosmetic/features/ad/domain/usecases/displayAds_usecase.dart';
+import 'package:nano_tech_cosmetic/features/ad/presentation/bloc/ad_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/repository/auth_repo_impl.dart';
@@ -13,6 +18,22 @@ import 'package:nano_tech_cosmetic/features/auth/domain/usecases/resendOTP_useca
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/resetPassword_usecase.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/verifyOTP_uasecase.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:nano_tech_cosmetic/features/category/data/data_sources/category_remote_data_source.dart';
+import 'package:nano_tech_cosmetic/features/category/data/repository/category_repo_impl.dart';
+import 'package:nano_tech_cosmetic/features/category/domain/repository/category_repo.dart';
+import 'package:nano_tech_cosmetic/features/category/domain/usecases/showAllCategory_usecase.dart';
+import 'package:nano_tech_cosmetic/features/category/presentation/bloc/category_bloc.dart';
+import 'package:nano_tech_cosmetic/features/offer/data/data_sources/offer_remote_data_source.dart';
+import 'package:nano_tech_cosmetic/features/offer/data/repository/offer_repo_impl.dart';
+import 'package:nano_tech_cosmetic/features/offer/domain/repository/offer_repo.dart';
+import 'package:nano_tech_cosmetic/features/offer/domain/usecases/show_offers_usecase.dart';
+import 'package:nano_tech_cosmetic/features/offer/presentation/bloc/offer_bloc.dart';
+import 'package:nano_tech_cosmetic/features/prodect/data/data_sources/product_remote_data_source.dart';
+import 'package:nano_tech_cosmetic/features/prodect/data/repository/product_repo_impl.dart';
+import 'package:nano_tech_cosmetic/features/prodect/domain/repository/product_repo.dart';
+import 'package:nano_tech_cosmetic/features/prodect/domain/usecases/rate_product_usecase.dart';
+import 'package:nano_tech_cosmetic/features/prodect/domain/usecases/show_all_product_usecase.dart';
+import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -20,39 +41,30 @@ final sl = GetIt.instance;
 Future<void> init() async {
 // //? Features ================================
 
-// //! Feature - Ad
-// // Bloc
+//! Feature - Ad
+// Bloc
+  sl.registerFactory(() => AdBloc(displayAdsUsecase: sl()));
 
-//   sl.registerFactory(() => AdsBloc(getAdsSlidersUsecase: sl()));
-//   sl.registerFactory(() => JobBloc(getJobsSlidersUsecase: sl()));
-//   sl.registerFactory(
-//       () => AdsFoundationBloc(showAllAdsForFoundationUsecase: sl()));
-//   sl.registerFactory(
-//       () => GetJopFoundationBloc(showAllJobForFoundationUsecase: sl()));
-//   sl.registerFactory(() => AddJobBloc(addJobUsecase: sl()));
-// // Usecases
+// Usecases
+  sl.registerLazySingleton(() => DisplayAdsUsecase(sl()));
 
-//   sl.registerLazySingleton(() => AddJobUsecase(sl()));
-//   sl.registerLazySingleton(() => GetAdsSlidersUsecase(sl()));
-//   sl.registerLazySingleton(() => GetJobsSlidersUsecase(sl()));
-//   sl.registerLazySingleton(() => ShowAllAdsForFoundationUsecase(sl()));
-//   sl.registerLazySingleton(() => ShowAllJobForFoundationUsecase(sl()));
-// // Repository
-//   sl.registerLazySingleton<AdsAndJobsRepo>(() => AdsAndJobsRepoImpl(
-//       remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
-// // Datasources
-//   sl.registerLazySingleton<AdsAndJobsRemoteDataSource>(
-//       () => AdsAndJobsRemoteDataSourceImplWithHttp(client: sl()));
+// Repository
+  sl.registerLazySingleton<AdRepo>(() =>
+      AdRepoImpl(remoteDataSource: sl(), authRepo: sl(), networkInfo: sl()));
+
+// Datasources
+  sl.registerLazySingleton<AdRemoteDataSource>(
+      () => AdRemoteDataSourceImplWithHttp(client: sl()));
 
 //! Feature - auth
 // Bloc
   sl.registerFactory(() => AuthBloc(
-    loginUsecase:sl(),
-    logoutUsecase:sl(),
-    registerUsecase:sl(),
-    resendOTPUsecase:sl(),
-    resetPasswordUsecase:sl(),
-    verifyOTPUsecase:sl(),
+        loginUsecase: sl(),
+        logoutUsecase: sl(),
+        registerUsecase: sl(),
+        resendOTPUsecase: sl(),
+        resetPasswordUsecase: sl(),
+        verifyOTPUsecase: sl(),
       ));
 
 // Usecases
@@ -66,63 +78,42 @@ Future<void> init() async {
 // Repository
   sl.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(
       remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
-  
+
 // Datasources
   sl.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImplWithHttp(client: sl()));
   sl.registerLazySingleton<AuthLocalDataSource>(
       () => AuthLocalDataSourceImplWithSharedPreferences(pref: sl()));
 
-// //! Feature - category
-// // Bloc
+//! Feature - category
+// Bloc
+  sl.registerFactory(() => CategoryBloc(showAllCategoryUsecase: sl()));
 
-//   sl.registerFactory(() => CategoriesBloc(getAllServiceInSystemUsecase: sl()));
-//   sl.registerFactory(
-//       () => SubServiceBloc(getAllSubServiceInSystemUsecase: sl()));
+// Usecases
+  sl.registerLazySingleton(() => ShowAllCategoryUsecase(sl()));
 
-// // Usecases
-//   sl.registerLazySingleton(() => GetAllServiceInSystemUsecase(sl()));
-//   sl.registerLazySingleton(() => GetAllSubServiceInSystemUsecase(sl()));
+// Repository
+  sl.registerLazySingleton<CategoryRepo>(() => CategoryRepoImpl(
+      remoteDataSource: sl(), authRepo: sl(), networkInfo: sl()));
 
-// // Repository
-//   sl.registerLazySingleton<CategoriesRepo>(() => CategoriesRepoImpl(
-//       remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
+// Datasources
+  sl.registerLazySingleton<CategoryRemoteDataSource>(
+      () => CategoryRemoteDataSourceImplWithHttp(client: sl()));
 
-// // Datasources
-//   sl.registerLazySingleton<CategoriesRemoteDataSource>(
-//       () => CategoriesRemoteDataSourceImplWithHttp(client: sl()));
+//! Feature - offer
+// Bloc
+  sl.registerFactory(() => OfferBloc(showOffersUsecase: sl()));
 
-// //! Feature - offer
-// // Bloc
-//   sl.registerFactory(() => OrdersCustomerBloc(
-//         getAllOrderUsecase: sl(),
-//         cancelOrderUsecase: sl(),
-//         setAssessmentUsecase: sl(),
-//       ));
-//   sl.registerFactory(
-//       () => OrdersBloc(getAllOrderUsecase: sl(), cancelOrderUsecase: sl()));
-//   sl.registerFactory(() => GetAllOrdersBloc(
-//       getAllOrderForServiceUsecase: sl(),
-//       getAllOrderForFoundationUsecase: sl()));
-//   sl.registerFactory(() => AcceptRejectedOrderBloc(
-//       acceptOrderUsecase: sl(), rejectedOrderUsecase: sl()));
-// // Usecases
-//   sl.registerLazySingleton(() => AcceptOrderUsecase(sl()));
-//   sl.registerLazySingleton(() => BlockUserFoundationUsecase(sl()));
-//   sl.registerLazySingleton(() => BlockUserServiceUsecase(sl()));
-//   sl.registerLazySingleton(() => CancelOrderUsecase(sl()));
-//   sl.registerLazySingleton(() => GetAllOrderForFoundationUsecase(sl()));
-//   sl.registerLazySingleton(() => GetAllOrderForServiceUsecase(sl()));
-//   sl.registerLazySingleton(() => GetAllOrderUsecase(sl()));
-//   sl.registerLazySingleton(() => RejectedOrderUsecase(sl()));
-//   sl.registerLazySingleton(() => SetAssessmentUsecase(sl()));
+// Usecases
+  sl.registerLazySingleton(() => ShowOffersUsecase(sl()));
 
-// // Repository
-//   sl.registerLazySingleton<OrderRepo>(() => OrderRepoImpl(sl(), sl(), sl()));
+// Repository
+  sl.registerLazySingleton<OfferRepo>(() =>
+      OfferRepoImpl(remoteDataSource: sl(), authRepo: sl(), networkInfo: sl()));
 
-// // Datasources
-//   sl.registerLazySingleton<OrderRemoteDataSource>(
-//       () => OrderRemoteDataSourceImplWithHttp(client: sl()));
+// Datasources
+  sl.registerLazySingleton<OfferRemoteDataSource>(
+      () => OfferRemoteDataSourceImplWithHttp(client: sl()));
 
 // //! Feature - order
 // // Bloc
@@ -159,26 +150,22 @@ Future<void> init() async {
 //   sl.registerLazySingleton<ServiceRemoteDataSource>(
 //       () => ServiceRemoteDataSourceImplWithHttp(client: sl()));
 
-// //! Feature - prodect
-// // Bloc
-//   sl.registerFactory(() => GetAllMyProposeBloc(
-//         getAllMyProposeUsecase: sl(),
-//       ));
-//   sl.registerFactory(() => ProposeNewServiceBloc(
-//         proposeNewServiceUsecase: sl(),
-//       ));
+//! Feature - prodect
+// Bloc
+  sl.registerFactory(
+      () => ProductBloc(rateProductUsecase: sl(), showAllProductUsecase: sl()));
 
-// // Usecases
-//   sl.registerLazySingleton(() => GetAllMyProposeUsecase(sl()));
-//   sl.registerLazySingleton(() => ProposeNewServiceUsecase(sl()));
+// Usecases
+  sl.registerLazySingleton(() => RateProductUsecase(sl()));
+  sl.registerLazySingleton(() => ShowAllProductUsecase(sl()));
 
-// // Repository
-//   sl.registerLazySingleton<SuggestionsRepo>(() => SuggestionsRepoImpl(
-//       localDataSource: sl(), networkInfo: sl(), remoteDataSource: sl()));
+// Repository
+  sl.registerLazySingleton<ProductRepo>(() => ProductRepoImpl(
+      authRepo: sl(), networkInfo: sl(), remoteDataSource: sl()));
 
-// // Datasources
-//   sl.registerLazySingleton<SuggestionsRemoteDataSource>(
-//       () => SuggestionsRemoteDataSourceImplWithHttp(client: sl()));
+// Datasources
+  sl.registerLazySingleton<ProductRemoteDataSource>(
+      () => ProductRemoteDataSourceImplWithHttp(client: sl()));
 
 //? ========================================
 
@@ -193,5 +180,5 @@ Future<void> init() async {
   final SharedPreferences pref = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => pref);
   sl.registerLazySingleton(() => http.Client());
-sl.registerLazySingleton(() => InternetConnectionChecker());
+  sl.registerLazySingleton(() => InternetConnectionChecker());
 }
