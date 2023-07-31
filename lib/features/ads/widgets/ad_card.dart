@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 
@@ -40,10 +39,18 @@ class AdCard extends StatelessWidget {
               )),
           child: Column(
             children: [
-              Image.asset(
-                AppAssets.image1,
+              Container(
                 height: AppDimensions.bodyHeightWithNav * 0.2,
                 width: 140,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(15),
+                  ),
+                  image: DecorationImage(
+                    image: AssetImage(image),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 15,

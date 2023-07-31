@@ -8,8 +8,7 @@ abstract class AppThemes {
     splashColor: AppColors.materialPrimary.shade200,
     canvasColor: AppColors.materialPrimary.shade50,
     iconTheme: const IconThemeData(
-      color: AppColors.white,
-      size: 35,
+      color: AppColors.gray,
     ),
     colorScheme: ColorScheme.fromSwatch(
       primarySwatch: AppColors.materialPrimary,
@@ -54,12 +53,13 @@ abstract class AppThemes {
         letterSpacing: 1,
         color: AppColors.materialPrimary.shade700,
       ),
-      bodyLarge: GoogleFonts.roboto(
+      bodyLarge: GoogleFonts.acme(
         fontSize: 18,
-        color: AppColors.black,
-        fontWeight: FontWeight.w800,
+        color: AppColors.gray,
+        letterSpacing: 1,
+        fontWeight: FontWeight.w700,
       ),
-      bodyMedium: GoogleFonts.acme(
+      bodyMedium: GoogleFonts.roboto(
         fontSize: 16,
         color: AppColors.gray,
         letterSpacing: 0.5,
