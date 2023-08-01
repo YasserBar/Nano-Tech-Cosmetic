@@ -11,7 +11,7 @@ abstract class OfferState extends Equatable {
       {required this.message});
 
   @override
-  List<Object> get props => [offer!, hasMore, loaded, message];
+  List<Object> get props => [offer??[], hasMore, loaded, message];
 }
 
 class OfferInitial extends OfferState {

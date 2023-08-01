@@ -18,21 +18,19 @@ class OffersScreen extends StatefulWidget {
 }
 
 class _OffersScreenState extends State<OffersScreen> {
-  @override
-  void initState() {
-    BlocProvider.of<OfferBloc>(context).add(
-      ShowOffersEvent(),
-    );
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => di.sl<OfferBloc>(),
+      create: (context) => di.sl<OfferBloc>()..add(
+        ShowOffersEvent(),
+      ),
       child: BlocConsumer<OfferBloc, OfferState>(
         listener: (context, state) {
-          if (state is FailureOfferState) {
+          if (state is FailureOfferState ||
+              state is OfflineFailureOfferState ||
+              state is InternalServerFailureOfferState ||
+              state is UnexpectedFailureOfferState) {
             WidgetsUtils.showSnackBar(
               title: "Failure",
               message: state.message,
@@ -50,7 +48,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   horizontal: AppDimensions.sidesBodyPadding,
                 ),
                 physics: const BouncingScrollPhysics(),
-                itemCount: state.loaded ? state.offer!.length : 0,
+                itemCount: state.offer!.length,
                 itemBuilder: (context, index) => OfferCard(
                   offer: state.offer![index],
                 ),
