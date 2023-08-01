@@ -13,12 +13,12 @@ class OrderDetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: const SecondaryAppbar(title: "Order Details"),
-      body: Column(
+      body: ListView(
         children: [
           Container(
-            height: AppDimensions.bodyHeightWithoutNav * 0.3,
+            // height: AppDimensions.bodyHeightWithoutNav * 0.35,
             padding: const EdgeInsets.symmetric(
-              vertical: AppDimensions.appbarBodyPadding+5 ,
+              vertical: AppDimensions.appbarBodyPadding + 5,
               horizontal: AppDimensions.sidesBodyPadding,
             ),
             child: Column(
@@ -72,7 +72,7 @@ class OrderDetailsScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      "Your order will prepare you can show status \nof...",
+                      "Your order will prepare you can show status of...",
                       style: TextStyle(color: AppColors.gray, fontSize: 16),
                       maxLines: 3,
                     )
@@ -81,22 +81,23 @@ class OrderDetailsScreen extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 0, thickness: 2, indent: 15, endIndent: 15),
-          SizedBox(
-            height: AppDimensions.bodyHeightWithoutNav * 0.7 - 30,
-            child: ListView(
-              padding: const EdgeInsets.all(15),
-              physics: const BouncingScrollPhysics(),
-              children: List.generate(
-                  10,
-                  (index) => const OrderProductCard(
-                        image: AppAssets.image1,
-                        name: "Cream Mini",
-                        price: "250",
-                        count: 3,
-                      )),
+          const Divider(height: 30, thickness: 2, indent: 15, endIndent: 15),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.sidesBodyPadding),
+            child: Column(
+              children: [
+                ...List.generate(
+                    10,
+                    (index) => const OrderProductCard(
+                          image: AppAssets.image1,
+                          name: "Cream Mini",
+                          price: "250",
+                          count: 3,
+                        )),
+              ],
             ),
-          ),
+          )
         ],
       ),
     );

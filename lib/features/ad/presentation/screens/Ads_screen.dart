@@ -42,7 +42,7 @@ class _AdsScreenState extends State<AdsScreen> {
             if (state is LoadedAdsState) {
               return RefreshIndicator(
                 onRefresh: () async {
-                  BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
+                  // BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
                 },
                 child: GridView.builder(
                   padding: const EdgeInsets.symmetric(
@@ -51,7 +51,7 @@ class _AdsScreenState extends State<AdsScreen> {
                   ),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 0.9,
+                      childAspectRatio: 0.85,
                       mainAxisSpacing: 15,
                       crossAxisSpacing: 15),
                   physics: const BouncingScrollPhysics(),

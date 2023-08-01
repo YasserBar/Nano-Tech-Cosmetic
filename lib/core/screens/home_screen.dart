@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
+        // BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
       },
       child: ListView(
         padding: const EdgeInsets.symmetric(
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SizedBox(
-            height: Get.height * 0.3,
+            height: Get.height * 0.35,
             child: BlocProvider(
               create: (context) =>
                   di.sl<AdBloc>()..add(const DisplayAdsEvent()),

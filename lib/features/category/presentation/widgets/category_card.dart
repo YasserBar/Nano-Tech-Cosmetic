@@ -37,10 +37,11 @@ class CategoryCard extends StatelessWidget {
                 color: AppColors.gray,
               )),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                height: 110,
-                width: 110,
+                height: 90,
+                width: 90,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(15),

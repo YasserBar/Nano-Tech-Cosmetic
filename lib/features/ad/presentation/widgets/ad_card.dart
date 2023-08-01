@@ -38,6 +38,7 @@ class AdCard extends StatelessWidget {
                 color: AppColors.gray,
               )),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 height: AppDimensions.bodyHeightWithNav * 0.2,
