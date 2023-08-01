@@ -1,5 +1,5 @@
 class AppRoutes {
-  static const baseUrl = 'http://127.0.0.1:8000/mobile/';
+  static const baseUrl = 'http://10.0.2.2:8000/mobile/';
 
   //Auth
   static const registerUser = 'registerUser';

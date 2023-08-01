@@ -6,6 +6,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/login_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
@@ -26,7 +27,10 @@ class SignInScreen extends StatelessWidget {
         child: BackgroundAuth(
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is FailureAuthState) {
+              if (state is FailureAuthState ||
+                  state is OfflineFailureAuthState ||
+                  state is InternalServerFailureAuthState ||
+                  state is UnexpectedFailureAuthState) {
                 WidgetsUtils.showSnackBar(
                   title: "Failure",
                   message: state.message,
@@ -111,15 +115,15 @@ class SignInScreen extends StatelessWidget {
                   CustomButtonAuth(
                     text: "Sign in",
                     onPressed: () {
-                      // BlocProvider.of<AuthBloc>(context).add(
-                      //   LoginEvent(
-                      //     Login(
-                      //       email: emailController.text,
-                      //       password: passwordController.text,
-                      //     ),
-                      //   ),
-                      // );
-                      Get.toNamed(AppPagesRoutes.mainScreen);
+                      BlocProvider.of<AuthBloc>(context).add(
+                        LoginEvent(
+                          Login(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          ),
+                        ),
+                      );
+                      // Get.toNamed(AppPagesRoutes.mainScreen);
                     },
                   ),
                 ],

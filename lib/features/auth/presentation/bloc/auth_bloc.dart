@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_messages.dart';
 import 'package:nano_tech_cosmetic/core/constants/enum_roll.dart';
+import 'package:nano_tech_cosmetic/core/errors/failures.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/login_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/register_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/resend_otp_entity.dart';
@@ -16,6 +18,7 @@ import 'package:nano_tech_cosmetic/features/auth/domain/usecases/verifyOTP_uasec
 import 'package:nano_tech_cosmetic/main.dart';
 
 part 'auth_event.dart';
+
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -33,78 +36,88 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.resendOTPUsecase,
     required this.resetPasswordUsecase,
     required this.verifyOTPUsecase,
-  }) : super(AuthInitial()) {
+  }) : super(const AuthInitial(message: 'init state ')) {
     on<AuthEvent>((event, emit) async {
       if (event is LoginEvent) {
-        emit(LoadingAuthState());
+        emit(const LoadingAuthState(message: "loading iarmstrong@example.org"));
 
         final failureOrUser = await loginUsecase(event.login);
 
         emit(
           failureOrUser.fold(
-            (failure) => FailureAuthState(message: globalMessage!),
+            (failure) {
+              if (failure is OfflineFailure) {
+                return const OfflineFailureAuthState();
+              } else if (failure is InternalServerErrorFailure) {
+                return const InternalServerFailureAuthState();
+              } else if (failure is UnexpectedFailure) {
+                return const UnexpectedFailureAuthState();
+              }
+              return FailureAuthState(
+                  message: globalMessage ?? "No any message");
+            },
             (user) {
               globalUser = user;
-              return SuccessLoginState(message: globalMessage!);
+              return SuccessLoginState(message: globalMessage ?? "No any message");
             },
           ),
         );
       } else if (event is LogoutEvent) {
-        emit(LoadingAuthState());
+        emit(const LoadingAuthState(message: "loading"));
 
         final failureOrDone = await logoutUsecase();
 
         emit(
           failureOrDone.fold(
-            (failure) => FailureAuthState(message: globalMessage!),
-            (done) => SuccessLogoutState(message: globalMessage!),
+            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
+            (done) => SuccessLogoutState(message: globalMessage ?? "No any message"),
           ),
         );
       } else if (event is RegisterEvent) {
-        emit(LoadingAuthState());
+        emit(const LoadingAuthState(message: "loading"));
 
         final failureOrDone = await registerUsecase(event.register, event.roll);
 
         emit(
           failureOrDone.fold(
-            (failure) => FailureAuthState(message: globalMessage!),
-            (done) => SuccessRegisterState(message: globalMessage!),
+            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
+            (done) => SuccessRegisterState(message: globalMessage ?? "No any message"),
           ),
         );
       } else if (event is VerifyOTPEvent) {
-        emit(LoadingAuthState());
+        emit(const LoadingAuthState(message: "loading"));
 
         final failureOrUser = await verifyOTPUsecase(event.verifyOTP);
 
         emit(
           failureOrUser.fold(
-            (failure) => FailureAuthState(message: globalMessage!),
+            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
             (user) {
               globalUser = user;
-              return SuccessVerifyOTPState(message: globalMessage!);
+              return SuccessVerifyOTPState(message: globalMessage ?? "No any message");
             },
           ),
         );
       } else if (event is ResendOTPEvent) {
-        emit(LoadingAuthState());
+        emit(const LoadingAuthState(message: "loading"));
 
         final failureOrDone = await resendOTPUsecase(event.resendOTP);
 
         emit(
           failureOrDone.fold(
-            (failure) => FailureAuthState(message: globalMessage!),
-            (done) => SuccessResendOTPState(message: globalMessage!),
+            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
+            (done) => SuccessResendOTPState(message: globalMessage ?? "No any message"),
           ),
         );
       } else if (event is ResetPasswordEvent) {
-        emit(LoadingAuthState());
+        emit(const LoadingAuthState(message: "loading"));
 
         final failureOrDone = await resetPasswordUsecase(event.resetPassword);
 
         emit(
           failureOrDone.fold(
-            (failure) => FailureAuthState(message: globalMessage!),
-            (done) => SuccessResendOTPState(message: globalMessage!),
+            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
+            (done) => SuccessResendOTPState(message: globalMessage ?? "No any message"),
           ),
         );
       }
