@@ -1,15 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
+import 'package:nano_tech_cosmetic/features/ad/domain/entities/ad_entity.dart';
 
 class AdCard extends StatelessWidget {
-  final String image;
-  final String description;
+  final Ad ad;
   final void Function()? onTap;
 
-  const AdCard(
-      {Key? key, required this.image, required this.description, this.onTap})
-      : super(key: key);
+  const AdCard({Key? key, required this.ad, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +46,7 @@ class AdCard extends StatelessWidget {
                     top: Radius.circular(15),
                   ),
                   image: DecorationImage(
-                    image: AssetImage(image),
+                    image: CachedNetworkImageProvider(ad.imageUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -55,14 +54,14 @@ class AdCard extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const SizedBox(
+              SizedBox(
                 width: 140,
                 child: Text(
-                  "Buy more 25000 and get free delivery",
+                  ad.description,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: AppColors.gray,
                   ),

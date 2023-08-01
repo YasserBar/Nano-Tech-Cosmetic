@@ -24,7 +24,7 @@ class WidgetsUtils {
         backgroundColor: snackBarType == SnackBarType.info
             ? AppColors.success1
             : snackBarType == SnackBarType.error
-                ? AppColors.danger3
+                ? AppColors.danger1
                 : AppColors.warning1,
         duration: Duration(seconds: duration),
         animationDuration: const Duration(seconds: 1));

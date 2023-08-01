@@ -1,19 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/features/prodect/domain/entities/product_entity.dart';
 
 class ProductCard extends StatelessWidget {
-  final String image;
-  final String name;
-  final String price;
-  final double rating;
+  final Product product;
 
-  const ProductCard(
-      {Key? key,
-      required this.image,
-      required this.name,
-      required this.price,
-      required this.rating})
-      : super(key: key);
+  const ProductCard({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +47,9 @@ class ProductCard extends StatelessWidget {
                         left: Radius.circular(15),
                       ),
                       image: DecorationImage(
-                        image: AssetImage(image),
+                        image: CachedNetworkImageProvider(
+                          product.imageUrl,
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -69,13 +64,17 @@ class ProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        name,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontSize: 20,
-                            ),
+                        product.name,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(
+                          fontSize: 20,
+                        ),
                       ),
                       Text(
-                        "$price D.I",
+                        "${product.price} D.I",
                         style: const TextStyle(
                           color: AppColors.primary,
                           fontSize: 18,

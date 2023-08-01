@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
@@ -20,37 +20,32 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => di.sl<AuthBloc>(),
-      child: Scaffold(
-        body: BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is FailureAuthState) {
-              WidgetsUtils.showSnackBar(
-                title: "Failure",
-                message: state.message,
-                snackBarType: SnackBarType.error,
-              );
-            } else if (state is SuccessLoginState) {
-              Get.toNamed(AppPagesRoutes.mainScreen);
-              WidgetsUtils.showSnackBar(
-                title: "Success",
-                message: state.message,
-                snackBarType: SnackBarType.info,
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state is LoadingAuthState) {
-              return const Center(
-                child: SpinKitDualRing(
-                  size: 150,
-                  color: AppColors.primary,
-                ),
-              );
-            }
-            return BackgroundAuth(
-              child: Column(
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => di.sl<AuthBloc>(),
+        child: BackgroundAuth(
+          child: BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is FailureAuthState) {
+                WidgetsUtils.showSnackBar(
+                  title: "Failure",
+                  message: state.message,
+                  snackBarType: SnackBarType.error,
+                );
+              } else if (state is SuccessLoginState) {
+                Get.toNamed(AppPagesRoutes.mainScreen);
+                WidgetsUtils.showSnackBar(
+                  title: "Success",
+                  message: state.message,
+                  snackBarType: SnackBarType.info,
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is LoadingAuthState) {
+                return const LoaderIndicator();
+              }
+              return Column(
                 children: [
                   CustomTextField(
                     labelText: "Email",
@@ -128,9 +123,9 @@ class SignInScreen extends StatelessWidget {
                     },
                   ),
                 ],
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
