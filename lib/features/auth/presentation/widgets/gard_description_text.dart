@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 
 class GardDescriptionText extends StatelessWidget {
@@ -22,11 +23,15 @@ class GardDescriptionText extends StatelessWidget {
             height: 12,
             width: 12,
           ),
-          Text(
-            text,
-            maxLines: 3,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: 18,
+          SizedBox(
+            width: Get.width*.8,
+            child: Text(
+              text,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontSize: 18,
+                  ),
             ),
           ),
         ],

@@ -15,7 +15,7 @@ class MyCartScreen extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: AppDimensions.bodyHeightWithNav * 0.8,
+          height: AppDimensions.bodyHeightWithNav * 0.75,
           child: RefreshIndicator(
             color: AppColors.primary,
             backgroundColor: AppColors.white,
@@ -36,9 +36,9 @@ class MyCartScreen extends StatelessWidget {
             ),
           ),
         ),
-        const Divider(height: 20, thickness: 2, indent: 15, endIndent: 15),
+        const Divider(height: 0, thickness: 2, indent: 15, endIndent: 15),
         Container(
-          height: AppDimensions.bodyHeightWithNav * 0.2 - 55,
+          height: AppDimensions.bodyHeightWithNav * 0.25 - 55,
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             children: [

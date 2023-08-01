@@ -101,7 +101,7 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                       ),
                       const Column(children: [
                         GardDescriptionText(
-                          text: "Buy your cosmetics directly from the\nsource",
+                          text: "Buy your cosmetics directly from the source",
                         ),
                         GardDescriptionText(
                           text: "Enjoy unique GardDescription shopping",

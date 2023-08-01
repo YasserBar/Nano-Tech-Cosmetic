@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 
 class GardCard extends StatelessWidget {
@@ -37,7 +38,8 @@ class GardCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            SvgPicture.asset(isSelected ? selectedIcon : unSelectedIcon),
+            SvgPicture.asset(isSelected ? selectedIcon : unSelectedIcon,
+                width: Get.width * 0.2),
             const SizedBox(
               height: 20,
             ),
