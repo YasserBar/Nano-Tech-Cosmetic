@@ -8,6 +8,8 @@ import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/resend_otp_entity.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/verify_otp_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
@@ -43,7 +45,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessVerifyOTPState) {
-                Get.toNamed(AppPagesRoutes.mainScreen);
+                Get.toNamed(AppPagesRoutes.resetPasswordScreen);
                 WidgetsUtils.showSnackBar(
                   title: "Success",
                   message: state.message,
@@ -102,12 +104,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     autoFocus: true,
                     onCodeChanged: (String code) {},
                     onSubmit: (String verificationCode) {
-                      // BlocProvider.of<AuthBloc>(context).add(
-                      //   VerifyOTPEvent(
-                      //     VerifyOTP(otp: verificationCode),
-                      //   ),
-                      // );
-                      Get.toNamed(AppPagesRoutes.resetPasswordScreen);
+                      BlocProvider.of<AuthBloc>(context).add(
+                        VerifyOTPEvent(
+                          VerifyOTP(otp: verificationCode),
+                        ),
+                      );
                     }, // end onSubmit
                   ),
                   const SizedBox(
@@ -118,11 +119,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          // BlocProvider.of<AuthBloc>(context).add(
-                          //   ResendOTPEvent(
-                          //     ResendOTP(email: email),
-                          //   ),
-                          // );
+                          BlocProvider.of<AuthBloc>(context).add(
+                            ResendOTPEvent(
+                              ResendOTP(email: email),
+                            ),
+                          );
                         },
                         child: const Text(
                           "resend",

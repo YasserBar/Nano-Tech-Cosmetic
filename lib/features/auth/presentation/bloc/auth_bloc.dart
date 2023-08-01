@@ -45,20 +45,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         emit(
           failureOrUser.fold(
-            (failure) {
-              if (failure is OfflineFailure) {
-                return const OfflineFailureAuthState();
-              } else if (failure is InternalServerErrorFailure) {
-                return const InternalServerFailureAuthState();
-              } else if (failure is UnexpectedFailure) {
-                return const UnexpectedFailureAuthState();
-              }
-              return FailureAuthState(
-                  message: globalMessage ?? "No any message");
-            },
+            (failure) => switchFailure(failure),
             (user) {
               globalUser = user;
-              return SuccessLoginState(message: globalMessage ?? "No any message");
+              return SuccessLoginState(
+                  message: globalMessage ?? "No any message");
             },
           ),
         );
@@ -69,8 +60,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         emit(
           failureOrDone.fold(
-            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
-            (done) => SuccessLogoutState(message: globalMessage ?? "No any message"),
+            (failure) => switchFailure(failure),
+            (done) =>
+                SuccessLogoutState(message: globalMessage ?? "No any message"),
           ),
         );
       } else if (event is RegisterEvent) {
@@ -80,8 +72,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         emit(
           failureOrDone.fold(
-            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
-            (done) => SuccessRegisterState(message: globalMessage ?? "No any message"),
+            (failure) => switchFailure(failure),
+            (done) => SuccessRegisterState(
+                message: globalMessage ?? "No any message"),
           ),
         );
       } else if (event is VerifyOTPEvent) {
@@ -91,10 +84,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         emit(
           failureOrUser.fold(
-            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
+            (failure) => switchFailure(failure),
             (user) {
               globalUser = user;
-              return SuccessVerifyOTPState(message: globalMessage ?? "No any message");
+              return SuccessVerifyOTPState(
+                  message: globalMessage ?? "No any message");
             },
           ),
         );
@@ -105,8 +99,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         emit(
           failureOrDone.fold(
-            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
-            (done) => SuccessResendOTPState(message: globalMessage ?? "No any message"),
+            (failure) => switchFailure(failure),
+            (done) => SuccessResendOTPState(
+                message: globalMessage ?? "No any message"),
           ),
         );
       } else if (event is ResetPasswordEvent) {
@@ -116,11 +111,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         emit(
           failureOrDone.fold(
-            (failure) => FailureAuthState(message: globalMessage ?? "No any message"),
-            (done) => SuccessResendOTPState(message: globalMessage ?? "No any message"),
+            (failure) => switchFailure(failure),
+            (done) => SuccessResetPasswordState(
+                message: globalMessage ?? "No any message"),
           ),
         );
       }
     });
   }
+}
+
+AuthState switchFailure(failure) {
+  if (failure is OfflineFailure) {
+    return const OfflineFailureAuthState();
+  } else if (failure is InternalServerErrorFailure) {
+    return const InternalServerFailureAuthState();
+  } else if (failure is UnexpectedFailure) {
+    return const UnexpectedFailureAuthState();
+  }
+  return FailureAuthState(message: globalMessage ?? "No any message");
 }

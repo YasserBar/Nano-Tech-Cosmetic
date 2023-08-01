@@ -6,6 +6,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/resend_otp_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
@@ -25,14 +26,19 @@ class ForgetPasswordScreen extends StatelessWidget {
         child: BackgroundAuth(
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is FailureAuthState) {
+              if (state is FailureAuthState ||
+                  state is OfflineFailureAuthState ||
+                  state is InternalServerFailureAuthState ||
+                  state is UnexpectedFailureAuthState) {
                 WidgetsUtils.showSnackBar(
                   title: "Failure",
                   message: state.message,
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessResendOTPState) {
-                Get.toNamed(AppPagesRoutes.mainScreen);
+                Get.toNamed(AppPagesRoutes.verifyCodeScreen, arguments: {
+                  AppKeys.EMAIL: emailController.text,
+                });
                 WidgetsUtils.showSnackBar(
                   title: "Success",
                   message: state.message,
@@ -58,16 +64,13 @@ class ForgetPasswordScreen extends StatelessWidget {
                   CustomButtonAuth(
                     text: "Send Code",
                     onPressed: () {
-                      // BlocProvider.of<AuthBloc>(context).add(
-                      //   ResendOTPEvent(
-                      //       ResendOTP(
-                      //           email: emailController.text
-                      //       )
-                      //   ),
-                      // );
-                      Get.toNamed(AppPagesRoutes.verifyCodeScreen, arguments: {
-                        AppKeys.EMAIL: emailController.text,
-                      });
+                      BlocProvider.of<AuthBloc>(context).add(
+                        ResendOTPEvent(
+                            ResendOTP(
+                                email: emailController.text
+                            )
+                        ),
+                      );
                     },
                   ),
                 ],
