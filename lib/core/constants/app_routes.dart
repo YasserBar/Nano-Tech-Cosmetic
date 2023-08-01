@@ -1,5 +1,5 @@
 class AppRoutes {
-  static const baseUrl = 'http://10.0.2.2:8000/mobile/';
+  static const baseUrl = 'https://nanotech21.000webhostapp.com/mobile/';
 
   //Auth
   static const registerUser = 'registerUser';

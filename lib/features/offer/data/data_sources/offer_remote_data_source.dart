@@ -19,8 +19,9 @@ class OfferRemoteDataSourceImplWithHttp extends OfferRemoteDataSource {
   @override
   Future<List<OfferModel>> showOffers(int page, {int? productId}) async {
     final response = await client.get(
-        Uri.parse(AppRoutes.baseUrl + AppRoutes.showOffers).replace(
-            queryParameters: {"page": page, "product_id": productId}
+    // , "product_id": productId
+    Uri.parse(AppRoutes.baseUrl + AppRoutes.showOffers).replace(
+            queryParameters: {"page": page}
                 .map((key, value) => MapEntry(key, value.toString()))),
         headers: setHeadersWithTokenAndLang());
     try {
@@ -32,6 +33,7 @@ class OfferRemoteDataSourceImplWithHttp extends OfferRemoteDataSource {
           .map<OfferModel>(
               (jsonOfferModel) => OfferModel.fromJson(jsonOfferModel))
           .toList();
+      print('step 2');
       return Future.value(listOfferModel);
     } catch (e) {
       rethrow;

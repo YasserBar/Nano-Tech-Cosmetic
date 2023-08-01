@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
@@ -23,23 +24,21 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
-  void initState() {
-    BlocProvider.of<CategoryBloc>(context).add(
-      const ShowAllCategoriesEvent(),
-    );
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: const SecondaryAppbar(title: "Categories"),
       body: BlocProvider(
-        create: (context) => di.sl<CategoryBloc>(),
+        create: (context) => di.sl<CategoryBloc>()
+          ..add(
+            const ShowAllCategoriesEvent(),
+          ),
         child: BlocConsumer<CategoryBloc, CategoryState>(
           listener: (context, state) {
-            if (state is FailureCategoryState) {
+            if (state is FailureCategoryState ||
+                state is OfflineFailureCategoryState ||
+                state is InternalServerFailureCategoryState ||
+                state is UnexpectedFailureCategoryState) {
               WidgetsUtils.showSnackBar(
                 title: "Failure",
                 message: state.message,
@@ -66,7 +65,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   itemBuilder: (context, index) => CategoryCard(
                     category: state.categories![index],
                     onTap: () {
-                      Get.toNamed(AppPagesRoutes.productsScreen);
+                      Get.toNamed(AppPagesRoutes.productsScreen,arguments: state.categories![index].id);
                     },
                   ),
                 ),

@@ -11,6 +11,7 @@ import 'package:nano_tech_cosmetic/main.dart';
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> showAllProduct(int page,
       {int? categoryId, String? name});
+
   Future<Unit> rateProduct(int rate, int prodectId);
 }
 
@@ -43,9 +44,10 @@ class ProductRemoteDataSourceImplWithHttp extends ProductRemoteDataSource {
         Uri.parse(AppRoutes.baseUrl + AppRoutes.showAllProduct).replace(
             queryParameters: {
           "page": page,
-          // "category_id": categoryId,
-          // "name": name
-        }.map((key, value) => MapEntry(key, value.toString()))),
+          "category_id": categoryId,
+          "name": name
+        }.map((key, value) =>
+                MapEntry(key, value == null ? '' : value.toString()))),
         headers: setHeadersWithTokenAndLang());
     print(response.body);
     try {

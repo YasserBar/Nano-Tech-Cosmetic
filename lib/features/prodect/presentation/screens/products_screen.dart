@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
@@ -21,23 +22,22 @@ class ProductsScreen extends StatefulWidget {
 
 class _ProductsScreenState extends State<ProductsScreen> {
   @override
-  void initState() {
-    BlocProvider.of<ProductBloc>(context).add(
-      const ShowAllProductsEvent(),
-    );
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: const SecondaryAppbar(title: "Electrical"),
       body: BlocProvider(
-        create: (context) => di.sl<ProductBloc>(),
+        create: (context) => di.sl<ProductBloc>()
+          ..add(
+            const ShowAllProductsEvent(),
+          )
+          ..categoryId = Get.arguments,
         child: BlocConsumer<ProductBloc, ProductState>(
           listener: (context, state) {
-            if (state is FailureProductState) {
+            if (state is FailureProductState ||
+                state is OfflineFailureProductState ||
+                state is InternalServerFailureProductState ||
+                state is UnexpectedFailureProductState) {
               WidgetsUtils.showSnackBar(
                 title: "Failure",
                 message: state.message,
