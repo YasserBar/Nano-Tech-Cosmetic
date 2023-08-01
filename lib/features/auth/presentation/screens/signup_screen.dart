@@ -9,6 +9,7 @@ import 'package:nano_tech_cosmetic/core/constants/enum_roll.dart';
 import 'package:nano_tech_cosmetic/core/helpers/pickers.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/register_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
@@ -30,7 +31,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController facebookController = TextEditingController();
   final TextEditingController twitterController = TextEditingController();
   final TextEditingController instagramController = TextEditingController();
@@ -70,7 +72,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             },
             builder: (context, state) {
               if (state is LoadingAuthState) {
-                return const LoaderIndicator();
+                return const Padding(
+                  padding: EdgeInsets.only(top: 30),
+                  child: LoaderIndicator(),
+                );
               }
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -289,27 +294,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: CustomButtonAuth(
                       text: "Sign up",
                       onPressed: () {
-                        // BlocProvider.of<AuthBloc>(context).add(
-                        //   RegisterEvent(
-                        //     Register(
-                        //       firstName: firstNameController.text,
-                        //       lastName: lastNameController.text,
-                        //       gender: isMail ? 'male' : 'female',
-                        //       birthday: birthdayController.text,
-                        //       address: addressController.text,
-                        //       phone: phoneController.text,
-                        //       email: emailController.text,
-                        //       password: passwordController.text,
-                        //       facebook: facebookController.text,
-                        //       twitter: twitterController.text,
-                        //       instagram: instagramController.text,
-                        //       telegram: telegramController.text,
-                        //     ),
-                        //     roll,
-                        //   ),
-                        // );
-
-                        Get.toNamed(AppPagesRoutes.mainScreen);
+                        BlocProvider.of<AuthBloc>(context).add(
+                          RegisterEvent(
+                            Register(
+                              firstName: firstNameController.text,
+                              lastName: lastNameController.text,
+                              gender: isMail ? 'male' : 'female',
+                              birthday: birthdayController.text,
+                              address: addressController.text,
+                              phone: phoneController.text,
+                              email: emailController.text,
+                              password: passwordController.text,
+                              facebook: facebookController.text,
+                              twitter: twitterController.text,
+                              instagram: instagramController.text,
+                              telegram: telegramController.text,
+                            ),
+                            roll,
+                          ),
+                        );
                       },
                     ),
                   ),

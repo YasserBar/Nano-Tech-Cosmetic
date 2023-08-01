@@ -5,6 +5,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/reset_password_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
@@ -33,6 +34,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessResetPasswordState) {
+                print("ssss");
                 Get.toNamed(AppPagesRoutes.mainScreen);
                 WidgetsUtils.showSnackBar(
                   title: "Success",
@@ -47,15 +49,17 @@ class ResetPasswordScreen extends StatelessWidget {
               }
               return Column(
                 children: [
-                  const CustomTextField(
+                  CustomTextField(
                     labelText: "Password",
                     isObscureText: true,
+                    controller: passwordController,
                   ),
                   const SizedBox(
                     height: 25,
                   ),
-                  const CustomTextField(
+                  CustomTextField(
                     labelText: "Confirm password",
+                    controller: confirmPasswordController,
                     isObscureText: true,
                   ),
                   const SizedBox(
@@ -67,19 +71,18 @@ class ResetPasswordScreen extends StatelessWidget {
                   CustomButtonAuth(
                     text: "Reset",
                     onPressed: () {
-                      // if (passwordController.text !=
-                      //     confirmPasswordController.text) {
-                      //   WidgetsUtils.showSnackBar(
-                      //     title: "Failure",
-                      //     message: "Password not match confirm password",
-                      //     snackBarType: SnackBarType.error,
-                      //   );
-                      // }
-                      // BlocProvider.of<AuthBloc>(context).add(
-                      //   ResetPasswordEvent(
-                      //       ResetPassword(password: passwordController.text)),
-                      // );
-                      Get.offAllNamed(AppPagesRoutes.signInScreen);
+                      if (passwordController.text !=
+                          confirmPasswordController.text) {
+                        WidgetsUtils.showSnackBar(
+                          title: "Failure",
+                          message: "Password not match confirm password",
+                          snackBarType: SnackBarType.error,
+                        );
+                      }
+                      BlocProvider.of<AuthBloc>(context).add(
+                        ResetPasswordEvent(
+                            ResetPassword(password: passwordController.text)),
+                      );
                     },
                   ),
                 ],
