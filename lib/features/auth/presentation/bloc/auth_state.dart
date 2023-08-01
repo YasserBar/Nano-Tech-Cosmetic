@@ -1,75 +1,60 @@
 part of 'auth_bloc.dart';
 
 abstract class AuthState extends Equatable {
-  const AuthState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class AuthInitial extends AuthState {}
-
-class LoadingAuthState extends AuthState {}
-
-class FailureAuthState extends AuthState {
   final String message;
 
-  const FailureAuthState({required this.message});
+  const AuthState({required this.message});
 
   @override
   List<Object> get props => [message];
+}
+
+class AuthInitial extends AuthState {
+  const AuthInitial({required super.message});
+}
+
+class LoadingAuthState extends AuthState {
+  const LoadingAuthState({required super.message});
+}
+
+class FailureAuthState extends AuthState {
+  const FailureAuthState({required super.message});
+}
+
+class InternalServerFailureAuthState extends AuthState {
+  const InternalServerFailureAuthState(
+      {super.message = AppMessages.InternalServerError});
+}
+
+class UnexpectedFailureAuthState extends AuthState {
+  const UnexpectedFailureAuthState(
+      {super.message = AppMessages.UnexpectedException});
+}
+
+class OfflineFailureAuthState extends AuthState {
+  const OfflineFailureAuthState({super.message = AppMessages.Offline});
 }
 
 class SuccessLoginState extends AuthState {
-  final String message;
-
-  const SuccessLoginState({required this.message});
-
-  @override
-  List<Object> get props => [message];
+  const SuccessLoginState({required super.message});
 }
 
 class SuccessLogoutState extends AuthState {
-  final String message;
-
-  const SuccessLogoutState({required this.message});
-
-  @override
-  List<Object> get props => [message];
+  const SuccessLogoutState({required super.message});
 }
 
 class SuccessVerifyOTPState extends AuthState {
-  final String message;
-
-  const SuccessVerifyOTPState({required this.message});
-
-  @override
-  List<Object> get props => [message];
+  const SuccessVerifyOTPState({required super.message});
 }
 
 class SuccessRegisterState extends AuthState {
-  final String message;
-
-  const SuccessRegisterState({required this.message});
-
-  @override
-  List<Object> get props => [message];
+  const SuccessRegisterState({required super.message});
 }
 
 class SuccessResendOTPState extends AuthState {
-  final String message;
-
-  const SuccessResendOTPState({required this.message});
-
-  @override
-  List<Object> get props => [message];
+  const SuccessResendOTPState({required super.message});
 }
 
 class SuccessResetPasswordState extends AuthState {
-  final String message;
-
-  const SuccessResetPasswordState({required this.message});
-
-  @override
-  List<Object> get props => [message];
+  const SuccessResetPasswordState({required super.message});
 }

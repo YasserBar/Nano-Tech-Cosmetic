@@ -6,15 +6,15 @@ class AppMessages{
 // const String Forbidden_MESSAGE =
 //     "عذراً، ليس لديك الصلاحيات الكافية للوصول إلى هذا المورد";
 // const String NotFound_MESSAGE = "عذراً، لا يمكن العثور على المورد المطلوب";
-// const String InternalServerError_MESSAGE =
-//     "عذراً، حدث خطأ في الخادم، لا يمكن تنفيذ الطلب الآن";
-// const String UnexpectedException_MESSAGE =
-//     "خطأ غير متوقع. يرجى إعادة المحاولة لاحق";
+  static const String InternalServerError =
+    "عذراً، حدث خطأ في الخادم، لا يمكن تنفيذ الطلب الآن";
+  static const String UnexpectedException =
+    "خطأ غير متوقع. يرجى إعادة المحاولة لاحق";
 
 // const String WrongData_MESSAGE =
 //     "البيانات المدخلة غير صحيحة. يرجى التحقق وإعادة المحاولة";
 
-// const String Offline_MESSAGE =
-//     "لا يمكن الاتصال بالإنترنت. يرجى التحقق من اتصالك بالشبكة وإعادة المحاولة لاحق";
+  static const String Offline =
+    "لا يمكن الاتصال بالإنترنت. يرجى التحقق من اتصالك بالشبكة وإعادة المحاولة لاحق";
 // const String EmptyCache_MESSAGE = "لا يوجد بيانات مخزنة حالياً";
 }

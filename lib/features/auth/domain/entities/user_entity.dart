@@ -8,11 +8,10 @@ class User extends Equatable {
   final String address;
   final String phone;
   final String email;
-  final String password;
-  final String facebook;
-  final String twitter;
-  final String instagram;
-  final String telegram;
+  final String? facebook;
+  final String? twitter;
+  final String? instagram;
+  final String? telegram;
   final String role;
   String token;
   String refreshToken;
@@ -25,7 +24,6 @@ class User extends Equatable {
     required this.address,
     required this.phone,
     required this.email,
-    required this.password,
     required this.facebook,
     required this.twitter,
     required this.instagram,
@@ -44,11 +42,6 @@ class User extends Equatable {
         address,
         phone,
         email,
-        password,
-        facebook,
-        twitter,
-        instagram,
-        telegram,
         role,
         token,
         refreshToken,

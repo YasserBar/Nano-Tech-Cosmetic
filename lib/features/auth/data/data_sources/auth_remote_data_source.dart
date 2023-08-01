@@ -45,9 +45,13 @@ class AuthRemoteDataSourceImplWithHttp extends AuthRemoteDataSource {
     );
     try {
       final bodyJson = json.decode(response.body);
+      print('step 1    ');
       globalMessage = bodyJson['message'];
+      print('step 2    ');
       switchStatusCode(response);
+      print('step 3    ');
       final UserModel userModel = UserModel.fromJson(bodyJson);
+      print('step 4    ');
       return Future.value(userModel);
     } catch (e) {
       rethrow;

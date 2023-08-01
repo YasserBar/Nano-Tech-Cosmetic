@@ -38,10 +38,15 @@ class AuthRepoImpl implements AuthRepo {
     final LoginModel loginModel = LoginModel(login.email, login.password);
 
     if (await networkInfo.isConnected) {
+
+
       try {
         final UserModel userModel = await remoteDataSource.login(loginModel);
+        print('out 1    ');
         globalUser = userModel;
+        print('out 2   ');
         localDataSource.cacheUser(userModel);
+        print('out 3   ');
         return Right(userModel);
       } catch (e) {
         return Left(switchException(e));
