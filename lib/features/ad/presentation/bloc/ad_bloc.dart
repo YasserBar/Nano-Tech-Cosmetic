@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nano_tech_cosmetic/core/errors/failures.dart';
 import 'package:nano_tech_cosmetic/features/ad/domain/usecases/displayAds_usecase.dart';
 import 'package:nano_tech_cosmetic/features/ad/presentation/bloc/ad_event.dart';
 import 'package:nano_tech_cosmetic/features/ad/presentation/bloc/ad_state.dart';
@@ -14,16 +15,16 @@ class AdBloc extends Bloc<AdEvent, AdState> {
   bool isLoadingMore = false;
 
   AdBloc({required this.displayAdsUsecase})
-      : super(const AdInitial(null, true, true)) {
+      : super(const AdInitial(null, true, true, message: 'loading')) {
     scrollController.addListener(() {
       if (!isLoadingMore) add(const LoadMoreAdsEvent());
     });
     on<AdEvent>((event, emit) async {
       if (event is DisplayAdsEvent) {
-        emit(const LoadingAdState(null, true, true));
+        emit(const LoadingAdState(null, true, true, message: 'loading'));
         final failureOrAds = await displayAdsUsecase(page);
         failureOrAds.fold((failure) {
-          emit(FailureAdState(null, true, true, message: globalMessage!));
+          emit(switchFailure(failure));
         }, (ads) {
           emit(LoadedAdsState(ads, true, true, message: globalMessage!));
         });
@@ -39,7 +40,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
         final failureOrAds = await displayAdsUsecase(page);
         failureOrAds.fold((failure) {
           page--;
-          emit(FailureAdState(null, true, true, message: globalMessage!));
+          emit(switchFailure(failure));
         }, (ads) {
           if (ads.isEmpty) {
             page--;
@@ -54,4 +55,16 @@ class AdBloc extends Bloc<AdEvent, AdState> {
       isLoadingMore = false;
     });
   }
+}
+
+AdState switchFailure(failure) {
+  if (failure is OfflineFailure) {
+    return const OfflineFailureAdState(null, true, true);
+  } else if (failure is InternalServerErrorFailure) {
+    return const InternalServerFailureAdState(null, true, true);
+  } else if (failure is UnexpectedFailure) {
+    return const UnexpectedFailureAdState(null, true, true);
+  }
+  return FailureAdState(null, true, true,
+      message: globalMessage ?? "No any message");
 }

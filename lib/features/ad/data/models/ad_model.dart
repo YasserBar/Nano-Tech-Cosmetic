@@ -6,7 +6,7 @@ class AdModel extends Ad {
     required String title,
     required String description,
     required int active,
-    required String imageUrl,
+    required String? imageUrl,
     required String? videoUrl,
   }) : super(
           id: id,
@@ -20,10 +20,10 @@ class AdModel extends Ad {
   factory AdModel.fromJson(Map<String, dynamic> json) {
     return AdModel(
       id: json['id'] as int,
-      title: json['title'] as String,
-      description: json['description'] as String,
+      title: json['title_en'] as String,
+      description: json['description_en'] as String,
       active: json['active'] as int,
-      imageUrl: json['image_url'] as String,
+      imageUrl: json['image_url'] as String?,
       videoUrl: json['video_url'] as String?,
     );
   }

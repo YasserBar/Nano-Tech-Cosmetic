@@ -1,38 +1,52 @@
 import 'package:equatable/equatable.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_messages.dart';
 import 'package:nano_tech_cosmetic/features/ad/domain/entities/ad_entity.dart';
 
 abstract class AdState extends Equatable {
   final List<Ad>? ads;
   final bool hasMore;
   final bool loaded;
-  const AdState(this.ads, this.hasMore, this.loaded);
+  final String message;
+
+  const AdState(this.ads, this.hasMore, this.loaded, {required this.message});
 
   @override
-  List<Object> get props => [ads!, hasMore, loaded];
+  List<Object> get props => [ads??[], hasMore, loaded, message];
 }
 
 class AdInitial extends AdState {
-  const AdInitial(super.ads, super.hasMore, super.loaded);
+  const AdInitial(super.ads, super.hasMore, super.loaded,
+      {required super.message});
 }
 
 class LoadingAdState extends AdState {
-  const LoadingAdState(super.ads, super.hasMore, super.loaded);
+  const LoadingAdState(super.ads, super.hasMore, super.loaded,
+      {required super.message});
 }
 
 class FailureAdState extends AdState {
-  final String message;
-
   const FailureAdState(super.ads, super.hasMore, super.loaded,
-      {required this.message});
+      {required super.message});
+}
 
-  @override
-  List<Object> get props => [message];
+class InternalServerFailureAdState extends AdState {
+  const InternalServerFailureAdState(super.ads, super.hasMore, super.loaded,
+      {super.message = AppMessages.InternalServerError});
+}
+
+class UnexpectedFailureAdState extends AdState {
+  const UnexpectedFailureAdState(super.ads, super.hasMore, super.loaded,
+      {super.message = AppMessages.UnexpectedException});
+}
+
+class OfflineFailureAdState extends AdState {
+  const OfflineFailureAdState(super.ads, super.hasMore, super.loaded,
+      {super.message = AppMessages.Offline});
 }
 
 class LoadedAdsState extends AdState {
-  final String message;
   const LoadedAdsState(super.ads, super.hasMore, super.loaded,
-      {required this.message});
+      {required super.message});
 
   @override
   List<Object> get props => [ads!, hasMore, loaded, message];

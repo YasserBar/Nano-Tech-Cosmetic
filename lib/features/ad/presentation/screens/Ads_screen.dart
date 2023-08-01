@@ -20,11 +20,6 @@ class AdsScreen extends StatefulWidget {
 }
 
 class _AdsScreenState extends State<AdsScreen> {
-  @override
-  void initState() {
-    BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +27,7 @@ class _AdsScreenState extends State<AdsScreen> {
       backgroundColor: AppColors.white,
       appBar: const SecondaryAppbar(title: "All Ads"),
       body: BlocProvider(
-        create: (context) => di.sl<AdBloc>(),
+        create: (context) => di.sl<AdBloc>()..add(const DisplayAdsEvent()),
         child: BlocConsumer<AdBloc, AdState>(
           listener: (context, state) {
             if (state is FailureAdState) {

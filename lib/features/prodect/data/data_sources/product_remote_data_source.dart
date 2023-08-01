@@ -43,10 +43,11 @@ class ProductRemoteDataSourceImplWithHttp extends ProductRemoteDataSource {
         Uri.parse(AppRoutes.baseUrl + AppRoutes.showAllProduct).replace(
             queryParameters: {
           "page": page,
-          "category_id": categoryId,
-          "name": name
+          // "category_id": categoryId,
+          // "name": name
         }.map((key, value) => MapEntry(key, value.toString()))),
         headers: setHeadersWithTokenAndLang());
+    print(response.body);
     try {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message'];

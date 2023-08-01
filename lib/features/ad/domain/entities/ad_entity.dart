@@ -5,7 +5,7 @@ class Ad extends Equatable {
   final String title;
   final String description;
   final int active;
-  final String imageUrl;
+  final String? imageUrl;
   final String? videoUrl;
 
   const Ad({
