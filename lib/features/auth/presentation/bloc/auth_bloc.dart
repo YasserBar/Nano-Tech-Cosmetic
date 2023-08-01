@@ -39,7 +39,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }) : super(const AuthInitial(message: 'init state ')) {
     on<AuthEvent>((event, emit) async {
       if (event is LoginEvent) {
-        emit(const LoadingAuthState(message: "loading iarmstrong@example.org"));
+        emit(const LoadingAuthState(message: "loading"));
 
         final failureOrUser = await loginUsecase(event.login);
 

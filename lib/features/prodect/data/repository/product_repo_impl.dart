@@ -21,7 +21,7 @@ class ProductRepoImpl extends ProductRepo {
 
   @override
   Future<Either<Failure, Unit>> rateProduct(int rate, int prodectId) async {
-    if (!await networkInfo.isConnected) {
+    if (await networkInfo.isConnected) {
       try {
         await remoteDataSource.rateProduct(rate, prodectId);
         return const Right(unit);
@@ -51,7 +51,7 @@ class ProductRepoImpl extends ProductRepo {
   @override
   Future<Either<Failure, List<ProductModel>>> showAllProduct(int page,
       {int? categoryId, String? name}) async {
-    if (!await networkInfo.isConnected) {
+    if (await networkInfo.isConnected) {
       try {
         final List<ProductModel> products = await remoteDataSource
             .showAllProduct(page, categoryId: categoryId, name: name);
