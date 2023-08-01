@@ -1,38 +1,55 @@
 import 'package:equatable/equatable.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_messages.dart';
 import 'package:nano_tech_cosmetic/features/category/domain/entities/category_entity.dart';
 
 abstract class CategoryState extends Equatable {
   final List<Category>? categories;
   final bool hasMore;
   final bool loaded;
-  const CategoryState(this.categories, this.hasMore, this.loaded);
+  final String message;
+  const CategoryState(this.categories, this.hasMore, this.loaded,
+      {required this.message});
 
   @override
-  List<Object> get props => [categories!, hasMore, loaded];
+  List<Object> get props => [categories!, hasMore, loaded, message];
 }
 
 class CategoryInitial extends CategoryState {
-  const CategoryInitial(super.categories, super.hasMore, super.loaded);
+  const CategoryInitial(super.categories, super.hasMore, super.loaded,
+      {required super.message});
 }
 
 class LoadingCategoryState extends CategoryState {
-  const LoadingCategoryState(super.categories, super.hasMore, super.loaded);
+  const LoadingCategoryState(super.categories, super.hasMore, super.loaded,
+      {required super.message});
 }
 
 class FailureCategoryState extends CategoryState {
-  final String message;
-
   const FailureCategoryState(super.categories, super.hasMore, super.loaded,
-      {required this.message});
+      {required super.message});
+}
 
-  @override
-  List<Object> get props => [message];
+class InternalServerFailureCategoryState extends CategoryState {
+  const InternalServerFailureCategoryState(
+      super.categories, super.hasMore, super.loaded,
+      {super.message = AppMessages.InternalServerError});
+}
+
+class UnexpectedFailureCategoryState extends CategoryState {
+  const UnexpectedFailureCategoryState(
+      super.categories, super.hasMore, super.loaded,
+      {super.message = AppMessages.UnexpectedException});
+}
+
+class OfflineFailureCategoryState extends CategoryState {
+  const OfflineFailureCategoryState(
+      super.categories, super.hasMore, super.loaded,
+      {super.message = AppMessages.Offline});
 }
 
 class LoadedCategoriesState extends CategoryState {
-  final String message;
   const LoadedCategoriesState(super.categories, super.hasMore, super.loaded,
-      {required this.message});
+      {required super.message});
 
   @override
   List<Object> get props => [categories!, hasMore, loaded, message];
