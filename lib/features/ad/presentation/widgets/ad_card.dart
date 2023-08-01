@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/features/ad/domain/entities/ad_entity.dart';
@@ -45,10 +46,13 @@ class AdCard extends StatelessWidget {
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(15),
                   ),
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(ad.imageUrl),
-                    fit: BoxFit.cover,
-                  ),
+                  image: ad.imageUrl != null
+                      ? DecorationImage(
+                          image: CachedNetworkImageProvider(ad.imageUrl!))
+                      : const DecorationImage(
+                          image: AssetImage(AppAssets.image1),
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
               const SizedBox(
@@ -57,7 +61,7 @@ class AdCard extends StatelessWidget {
               SizedBox(
                 width: 140,
                 child: Text(
-                  ad.description,
+                  ad.title,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,

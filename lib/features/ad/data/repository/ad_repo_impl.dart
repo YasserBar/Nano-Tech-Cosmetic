@@ -21,7 +21,7 @@ class AdRepoImpl extends AdRepo {
 
   @override
   Future<Either<Failure, List<AdModel>>> displayAds(int page) async {
-    if (await networkInfo.isConnected) {
+    if (!await networkInfo.isConnected) {
       try {
         final List<AdModel> ads = await remoteDataSource.displayAds(page);
         return Right(ads);

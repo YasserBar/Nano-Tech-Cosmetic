@@ -17,14 +17,14 @@ import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/product
 abstract class AppPagesRoutes {
   // Auth
   static const String onBoarding = "/onBoarding";
-  static const String signInScreen = "/";
+  static const String signInScreen = "/signInScreen";
   static const String signUpScreen = "/signUpScreen";
   static const String forgetPasswordScreen = "/forgetPasswordScreen";
   static const String verifyCodeScreen = "/verifyCodeScreen";
   static const String resetPasswordScreen = "/resetPasswordScreen";
   static const String chooseGardScreen = "/chooseGardScreen";
 
-  static const String mainScreen = "/mainScreen";
+  static const String mainScreen = "/";
   static const String adsScreen = "/adsScreen";
   static const String myCartScreen = "/myCartScreen";
   static const String myOrderScreen = "/myOrderScreen";

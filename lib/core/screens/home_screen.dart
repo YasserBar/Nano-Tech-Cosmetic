@@ -26,13 +26,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
-    BlocProvider.of<ProductBloc>(context).add(const ShowAllProductsEvent());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
@@ -112,12 +105,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SizedBox(
-            height: Get.height * 0.35,
+            height: Get.height * 0.3,
             child: BlocProvider(
-              create: (context) => di.sl<AdBloc>(),
+              create: (context) =>
+                  di.sl<AdBloc>()..add(const DisplayAdsEvent()),
               child: BlocConsumer<AdBloc, AdState>(
                 listener: (context, state) {
-                  if (state is FailureAdState) {
+                  if (state is FailureAdState ||
+                      state is OfflineFailureAdState ||
+                      state is InternalServerFailureAdState ||
+                      state is UnexpectedFailureAdState) {
                     WidgetsUtils.showSnackBar(
                       title: "Failure",
                       message: state.message,
@@ -140,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }
-                  return const LoaderIndicator();
+                  return const LoaderIndicator(size: 50,lineWidth: 4,);
                 },
               ),
             ),
@@ -174,10 +171,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           BlocProvider(
-            create: (context) => di.sl<ProductBloc>(),
+            create: (context) =>
+                di.sl<ProductBloc>()..add(const ShowAllProductsEvent()),
             child: BlocConsumer<ProductBloc, ProductState>(
               listener: (context, state) {
-                if (state is FailureProductState) {
+                if (state is FailureProductState ||
+                    state is OfflineFailureProductState ||
+                    state is InternalServerFailureProductState ||
+                    state is UnexpectedFailureProductState) {
                   WidgetsUtils.showSnackBar(
                     title: "Failure",
                     message: state.message,
@@ -201,7 +202,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 }
-                return const LoaderIndicator();
+                return const Padding(
+                  padding: EdgeInsets.only(top: 50),
+                  child: LoaderIndicator(size: 50,lineWidth: 4),
+                );
               },
             ),
           ),
