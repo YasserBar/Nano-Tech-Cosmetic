@@ -49,7 +49,7 @@ class ProductRemoteDataSourceImplWithHttp extends ProductRemoteDataSource {
         }.map((key, value) =>
                 MapEntry(key, value == null ? '' : value.toString()))),
         headers: setHeadersWithTokenAndLang());
-    print(response.body);
+    // print(response.body);
     try {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message'];
@@ -64,4 +64,5 @@ class ProductRemoteDataSourceImplWithHttp extends ProductRemoteDataSource {
       rethrow;
     }
   }
+
 }

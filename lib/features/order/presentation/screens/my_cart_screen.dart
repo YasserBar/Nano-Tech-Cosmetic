@@ -5,7 +5,9 @@ import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/widgets/cart_product_card.dart';
+import 'package:nano_tech_cosmetic/main.dart';
 
 class MyCartScreen extends StatelessWidget {
   const MyCartScreen({Key? key}) : super(key: key);
@@ -68,49 +70,20 @@ class MyCartScreen extends StatelessWidget {
                   width: double.infinity,
                   child: MaterialButton(
                     onPressed: () {
-                      WidgetsUtils.showCustomDialog(context, title: "Order",
-                          btnOkOnPress: () {
-                        Get.toNamed(AppPagesRoutes.signInScreen);
-                      }, btnCancelOnPress: () {
-                        WidgetsUtils.showCustomDialog(context,
-                            title: "Total",
-                            children: [
-                              const Center(
-                                child: Text(
-                                  "240.000 D.I",
-                                  style: TextStyle(
-                                      color: AppColors.secondary, fontSize: 30),
-                                ),
-                              )
-                            ]);
-                      }, okText: "Sign in", children: [
-                        Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Text(
-                                "Don't have an account? ",
-                                style: TextStyle(
-                                  color: AppColors.gray,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Get.toNamed(AppPagesRoutes.signUpScreen);
-                                },
-                                child: const Text(
-                                  "sign up",
-                                  style: TextStyle(
-                                    color: AppColors.secondary,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ]);
+                      globalUser != null
+                          ? WidgetsUtils.showCustomDialog(context,
+                              title: "Total",
+                              children: [
+                                  const Center(
+                                    child: Text(
+                                      "240.000 D.I",
+                                      style: TextStyle(
+                                          color: AppColors.secondary,
+                                          fontSize: 30),
+                                    ),
+                                  )
+                                ])
+                          : signInDialog(context);
                     },
                     color: AppColors.primary,
                     shape: RoundedRectangleBorder(

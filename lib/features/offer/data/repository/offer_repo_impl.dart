@@ -24,7 +24,7 @@ class OfferRepoImpl extends OfferRepo {
       {int? productId}) async {
     if (await networkInfo.isConnected) {
       try {
-        print('step 1');
+        // print('step 1');
         final List<OfferModel> offers =
             await remoteDataSource.showOffers(page, productId: productId);
 

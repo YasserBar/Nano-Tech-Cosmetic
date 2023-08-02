@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/entities/product_entity.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/widgets/product_card.dart';

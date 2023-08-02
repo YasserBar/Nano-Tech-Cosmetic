@@ -1,6 +1,13 @@
-part of 'auth_bloc.dart';
 
-@immutable
+
+import 'package:equatable/equatable.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/login_entity.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/register_entity.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/resend_otp_entity.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/reset_password_entity.dart';
+import 'package:nano_tech_cosmetic/features/auth/domain/entities/verify_otp_entity.dart';
+
 abstract class AuthEvent extends Equatable {
   const AuthEvent();
 
@@ -35,7 +42,7 @@ class VerifyOTPEvent extends AuthEvent {
 
 class RegisterEvent extends AuthEvent {
   final Register register;
-  final Roll roll;
+  final Role roll;
 
   const RegisterEvent(this.register, this.roll);
 

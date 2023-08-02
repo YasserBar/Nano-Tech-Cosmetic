@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:nano_tech_cosmetic/core/constants/enum_roll.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/errors/failures.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/login_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/register_entity.dart';
@@ -13,7 +13,7 @@ abstract class AuthRepo {
 
   Future<Either<Failure, User>> verifyOTP(VerifyOTP verifyOTP);
 
-  Future<Either<Failure, Unit>> register(Register register, Roll roll);
+  Future<Either<Failure, Unit>> register(Register register, Role roll);
 
   Future<Either<Failure, Unit>> logout();
 

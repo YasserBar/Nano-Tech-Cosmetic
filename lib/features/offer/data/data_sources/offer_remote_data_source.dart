@@ -33,7 +33,7 @@ class OfferRemoteDataSourceImplWithHttp extends OfferRemoteDataSource {
           .map<OfferModel>(
               (jsonOfferModel) => OfferModel.fromJson(jsonOfferModel))
           .toList();
-      print('step 2');
+      // print('step 2');
       return Future.value(listOfferModel);
     } catch (e) {
       rethrow;

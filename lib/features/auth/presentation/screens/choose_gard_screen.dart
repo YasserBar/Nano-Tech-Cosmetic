@@ -5,7 +5,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
-import 'package:nano_tech_cosmetic/core/constants/enum_roll.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/gard_card.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/gard_description_text.dart';
@@ -122,10 +122,10 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                               AppPagesRoutes.signUpScreen,
                               arguments: {
                                 AppKeys.ROLL: isCustomer
-                                    ? Roll.customer
+                                    ? Role.customer
                                     : isSalon
-                                        ? Roll.salon
-                                        : Roll.company
+                                        ? Role.salon
+                                        : Role.company
                               },
                             );
                           },

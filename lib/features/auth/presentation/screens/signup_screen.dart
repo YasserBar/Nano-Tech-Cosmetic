@@ -5,12 +5,12 @@ import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
-import 'package:nano_tech_cosmetic/core/constants/enum_roll.dart';
 import 'package:nano_tech_cosmetic/core/helpers/pickers.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/register_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_event.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
@@ -38,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController instagramController = TextEditingController();
   final TextEditingController telegramController = TextEditingController();
   bool isMail = true;
-  Roll roll = Roll.customer;
+  Role roll = Role.customer;
 
   @override
   void initState() {

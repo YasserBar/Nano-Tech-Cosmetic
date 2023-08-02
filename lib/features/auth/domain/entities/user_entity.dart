@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 
 class User extends Equatable {
   final String firstName;
@@ -12,7 +13,7 @@ class User extends Equatable {
   final String? twitter;
   final String? instagram;
   final String? telegram;
-  final String role;
+  final Role role;
   String token;
   String refreshToken;
 
