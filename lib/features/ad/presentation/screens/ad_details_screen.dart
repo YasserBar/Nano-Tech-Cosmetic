@@ -105,14 +105,17 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                ad.title,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                        color: AppColors.gray, fontSize: 36),
+                              Center(
+                                child: Text(
+                                  ad.title,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                          color: AppColors.gray, fontSize: 36),
+                                ),
                               ),
                               const SizedBox(
                                 height: 5,
@@ -146,55 +149,3 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
     );
   }
 }
-
-/*
-IconButton(
-                        onPressed: () {
-                          WidgetsUtils.showCustomDialog(context,
-                              title: "Order by name",
-                              okText: "Order",
-                              hasBtnCancel: false,
-                              children: [
-                                const CustomTextField(
-                                  labelText: "New name",
-                                ),
-                                const SizedBox(
-                                  height: 25,
-                                ),
-                                const CustomTextField(
-                                  labelText: "New name",
-                                  isTextArea: true,
-                                ),
-                              ]);
-                        },
-                        icon: const Icon(
-                          Icons.addchart,
-                          size: 28,
-                        ),
-                        color: AppColors.white),
-                    IconButton(
-                        onPressed: () {
-                          WidgetsUtils.showCustomDialog(context,
-                              title: "Order Manufacturing",
-                              okText: "Order",
-                              hasBtnCancel: false,
-                              children: [
-                                const CustomTextField(
-                                  labelText: "Details order",
-                                  isTextArea: true,
-                                ),
-                                const SizedBox(
-                                  height: 25,
-                                ),
-                                const CustomTextField(
-                                  labelText: "Notes",
-                                  isTextArea: true,
-                                ),
-                              ]);
-                        },
-                        icon: const Icon(
-                          Icons.post_add_rounded,
-                          size: 30,
-                        ),
-                        color: AppColors.white),
- */

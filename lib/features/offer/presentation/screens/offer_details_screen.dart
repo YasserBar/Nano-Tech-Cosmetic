@@ -105,51 +105,48 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                offer.title,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                        color: AppColors.white, fontSize: 36),
-                              ),
-                              const SizedBox(
-                                height: 5,
+                              Center(
+                                child: Text(
+                                  offer.title,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                          color: AppColors.white, fontSize: 36),
+                                ),
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(
-                                    child: Text(
-                                      "${offer.price} D.I",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                              color: AppColors.white,
-                                              fontSize: 30,
-                                              letterSpacing: 2),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "${offer.oldPrice}D.I",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
+                                  Text(
+                                    "${offer.price} D.I",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
                                             color: AppColors.white,
                                             fontSize: 30,
-                                            letterSpacing: 2,
-                                            decorationStyle:
-                                                TextDecorationStyle.wavy,
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                          ),
-                                    ),
+                                            letterSpacing: 2),
+                                  ),
+                                  Text(
+                                    "${offer.oldPrice}D.I",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                          color: AppColors.white,
+                                          fontSize: 30,
+                                          letterSpacing: 2,
+                                          decorationStyle:
+                                              TextDecorationStyle.wavy,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                        ),
                                   ),
                                 ],
                               ),

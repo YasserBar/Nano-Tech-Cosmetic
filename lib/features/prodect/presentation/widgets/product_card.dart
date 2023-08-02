@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/entities/product_entity.dart';
 
 class ProductCard extends StatelessWidget {
@@ -83,35 +84,11 @@ class ProductCard extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                            Icon(
-                              Icons.star_half,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                            Icon(
-                              Icons.star_border,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                          ],
-                        ),
+                        CustomRatingBar(
+                          rating: double.parse(product.rating.toString()),
+                          onRatingUpdate: (rating) {},
+                          itemSize: 20
+                        )
                       ],
                     ),
                   ],

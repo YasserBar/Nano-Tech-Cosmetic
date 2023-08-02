@@ -4,7 +4,10 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/entities/product_entity.dart';
 import 'package:nano_tech_cosmetic/main.dart';
 
@@ -107,14 +110,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                product.name,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                        color: AppColors.white, fontSize: 36),
+                              Center(
+                                child: Text(
+                                  product.name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                          color: AppColors.white, fontSize: 36),
+                                ),
                               ),
                               const SizedBox(
                                 height: 5,
@@ -174,7 +180,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                             ],
                           ),
-                          if (globalUser == null)
+                          if (globalUser == null ||
+                              globalUser!.role == Role.customer)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -227,7 +234,58 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   child: MaterialButton(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 15),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      if(globalUser!.role == Role.company){
+                                        WidgetsUtils.showCustomDialog(context,
+                                            title: "Order by name",
+                                            okText: "Order",
+                                            hasBtnCancel: false,
+                                            children: [
+                                              const CustomTextField(
+                                                labelText: "New name",
+                                              ),
+                                              const SizedBox(
+                                                height: 25,
+                                              ),
+                                              const CustomTextField(
+                                                labelText: "Amount",
+                                                inputType: TextInputType.number,
+                                              ),
+                                              const SizedBox(
+                                                height: 25,
+                                              ),
+                                              const CustomTextField(
+                                                labelText: "Notes",
+                                                isTextArea: true,
+                                              ),
+                                            ]);
+                                      } else{
+                                        WidgetsUtils.showCustomDialog(context,
+                                            title: "Order Manufacturing",
+                                            okText: "Order",
+                                            hasBtnCancel: false,
+                                            children: [
+                                              const CustomTextField(
+                                                labelText: "Details order",
+                                                isTextArea: true,
+                                              ),
+                                              const SizedBox(
+                                                height: 25,
+                                              ),
+                                              const CustomTextField(
+                                                labelText: "Amount",
+                                                inputType: TextInputType.number,
+                                              ),
+                                              const SizedBox(
+                                                height: 25,
+                                              ),
+                                              const CustomTextField(
+                                                labelText: "Notes",
+                                                isTextArea: true,
+                                              ),
+                                            ]);
+                                      }
+                                    },
                                     color: AppColors.white,
                                     shape: const RoundedRectangleBorder(
                                       borderRadius:
@@ -236,7 +294,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           width: 1, color: AppColors.gray),
                                     ),
                                     child: const Text(
-                                      "add to cart",
+                                      "Special order",
                                       style: TextStyle(
                                           fontSize: 20, color: AppColors.gray),
                                     ),
@@ -257,55 +315,3 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 }
-
-/*
-IconButton(
-                        onPressed: () {
-                          WidgetsUtils.showCustomDialog(context,
-                              title: "Order by name",
-                              okText: "Order",
-                              hasBtnCancel: false,
-                              children: [
-                                const CustomTextField(
-                                  labelText: "New name",
-                                ),
-                                const SizedBox(
-                                  height: 25,
-                                ),
-                                const CustomTextField(
-                                  labelText: "New name",
-                                  isTextArea: true,
-                                ),
-                              ]);
-                        },
-                        icon: const Icon(
-                          Icons.addchart,
-                          size: 28,
-                        ),
-                        color: AppColors.white),
-                    IconButton(
-                        onPressed: () {
-                          WidgetsUtils.showCustomDialog(context,
-                              title: "Order Manufacturing",
-                              okText: "Order",
-                              hasBtnCancel: false,
-                              children: [
-                                const CustomTextField(
-                                  labelText: "Details order",
-                                  isTextArea: true,
-                                ),
-                                const SizedBox(
-                                  height: 25,
-                                ),
-                                const CustomTextField(
-                                  labelText: "Notes",
-                                  isTextArea: true,
-                                ),
-                              ]);
-                        },
-                        icon: const Icon(
-                          Icons.post_add_rounded,
-                          size: 30,
-                        ),
-                        color: AppColors.white),
- */

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/widgets/cart_product_card.dart';
@@ -22,18 +21,21 @@ class MyCartScreen extends StatelessWidget {
             color: AppColors.primary,
             backgroundColor: AppColors.white,
             onRefresh: () async {},
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                vertical: AppDimensions.appbarBodyPadding,
-                horizontal: AppDimensions.sidesBodyPadding,
-              ),
-              physics: const BouncingScrollPhysics(),
-              itemCount: 10,
-              itemBuilder: (context, index) => const CartProductCard(
-                image: AppAssets.image1,
-                name: "Cream Mini",
-                price: "250",
-                rating: 1,
+            child: SlidableAutoCloseBehavior(
+
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                  vertical: AppDimensions.appbarBodyPadding,
+                  horizontal: AppDimensions.sidesBodyPadding,
+                ),
+                physics: const BouncingScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (context, index) => const CartProductCard(
+                  image: AppAssets.image1,
+                  name: "Cream Mini",
+                  price: "250",
+                  rating: 1,
+                ),
               ),
             ),
           ),
