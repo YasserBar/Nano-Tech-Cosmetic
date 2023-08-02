@@ -1,20 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/features/ad/domain/entities/ad_entity.dart';
 
 class AdCard extends StatelessWidget {
   final Ad ad;
-  final void Function()? onTap;
 
-  const AdCard({Key? key, required this.ad, this.onTap}) : super(key: key);
+  const AdCard({Key? key, required this.ad}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        Get.toNamed(AppPagesRoutes.adDetailsScreen,arguments: ad);
+      },
       child: Container(
         padding: const EdgeInsets.all(5),
         margin: const EdgeInsets.symmetric(horizontal: 5),
