@@ -118,16 +118,12 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                         child: CustomButtonAuth(
                           text: "Next",
                           onPressed: () {
-                            Get.toNamed(
-                              AppPagesRoutes.signUpScreen,
-                              arguments: {
-                                AppKeys.ROLL: isCustomer
+                            Get.toNamed(AppPagesRoutes.signUpScreen,
+                                arguments: isCustomer
                                     ? Role.customer
                                     : isSalon
                                         ? Role.salon
-                                        : Role.company
-                              },
-                            );
+                                        : Role.company);
                           },
                         ),
                       ),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/login_entity.dart';
@@ -56,6 +57,7 @@ class SignInScreen extends StatelessWidget {
                     labelText: "Email",
                     inputType: TextInputType.emailAddress,
                     controller: emailController,
+                    validator: (val) => AppValidator.validateEmail(val),
                   ),
                   const SizedBox(
                     height: 25,
@@ -64,6 +66,7 @@ class SignInScreen extends StatelessWidget {
                     labelText: "Password",
                     isObscureText: true,
                     controller: passwordController,
+                    validator: (val) => AppValidator.validatePassword(val),
                   ),
                   const SizedBox(
                     height: 25,

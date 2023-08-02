@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/reset_password_entity.dart';
@@ -54,6 +55,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     labelText: "Password",
                     isObscureText: true,
                     controller: passwordController,
+                    validator: (val) => AppValidator.validatePassword(val),
                   ),
                   const SizedBox(
                     height: 25,
@@ -62,6 +64,8 @@ class ResetPasswordScreen extends StatelessWidget {
                     labelText: "Confirm password",
                     controller: confirmPasswordController,
                     isObscureText: true,
+                    validator: (val) => AppValidator.validateConflictPassword(
+                        val, passwordController.text),
                   ),
                   const SizedBox(
                     height: 25,

@@ -27,7 +27,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
   @override
   void initState() {
-    email = Get.arguments[AppKeys.EMAIL];
+    email = Get.arguments;
     super.initState();
   }
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/resend_otp_entity.dart';
@@ -37,9 +37,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessResendOTPState) {
-                Get.toNamed(AppPagesRoutes.verifyCodeScreen, arguments: {
-                  AppKeys.EMAIL: emailController.text,
-                });
+                Get.toNamed(AppPagesRoutes.verifyCodeScreen,
+                    arguments: emailController.text);
                 WidgetsUtils.showSnackBar(
                   title: "Success",
                   message: state.message,
@@ -58,6 +57,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     labelText: "Email",
                     controller: emailController,
                     inputType: TextInputType.emailAddress,
+                    validator: (val) => AppValidator.validateEmail(val),
                   ),
                   const SizedBox(
                     height: 75,
@@ -66,11 +66,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     text: "Send Code",
                     onPressed: () {
                       BlocProvider.of<AuthBloc>(context).add(
-                        ResendOTPEvent(
-                            ResendOTP(
-                                email: emailController.text
-                            )
-                        ),
+                        ResendOTPEvent(ResendOTP(email: emailController.text)),
                       );
                     },
                   ),
