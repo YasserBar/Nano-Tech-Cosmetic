@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:nano_tech_cosmetic/core/constants/app_routes.dart';
-import 'package:nano_tech_cosmetic/core/constants/enum_roll.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/helpers/header.dart';
 import 'package:nano_tech_cosmetic/core/helpers/switch_status_code.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/models/auth_model.dart';
@@ -20,7 +20,7 @@ abstract class AuthRemoteDataSource {
 
   Future<Unit> logout();
 
-  Future<Unit> register(RegisterModel registerModel, Roll roll);
+  Future<Unit> register(RegisterModel registerModel, Role roll);
 
   Future<Unit> resetPassword(ResetPasswordModel resetPasswordModel);
 
@@ -45,13 +45,13 @@ class AuthRemoteDataSourceImplWithHttp extends AuthRemoteDataSource {
     );
     try {
       final bodyJson = json.decode(response.body);
-      print('step 1    ');
+      // print('step 1    ');
       globalMessage = bodyJson['message'];
-      print('step 2    ');
+      // print('step 2    ');
       switchStatusCode(response);
-      print('step 3    ');
+      // print('step 3    ');
       final UserModel userModel = UserModel.fromJson(bodyJson);
-      print('step 4    ');
+      // print('step 4    ');
       return Future.value(userModel);
     } catch (e) {
       rethrow;
@@ -106,21 +106,19 @@ class AuthRemoteDataSourceImplWithHttp extends AuthRemoteDataSource {
   }
 
   @override
-  Future<Unit> register(RegisterModel registerModel, Roll roll) async {
+  Future<Unit> register(RegisterModel registerModel, Role roll) async {
     final String rootRegister ;
     switch (roll) {
-      case Roll.customer:
+      case Role.customer:
         rootRegister = AppRoutes.registerUser;
         break;
-      case Roll.salon:
+      case Role.salon:
         rootRegister = AppRoutes.registerSalon;
         break;
-      case Roll.company:
+      case Role.company:
         rootRegister = AppRoutes.registerCompany;
         break;
-      case Roll.guest:
-        rootRegister = AppRoutes.registerCompany;
-        break;
+     
     }
 
     final response = await client.post(

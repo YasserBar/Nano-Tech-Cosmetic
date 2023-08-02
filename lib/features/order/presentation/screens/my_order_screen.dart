@@ -26,7 +26,7 @@ class MyOrderScreen extends StatelessWidget {
           price: "3500",
           response: "Your order will prepare you\n can show status of...  ",
           date: "21-3-2023",
-          status: OrderStatus.rejecting,
+          status: OrderStatus.rejected,
           onTap: () {
             Get.toNamed(AppPagesRoutes.orderDetailsScreen);
           },

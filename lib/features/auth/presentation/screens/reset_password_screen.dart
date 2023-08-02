@@ -7,6 +7,7 @@ import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/reset_password_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_event.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
@@ -34,7 +35,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessResetPasswordState) {
-                print("ssss");
+                // print("ssss");
                 Get.toNamed(AppPagesRoutes.mainScreen);
                 WidgetsUtils.showSnackBar(
                   title: "Success",

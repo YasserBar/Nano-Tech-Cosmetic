@@ -1,3 +1,4 @@
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dart';
 
 class UserModel extends User {
@@ -28,7 +29,7 @@ class UserModel extends User {
           twitter: twitter,
           instagram: instagram,
           telegram: telegram,
-          role: role,
+          role: switchRole(role),
           token: token,
           refreshToken: refreshToken,
         );
@@ -69,5 +70,15 @@ class UserModel extends User {
       'token': token,
       'refreshToken': refreshToken,
     };
+  }
+}
+
+Role switchRole(String role) {
+  if (role == 'customer') {
+    return Role.customer;
+  } else if (role == 'salon') {
+    return Role.salon;
+  } else {
+    return Role.company;
   }
 }

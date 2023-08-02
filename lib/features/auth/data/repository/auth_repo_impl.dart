@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:nano_tech_cosmetic/core/constants/enum_roll.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/errors/exception.dart';
 import 'package:nano_tech_cosmetic/core/errors/failures.dart';
 import 'package:nano_tech_cosmetic/core/helpers/network_info.dart';
@@ -42,11 +42,11 @@ class AuthRepoImpl implements AuthRepo {
 
       try {
         final UserModel userModel = await remoteDataSource.login(loginModel);
-        print('out 1    ');
+        // print('out 1    ');
         globalUser = userModel;
-        print('out 2   ');
+        // print('out 2   ');
         localDataSource.cacheUser(userModel);
-        print('out 3   ');
+        // print('out 3   ');
         return Right(userModel);
       } catch (e) {
         return Left(switchException(e));
@@ -88,7 +88,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, Unit>> register(Register register, Roll roll) async {
+  Future<Either<Failure, Unit>> register(Register register, Role roll) async {
     final RegisterModel registerModel = RegisterModel(
       register.firstName,
       register.lastName,

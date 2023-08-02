@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/screens/home_screen.dart';
+import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offers_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_cart_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/widgets/search_product_delegate.dart';
+import 'package:nano_tech_cosmetic/main.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -43,7 +45,9 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               InkWell(
                 onTap: () {
-                  scaffoldKey.currentState!.openDrawer();
+                  globalUser != null
+                      ? scaffoldKey.currentState!.openDrawer()
+                      : signInDialog(context);
                 },
                 child: SvgPicture.asset(
                   AppAssets.menu,
@@ -223,26 +227,6 @@ class _MainScreenState extends State<MainScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      // Row(
-                      //   children: [
-                      //     SvgPicture.asset(
-                      //       AppAssets.instagram,
-                      //     ),
-                      //     const SizedBox(
-                      //       width: 10,
-                      //     ),
-                      //     const Text(
-                      //       "KumarBaker@insta",
-                      //       style: TextStyle(
-                      //         color: AppColors.gray,
-                      //         fontSize: 18,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
                       Row(
                         children: [
                           SvgPicture.asset(AppAssets.telegram),
@@ -359,7 +343,9 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: indexNavBar,
         onTap: (value) {
           setState(() {
-            indexNavBar = value;
+            value == 2 && globalUser == null
+                ? signInDialog(context)
+                : indexNavBar = value;
           });
         },
         type: BottomNavigationBarType.fixed,

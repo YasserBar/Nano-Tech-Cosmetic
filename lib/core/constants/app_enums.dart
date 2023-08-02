@@ -8,6 +8,12 @@ enum SnackBarType {
 enum OrderStatus {
   waiting,
   processing,
-  rejecting,
+  rejected,
   done,
+}
+
+enum Role {
+  customer,
+  salon,
+  company,
 }

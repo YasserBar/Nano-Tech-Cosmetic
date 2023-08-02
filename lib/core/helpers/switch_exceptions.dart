@@ -11,7 +11,7 @@ Failure switchException(Object exception) {
   } else if (exception is InternalServerErrorException) {
     return InternalServerErrorFailure();
   } else {
-    print(exception);
+    // print(exception);
     return UnexpectedFailure();
   }
 }

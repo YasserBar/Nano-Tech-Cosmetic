@@ -86,7 +86,7 @@ class OrderCard extends StatelessWidget {
                       ? AppAssets.waitingOrder
                       : status == OrderStatus.processing
                           ? AppAssets.processOrder
-                          : status == OrderStatus.rejecting
+                          : status == OrderStatus.rejected
                               ? AppAssets.rejectOrder
                               : AppAssets.doneOrder)
                 ],

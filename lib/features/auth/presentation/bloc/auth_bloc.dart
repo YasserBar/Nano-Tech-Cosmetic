@@ -1,23 +1,16 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_messages.dart';
-import 'package:nano_tech_cosmetic/core/constants/enum_roll.dart';
 import 'package:nano_tech_cosmetic/core/errors/failures.dart';
-import 'package:nano_tech_cosmetic/features/auth/domain/entities/login_entity.dart';
-import 'package:nano_tech_cosmetic/features/auth/domain/entities/register_entity.dart';
-import 'package:nano_tech_cosmetic/features/auth/domain/entities/resend_otp_entity.dart';
-import 'package:nano_tech_cosmetic/features/auth/domain/entities/reset_password_entity.dart';
-import 'package:nano_tech_cosmetic/features/auth/domain/entities/verify_otp_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/login_usecase.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/register_usecase.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/resendOTP_usecase.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/resetPassword_usecase.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/verifyOTP_uasecase.dart';
+import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_event.dart';
 import 'package:nano_tech_cosmetic/main.dart';
 
-part 'auth_event.dart';
 
 part 'auth_state.dart';
 
