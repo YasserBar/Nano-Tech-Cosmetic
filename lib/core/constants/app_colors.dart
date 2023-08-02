@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 abstract class AppColors {
   // Figma Colors
-  static const Color primary = Color(0xB3E60A1C);
+  static const Color primarySolid = Color(0xFFAC3A99);
+  static const Color primary = Color(0xB3AC3A99);
   static const Color primary1 = Color(0xFFEA49D0);
   static const Color primary2 = Color(0xFFFEC6F5);
   static const Color secondary = Color(0xFF0977F5);
@@ -22,7 +23,7 @@ abstract class AppColors {
   static const Color yellowAccent = Colors.yellowAccent;
 
   // Primary Colors
-  static const MaterialColor materialPrimary = MaterialColor(0xFF3A68AC, {//0xFFAC3A99
+  static const MaterialColor materialPrimary = MaterialColor(0xFFAC3A99, {
     50: Color(0xFFFBEFF5),
     100: Color(0xFFFCDBEE),
     200: Color(0xFFF6B5D9),
