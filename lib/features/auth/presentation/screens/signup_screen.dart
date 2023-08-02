@@ -6,6 +6,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/pickers.dart';
+import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/register_entity.dart';
@@ -37,14 +38,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController twitterController = TextEditingController();
   final TextEditingController instagramController = TextEditingController();
   final TextEditingController telegramController = TextEditingController();
-  bool isMail = true;
-  Role roll = Role.customer;
-
-  @override
-  void initState() {
-    roll = Get.arguments[AppKeys.ROLL];
-    super.initState();
-  }
+  bool isMail = false;
+  Role roll = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +88,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               CustomTextField(
                                 labelText: "First name",
                                 controller: firstNameController,
+                                validator: (val) =>
+                                    AppValidator.validateName(val),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -100,6 +97,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               CustomTextField(
                                 labelText: "Last name",
                                 controller: lastNameController,
+                                validator: (val) =>
+                                    AppValidator.validateLastName(val),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -149,38 +148,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    isMail = true;
-                                  });
-                                },
-                                child: Row(
-                                  children: [
-                                    Checkbox(
-                                      value: isMail,
-                                      side: const BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 2,
-                                      ),
-                                      onChanged: (val) {
-                                        setState(() {
-                                          isMail = true;
-                                        });
-                                      },
-                                    ),
-                                    const Text(
-                                      "Male",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColors.gray,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Spacer(),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
                                     isMail = false;
                                   });
                                 },
@@ -210,6 +177,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               const Spacer(),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    isMail = true;
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    Checkbox(
+                                      value: isMail,
+                                      side: const BorderSide(
+                                        color: AppColors.secondary,
+                                        width: 2,
+                                      ),
+                                      onChanged: (val) {
+                                        setState(() {
+                                          isMail = true;
+                                        });
+                                      },
+                                    ),
+                                    const Text(
+                                      "Male",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: AppColors.gray,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Spacer(),
                             ],
                           ),
                         ),
@@ -225,6 +224,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 labelText: "Email",
                                 controller: emailController,
                                 inputType: TextInputType.emailAddress,
+                                validator: (val) =>
+                                    AppValidator.validateEmail(val),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -233,6 +234,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 labelText: "Password",
                                 controller: passwordController,
                                 isObscureText: true,
+                                validator: (val) =>
+                                    AppValidator.validatePassword(val),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -241,6 +244,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 labelText: "Confirm Password",
                                 controller: confirmPasswordController,
                                 isObscureText: true,
+                                validator: (val) =>
+                                    AppValidator.validateConflictPassword(val,passwordController.text),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -248,6 +253,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               CustomTextField(
                                 labelText: "Phone Number",
                                 controller: phoneController,
+                                validator: (val) =>
+                                    AppValidator.validatePhone(val),
                               ),
                               const SizedBox(
                                 height: 25,

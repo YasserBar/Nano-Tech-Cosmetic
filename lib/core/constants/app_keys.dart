@@ -3,11 +3,7 @@
 class AppKeys {
   static const String CACHED_USER = "CACHED_USER";
 
-  static const String CACHED_AUTH = "CACHED_AUTH";
-  
-  static const String CACHED_ROLL = "CACHED_ROLL";
+  static const String CACHED_CART = "CACHED_CART";
 
-  static const String EMAIL = "EMAIL";
-
-  static const String ROLL = "ROLL";
+  static const String CACHED_ITEM_CART = "CACHED_ITEM_CART";
 }
