@@ -16,6 +16,7 @@ import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_ev
 import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_state.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/widgets/product_card.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
+import 'package:nano_tech_cosmetic/main.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,88 +28,97 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        // BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
-      },
-      child: ListView(
-        padding: const EdgeInsets.symmetric(
-          vertical: AppDimensions.appbarBodyPadding,
-        ),
-        physics: const BouncingScrollPhysics(),
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: AppDimensions.sidesBodyPadding,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Welcome!",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(fontSize: 35),
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Do you have an account? ",
-                      style: Theme.of(context).textTheme.bodySmall,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AdBloc>(
+            create: (context) => di.sl<AdBloc>()..add(const DisplayAdsEvent())),
+        BlocProvider<ProductBloc>(
+            create: (context) =>
+                di.sl<ProductBloc>()..add(const ShowAllProductsEvent())),
+      ],
+      child: RefreshIndicator(
+        onRefresh: () async {
+          // BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
+          // BlocProvider.of<ProductBloc>(context)
+          //     .add(const ShowAllProductsEvent());
+        },
+        child: ListView(
+          padding: const EdgeInsets.symmetric(
+            vertical: AppDimensions.appbarBodyPadding,
+          ),
+          physics: const BouncingScrollPhysics(),
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                left: AppDimensions.sidesBodyPadding,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Welcome!",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontSize: 35),
+                  ),
+                  SizedBox(height: globalUser == null ? 0 : 5),
+                  if (globalUser == null)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Do you have an account? ",
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(AppPagesRoutes.signInScreen);
+                          },
+                          child: Text(
+                            "sign in",
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: AppColors.secondary,
+                                    ),
+                          ),
+                        ),
+                      ],
                     ),
-                    InkWell(
-                      onTap: () {
-                        Get.toNamed(AppPagesRoutes.signInScreen);
-                      },
-                      child: Text(
-                        "sign in",
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: AppColors.secondary,
-                            ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppDimensions.sidesBodyPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Ads",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontSize: 26),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(AppPagesRoutes.adsScreen);
+                    },
+                    child: const Text(
+                      "See all",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: AppColors.secondary,
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.sidesBodyPadding),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Ads",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(fontSize: 26),
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.toNamed(AppPagesRoutes.adsScreen);
-                  },
-                  child: const Text(
-                    "See all",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: AppColors.secondary,
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: Get.height * 0.35,
-            child: BlocProvider(
-              create: (context) =>
-                  di.sl<AdBloc>()..add(const DisplayAdsEvent()),
+            SizedBox(
+              height: Get.height * 0.35,
               child: BlocConsumer<AdBloc, AdState>(
                 listener: (context, state) {
                   if (state is FailureAdState ||
@@ -137,43 +147,42 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }
-                  return const LoaderIndicator(size: 50,lineWidth: 4,);
+                  return const LoaderIndicator(
+                    size: 50,
+                    lineWidth: 4,
+                  );
                 },
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.sidesBodyPadding, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Product  ",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(fontSize: 26),
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.toNamed(AppPagesRoutes.categoriesScreen);
-                  },
-                  child: const Text(
-                    "Categories",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: AppColors.secondary,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppDimensions.sidesBodyPadding, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Product  ",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontSize: 26),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(AppPagesRoutes.categoriesScreen);
+                    },
+                    child: const Text(
+                      "Categories",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: AppColors.secondary,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          BlocProvider(
-            create: (context) =>
-                di.sl<ProductBloc>()..add(const ShowAllProductsEvent()),
-            child: BlocConsumer<ProductBloc, ProductState>(
+            BlocConsumer<ProductBloc, ProductState>(
               listener: (context, state) {
                 if (state is FailureProductState ||
                     state is OfflineFailureProductState ||
@@ -204,12 +213,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
                 return const Padding(
                   padding: EdgeInsets.only(top: 50),
-                  child: LoaderIndicator(size: 50,lineWidth: 4),
+                  child: LoaderIndicator(size: 50, lineWidth: 4),
                 );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

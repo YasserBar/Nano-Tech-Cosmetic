@@ -81,35 +81,6 @@ class OfferCard extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                            Icon(
-                              Icons.star_half,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                            Icon(
-                              Icons.star_border,
-                              color: AppColors.yellowAccent,
-                              size: 20,
-                            ),
-                          ],
-                        ),
                         Text(
                           offer.description,
                         ),
