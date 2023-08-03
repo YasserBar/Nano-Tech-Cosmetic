@@ -17,7 +17,7 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await di.init();
-  _initializeTokenAndCustomer();
+
   runApp(const MyApp());
 }
 
@@ -26,15 +26,6 @@ void main() async {
 //   FlutterNativeSplash.remove();
 // }
 
-Future<void> _initializeTokenAndCustomer() async {
-  try {
-    globalUser = await di.sl<AuthLocalDataSource>().getCachedUser();
-  } catch (e) {
-    if (kDebugMode) {
-      print(e);
-    }
-  }
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

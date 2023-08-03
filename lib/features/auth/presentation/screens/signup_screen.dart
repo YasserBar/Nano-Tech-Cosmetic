@@ -57,7 +57,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessRegisterState) {
-                Get.toNamed(AppPagesRoutes.mainScreen);
+                Get.toNamed(AppPagesRoutes.verifyCodeScreen,
+                    arguments: emailController.text);
                 WidgetsUtils.showSnackBar(
                   title: "Success",
                   message: state.message,
@@ -245,7 +246,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 controller: confirmPasswordController,
                                 isObscureText: true,
                                 validator: (val) =>
-                                    AppValidator.validateConflictPassword(val,passwordController.text),
+                                    AppValidator.validateConflictPassword(
+                                        val, passwordController.text),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -262,6 +264,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               CustomTextField(
                                 labelText: "Instagram",
                                 controller: instagramController,
+                                validator: (val) =>
+                                    AppValidator.validateRequired(val),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -269,6 +273,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               CustomTextField(
                                 labelText: "Twitter",
                                 controller: twitterController,
+                                validator: (val) =>
+                                    AppValidator.validateRequired(val),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -276,6 +282,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               CustomTextField(
                                 labelText: "Facebook",
                                 controller: facebookController,
+                                validator: (val) =>
+                                    AppValidator.validateRequired(val),
                               ),
                               const SizedBox(
                                 height: 25,
@@ -283,6 +291,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               CustomTextField(
                                 labelText: "Telegram",
                                 controller: telegramController,
+                                validator: (val) =>
+                                    AppValidator.validateRequired(val),
                               ),
                               const SizedBox(
                                 height: 25,

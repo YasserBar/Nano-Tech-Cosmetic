@@ -39,7 +39,7 @@ class SignInScreen extends StatelessWidget {
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessLoginState) {
-                Get.toNamed(AppPagesRoutes.mainScreen);
+                Get.offAllNamed(AppPagesRoutes.mainScreen);
                 WidgetsUtils.showSnackBar(
                   title: "Success",
                   message: state.message,
