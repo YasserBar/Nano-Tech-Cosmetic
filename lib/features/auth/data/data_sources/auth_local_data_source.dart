@@ -27,10 +27,10 @@ class AuthLocalDataSourceImplWithSharedPreferences extends AuthLocalDataSource {
   Future<Unit> cacheUser(UserModel userModel) async {
     Object userJson = userModel.toJson();
     final storeUser =
-        await pref.setString(AppKeys.CACHED_USER, jsonEncode(userJson));
+        await pref.setString(AppKeys.CACHED_USER, userJson.toString());
     if (kDebugMode) {
       if (storeUser) {
-        print('store Auth');
+        print('store User');
       } else {
         print('failure');
       }

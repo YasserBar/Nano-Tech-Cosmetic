@@ -4,7 +4,7 @@ class Pickers{
   static Future<String?> choseDate(BuildContext context) async {
     DateTime? date = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: DateTime(2000),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );

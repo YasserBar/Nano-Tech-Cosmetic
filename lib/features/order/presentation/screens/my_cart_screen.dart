@@ -85,7 +85,7 @@ class MyCartScreen extends StatelessWidget {
                                     ),
                                   )
                                 ])
-                          : signInDialog(context);
+                          : signInDialog(context, title: 'Order');
                     },
                     color: AppColors.primary,
                     shape: RoundedRectangleBorder(

@@ -42,9 +42,9 @@ class AuthRepoImpl implements AuthRepo {
 
       try {
         final UserModel userModel = await remoteDataSource.login(loginModel);
-        // print('out 1    ');
         globalUser = userModel;
-        // print('out 2   ');
+        print('out 1    ');
+        print(globalUser);
         localDataSource.cacheUser(userModel);
         // print('out 3   ');
         return Right(userModel);
@@ -60,9 +60,9 @@ class AuthRepoImpl implements AuthRepo {
   Future<Either<Failure, Unit>> logout() async {
     if (await networkInfo.isConnected) {
       try {
-        Unit unit = await remoteDataSource.logout();
+        await remoteDataSource.logout();
         localDataSource.removeCachedUser();
-        return Right(unit);
+        return const Right(unit);
       } on UnauthorizedException {
         final Either<Failure, Unit> either = await refreshToken();
         return either.fold(

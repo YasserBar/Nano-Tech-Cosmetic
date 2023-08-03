@@ -4,7 +4,6 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
@@ -35,7 +34,15 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => di.sl<AuthBloc>(),
+        create: (context) {
+          if (Get.previousRoute == AppPagesRoutes.mainScreen) {
+            return di.sl<AuthBloc>()
+              ..add(
+                ResendOTPEvent(ResendOTP(email: Get.arguments)),
+              );
+          }
+          return di.sl<AuthBloc>();
+        },
         child: BackgroundAuth(
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
@@ -46,7 +53,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessVerifyOTPState) {
-                Get.toNamed(AppPagesRoutes.resetPasswordScreen);
+                if (Get.previousRoute == AppPagesRoutes.signUpScreen) {
+                  Get.offAllNamed(AppPagesRoutes.mainScreen);
+                } else {
+                  Get.toNamed(AppPagesRoutes.resetPasswordScreen);
+                }
                 WidgetsUtils.showSnackBar(
                   title: "Success",
                   message: state.message,

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 
@@ -46,6 +47,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         TextFormField(
           validator: widget.validator,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: widget.controller,
           onTap: widget.onTap,
           decoration: InputDecoration(
@@ -73,6 +75,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
               borderRadius: BorderRadius.circular(15),
               borderSide: const BorderSide(
                 color: AppColors.primary,
+                width: 3,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(
+                color: AppColors.danger1,
+                width: 3,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(
+                color: AppColors.danger2,
                 width: 3,
               ),
             ),
