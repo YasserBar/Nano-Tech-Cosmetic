@@ -86,8 +86,8 @@ class ProductCard extends StatelessWidget {
                         ),
                         CustomRatingBar(
                           rating: double.parse(product.rating.toString()),
-                          onRatingUpdate: (rating) {},
-                          itemSize: 20
+                          itemSize: 20,
+                          onRatingUpdate: (double rating) {},
                         )
                       ],
                     ),

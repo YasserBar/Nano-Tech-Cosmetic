@@ -6,13 +6,14 @@ import 'package:nano_tech_cosmetic/core/constants/app_routes.dart';
 import 'package:nano_tech_cosmetic/core/helpers/header.dart';
 import 'package:nano_tech_cosmetic/core/helpers/switch_status_code.dart';
 import 'package:nano_tech_cosmetic/features/prodect/data/models/product_model.dart';
+import 'package:nano_tech_cosmetic/features/prodect/domain/entities/rate_product_entity.dart';
 import 'package:nano_tech_cosmetic/main.dart';
 
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> showAllProduct(int page,
       {int? categoryId, String? name});
 
-  Future<Unit> rateProduct(int rate, int prodectId);
+  Future<Unit> rateProduct(RateProduct rateProduct);
 }
 
 class ProductRemoteDataSourceImplWithHttp extends ProductRemoteDataSource {
@@ -21,10 +22,10 @@ class ProductRemoteDataSourceImplWithHttp extends ProductRemoteDataSource {
   ProductRemoteDataSourceImplWithHttp({required this.client});
 
   @override
-  Future<Unit> rateProduct(int rate, int prodectId) async {
-    final response = await client.get(
+  Future<Unit> rateProduct(RateProduct rateProduct) async {
+    final response = await client.post(
         Uri.parse(AppRoutes.baseUrl + AppRoutes.rateProduct).replace(
-            queryParameters: {"product_id": prodectId, "rating": rate}
+            queryParameters: {"product_id": rateProduct.productId, "rating": rateProduct.rate}
                 .map((key, value) => MapEntry(key, value.toString()))),
         headers: setHeadersWithTokenAndLang());
     try {

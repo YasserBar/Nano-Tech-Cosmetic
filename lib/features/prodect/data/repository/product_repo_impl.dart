@@ -6,6 +6,7 @@ import 'package:nano_tech_cosmetic/core/helpers/switch_exceptions.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/repository/auth_repo.dart';
 import 'package:nano_tech_cosmetic/features/prodect/data/data_sources/product_remote_data_source.dart';
 import 'package:nano_tech_cosmetic/features/prodect/data/models/product_model.dart';
+import 'package:nano_tech_cosmetic/features/prodect/domain/entities/rate_product_entity.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/repository/product_repo.dart';
 
 class ProductRepoImpl extends ProductRepo {
@@ -20,10 +21,10 @@ class ProductRepoImpl extends ProductRepo {
   });
 
   @override
-  Future<Either<Failure, Unit>> rateProduct(int rate, int prodectId) async {
+  Future<Either<Failure, Unit>> rateProduct(RateProduct rateProduct) async {
     if (await networkInfo.isConnected) {
       try {
-        await remoteDataSource.rateProduct(rate, prodectId);
+        await remoteDataSource.rateProduct(rateProduct);
         return const Right(unit);
       } on UnauthorizedException {
         final Either<Failure, Unit> either = await authRepo.refreshToken();
@@ -31,7 +32,7 @@ class ProductRepoImpl extends ProductRepo {
           (failure) => Left(failure),
           (done) async {
             try {
-              await remoteDataSource.rateProduct(rate, prodectId);
+              await remoteDataSource.rateProduct(rateProduct);
               return const Right(unit);
             } on UnauthorizedException {
               return Left(UnauthorizedFailure());

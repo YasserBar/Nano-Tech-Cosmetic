@@ -65,7 +65,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<RateProductEvent>((event, emit) async {
       emit(const LoadingProductState(null, true, true,message: 'loading'));
       final failureOrproducts =
-          await showAllProductUsecase(page, categoryId: categoryId, name: name);
+          await rateProductUsecase(event.rateProduct);
       failureOrproducts.fold((failure) {
         emit(switchFailure(failure));
       }, (products) {

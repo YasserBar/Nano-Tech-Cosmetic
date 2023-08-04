@@ -7,39 +7,43 @@ class CustomRatingBar extends StatelessWidget {
   final double rating;
   final double itemSize;
   final void Function(double rating) onRatingUpdate;
-
+  final void Function()? onTap;
   const CustomRatingBar({
     Key? key,
     required this.rating,
     required this.onRatingUpdate,
     this.ignoreGestures = true,
     this.itemSize = 25,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RatingBar(
-      initialRating: rating,
-      direction: Axis.horizontal,
-      allowHalfRating: true,
-      itemCount: 5,
-      ratingWidget: RatingWidget(
-        full: const Icon(
-          Icons.star_outlined,
-          color: AppColors.yellowAccent,
+    return InkWell(
+      onTap: onTap,
+      child: RatingBar(
+        initialRating: rating,
+        direction: Axis.horizontal,
+        allowHalfRating: true,
+        itemCount: 5,
+        ratingWidget: RatingWidget(
+          full: const Icon(
+            Icons.star_outlined,
+            color: AppColors.yellowAccent,
+          ),
+          half: const Icon(
+            Icons.star_half_outlined,
+            color: AppColors.yellowAccent,
+          ),
+          empty: const Icon(
+            Icons.star_outline_outlined,
+            color: AppColors.yellowAccent,
+          ),
         ),
-        half: const Icon(
-          Icons.star_half_outlined,
-          color: AppColors.yellowAccent,
-        ),
-        empty: const Icon(
-          Icons.star_outline_outlined,
-          color: AppColors.yellowAccent,
-        ),
+        ignoreGestures: ignoreGestures,
+        itemSize: itemSize,
+        onRatingUpdate: onRatingUpdate,
       ),
-      ignoreGestures: ignoreGestures,
-      itemSize: itemSize,
-      onRatingUpdate: onRatingUpdate,
     );
   }
 }
