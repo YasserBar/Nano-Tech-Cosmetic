@@ -60,7 +60,7 @@ class AuthRemoteDataSourceImplWithHttp extends AuthRemoteDataSource {
 
   @override
   Future<Unit> logout() async {
-    final response = await client.get(
+    final response = await client.post(
         Uri.parse(AppRoutes.baseUrl + AppRoutes.logout),
         headers: setHeadersWithToken());
     try {

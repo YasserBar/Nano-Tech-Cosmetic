@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
@@ -7,9 +8,15 @@ import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
+import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/entities/product_entity.dart';
+import 'package:nano_tech_cosmetic/features/prodect/domain/entities/rate_product_entity.dart';
+import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_bloc.dart';
+import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_event.dart';
+import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_state.dart';
 import 'package:nano_tech_cosmetic/main.dart';
+import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({Key? key}) : super(key: key);
@@ -21,6 +28,7 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   bool isReadMoreMode = false, isEnd = false;
   Product product = Get.arguments;
+  int rating = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -139,8 +147,182 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             fontSize: 24),
                                   ),
                                   CustomRatingBar(
-                                    rating: 3,
-                                    onRatingUpdate: (rating) {},
+                                    rating:
+                                        double.parse(product.rating.toString()),
+                                    itemSize: 30,
+                                    onTap: () {
+                                      if (globalUser == null) {
+                                        signInDialog(context, title: "Rating");
+                                      } else {
+                                        WidgetsUtils.showCustomDialog(
+                                          context,
+                                          title: "Rating Product",
+                                          hasBtns: false,
+                                          children: [
+                                            BlocProvider(
+                                              create: (context) =>
+                                                  di.sl<ProductBloc>(),
+                                              child: BlocConsumer<ProductBloc,
+                                                  ProductState>(
+                                                listener: (BuildContext context,
+                                                    state) {
+                                                  if (state is FailureProductState ||
+                                                      state
+                                                          is OfflineFailureProductState ||
+                                                      state
+                                                          is InternalServerFailureProductState ||
+                                                      state
+                                                          is UnexpectedFailureProductState) {
+                                                    WidgetsUtils.showSnackBar(
+                                                      title: "Failure",
+                                                      message: state.message,
+                                                      snackBarType:
+                                                          SnackBarType.error,
+                                                    );
+                                                  } else if (state
+                                                      is SuccessRatingState) {
+                                                    Get.back();
+                                                    WidgetsUtils.showSnackBar(
+                                                      title: "Success ",
+                                                      message: state.message,
+                                                      snackBarType:
+                                                          SnackBarType.info,
+                                                    );
+                                                  }
+                                                },
+                                                builder: (BuildContext context,
+                                                    ProductState state) {
+                                                  return Column(
+                                                    children: [
+                                                      Center(
+                                                        child: CustomRatingBar(
+                                                          rating: double.parse(
+                                                            product.rating
+                                                                .toString(),
+                                                          ),
+                                                          itemSize: 40,
+                                                          ignoreGestures: false,
+                                                          onRatingUpdate:
+                                                              (double rating) {
+                                                            this.rating =
+                                                                rating.floor();
+                                                          },
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .all(30)
+                                                                .copyWith(
+                                                                    bottom: 20),
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                              flex: 3,
+                                                              child:
+                                                                  MaterialButton(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .symmetric(
+                                                                  vertical: 10,
+                                                                ),
+                                                                onPressed: () {
+                                                                  BlocProvider.of<
+                                                                              ProductBloc>(
+                                                                          context)
+                                                                      .add(
+                                                                    RateProductEvent(
+                                                                      rateProduct:
+                                                                          RateProduct(
+                                                                        productId:
+                                                                            product.id,
+                                                                        rate:
+                                                                            rating,
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                                color: AppColors
+                                                                    .primary,
+                                                                shape:
+                                                                    const RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              30)),
+                                                                  side:
+                                                                      BorderSide(
+                                                                    width: 1,
+                                                                    color:
+                                                                        AppColors
+                                                                            .gray,
+                                                                  ),
+                                                                ),
+                                                                child:
+                                                                    const Text(
+                                                                  "Confirm",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    color: AppColors
+                                                                        .white,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 15,
+                                                            ),
+                                                            Expanded(
+                                                              flex: 3,
+                                                              child:
+                                                                  MaterialButton(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        10),
+                                                                onPressed: () {
+                                                                  Get.back();
+                                                                },
+                                                                color: AppColors
+                                                                    .white,
+                                                                shape:
+                                                                    const RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              30)),
+                                                                  side: BorderSide(
+                                                                      width: 1,
+                                                                      color: AppColors
+                                                                          .gray),
+                                                                ),
+                                                                child:
+                                                                    const Text(
+                                                                  "Cancel",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          20,
+                                                                      color: AppColors
+                                                                          .gray),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                          btnOkOnPress: () {},
+                                        );
+                                      }
+                                    },
+                                    onRatingUpdate: (double rating) {},
                                   )
                                 ],
                               ),
@@ -235,7 +417,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 15),
                                     onPressed: () {
-                                      if(globalUser!.role == Role.company){
+                                      if (globalUser!.role == Role.company) {
                                         WidgetsUtils.showCustomDialog(context,
                                             title: "Order by name",
                                             okText: "Order",
@@ -259,7 +441,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                 isTextArea: true,
                                               ),
                                             ]);
-                                      } else{
+                                      } else {
                                         WidgetsUtils.showCustomDialog(context,
                                             title: "Order Manufacturing",
                                             okText: "Order",

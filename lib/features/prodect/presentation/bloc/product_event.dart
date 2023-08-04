@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:nano_tech_cosmetic/features/prodect/domain/entities/rate_product_entity.dart';
 
 abstract class ProductEvent extends Equatable {
   const ProductEvent();
@@ -8,10 +9,11 @@ abstract class ProductEvent extends Equatable {
 }
 
 class RateProductEvent extends ProductEvent {
-  const RateProductEvent();
+  final RateProduct rateProduct;
+  const RateProductEvent({required this.rateProduct});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [rateProduct];
 }
 
 class ShowAllProductsEvent extends ProductEvent {

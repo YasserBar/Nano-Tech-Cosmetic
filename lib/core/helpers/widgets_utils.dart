@@ -38,6 +38,7 @@ class WidgetsUtils {
       Function()? btnOkOnPress,
       Function()? btnCancelOnPress,
       bool hasBtnCancel=true,
+      bool hasBtns=true,
       bool barrierDismissible = true}) {
     showDialog(
       barrierColor: AppColors.white50,
@@ -68,6 +69,7 @@ class WidgetsUtils {
             const SizedBox(
               height: 30,
             ),
+            if(hasBtns)
             Padding(
               padding: const EdgeInsets.all(30).copyWith(bottom: 20),
               child: Row(

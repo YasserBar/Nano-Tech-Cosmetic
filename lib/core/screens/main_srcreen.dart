@@ -5,11 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/screens/home_screen.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
+import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
-import 'package:nano_tech_cosmetic/features/auth/domain/entities/resend_otp_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_event.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offers_screen.dart';
@@ -26,17 +28,16 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-
 class _MainScreenState extends State<MainScreen> {
   int indexNavBar = 0;
-  bool isLogoutTap=false;
+  bool isLogoutTap = false;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-@override
+
+  @override
   void initState() {
-  _initializeTokenAndCustomer();
+    _initializeTokenAndCustomer();
     super.initState();
   }
-
 
   Future<void> _initializeTokenAndCustomer() async {
     try {
@@ -47,6 +48,7 @@ class _MainScreenState extends State<MainScreen> {
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +89,7 @@ class _MainScreenState extends State<MainScreen> {
                 onPressed: () {
                   showSearch(
                     context: context,
-                    delegate: SearchProductDelegate(products: []),
+                    delegate: SearchProductDelegate(),
                   );
                 },
                 icon: const Icon(
@@ -103,349 +105,423 @@ class _MainScreenState extends State<MainScreen> {
       drawer: globalUser == null
           ? null
           : Drawer(
-        child: SafeArea(
-          child: Container(
-            decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.white,
-                  offset: Offset(-10, 0),
-                  spreadRadius: 10,
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: 10,
-                  ),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: AppColors.primary,
-                        child: Text(
-                          "${globalUser!.firstName[0]
-                              .toUpperCase()}${globalUser!.lastName[0]
-                              .toUpperCase()}",
-                          style: const TextStyle(
-                            color: AppColors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "${globalUser!.firstName} ${globalUser!.lastName}",
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 22),
+              child: SafeArea(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.white,
+                        offset: Offset(-10, 0),
+                        spreadRadius: 10,
+                        blurRadius: 10,
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
+                  child: ListView(
                     children: [
-                      Row(
-                        children: [
-                          const Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Birthdate:",
-                                  style: TextStyle(
-                                    color: AppColors.primary,
-                                  ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 10,
+                        ),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundColor: AppColors.primary,
+                              child: Text(
+                                "${globalUser!.firstName[0].toUpperCase()}${globalUser!.lastName[0].toUpperCase()}",
+                                style: const TextStyle(
+                                  color: AppColors.white,
                                 ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Gender:",
-                                  style: TextStyle(
-                                    color: AppColors.primary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  globalUser!.birthday,
-                                  style: const TextStyle(
-                                    color: AppColors.gray,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  globalUser!.gender,
-                                  style: const TextStyle(
-                                    color: AppColors.gray,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 35,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(AppAssets.address),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.5,
-                            child: Text(
-                              globalUser!.address,
-                              overflow: TextOverflow.clip,
-                              style: const TextStyle(
-                                  color: AppColors.gray, fontSize: 18),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(AppAssets.gmail),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.5,
-                            child: Text(
-                              globalUser!.email,
-                              overflow: TextOverflow.clip,
-                              style: const TextStyle(
-                                  color: AppColors.gray, fontSize: 18),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(AppAssets.phone),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.5,
-                            child: Text(
-                              globalUser!.phone,
-                              overflow: TextOverflow.clip,
-                              style: const TextStyle(
-                                color: AppColors.gray,
-                                fontSize: 18,
                               ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "${globalUser!.firstName} ${globalUser!.lastName}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontSize: 22),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Birthdate:",
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Gender:",
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        globalUser!.birthday,
+                                        style: const TextStyle(
+                                          color: AppColors.gray,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        globalUser!.gender,
+                                        style: const TextStyle(
+                                          color: AppColors.gray,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 35,
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(AppAssets.address),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.5,
+                                  child: Text(
+                                    globalUser!.address,
+                                    overflow: TextOverflow.clip,
+                                    style: const TextStyle(
+                                        color: AppColors.gray, fontSize: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(AppAssets.gmail),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.5,
+                                  child: Text(
+                                    globalUser!.email,
+                                    overflow: TextOverflow.clip,
+                                    style: const TextStyle(
+                                        color: AppColors.gray, fontSize: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(AppAssets.phone),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.5,
+                                  child: Text(
+                                    globalUser!.phone,
+                                    overflow: TextOverflow.clip,
+                                    style: const TextStyle(
+                                      color: AppColors.gray,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(AppAssets.instagram),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.5,
+                                  child: Text(
+                                    globalUser!.instagram ?? "No Account",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                        color: AppColors.gray, fontSize: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(AppAssets.telegram),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  child: Text(
+                                    globalUser!.telegram ?? "No Account",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                        color: AppColors.gray, fontSize: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(AppAssets.facebook),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.5,
+                                  child: Text(
+                                    globalUser!.facebook ?? "No Account",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                        color: AppColors.gray, fontSize: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(AppAssets.twitter),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.5,
+                                  child: Text(
+                                    globalUser!.twitter ?? "No Account",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                        color: AppColors.gray, fontSize: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(AppAssets.instagram),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.5,
-                            child: Text(
-                              globalUser!.instagram ?? "No Account",
-                              overflow: TextOverflow.clip,
-                              maxLines: 1,
-                              style: const TextStyle(
-                                  color: AppColors.gray, fontSize: 18),
-                            ),
-                          ),
-                        ],
+                      ListTile(
+                        onTap: () {},
+                        leading: SvgPicture.asset(AppAssets.translate),
+                        title: const Text("Change Lang"),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      ListTile(
+                        onTap: () {
+                          Get.toNamed(AppPagesRoutes.verifyCodeScreen,
+                              arguments: globalUser!.email);
+                        },
+                        leading: SvgPicture.asset(AppAssets.resetPassword),
+                        title: const Text("Reset password"),
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(AppAssets.telegram),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            child: Text(
-                              globalUser!.telegram ?? "No Account",
-                              overflow: TextOverflow.clip,
-                              maxLines: 1,
-                              style: const TextStyle(
-                                  color: AppColors.gray, fontSize: 18),
-                            ),
-                          ),
-                        ],
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
                       ),
-                      const SizedBox(
-                        height: 10,
+                      ListTile(
+                        leading: SvgPicture.asset(AppAssets.about),
+                        title: const Text("About"),
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(AppAssets.facebook),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.5,
-                            child: Text(
-                              globalUser!.facebook ?? "No Account",
-                              overflow: TextOverflow.clip,
-                              maxLines: 1,
-                              style: const TextStyle(
-                                  color: AppColors.gray, fontSize: 18),
-                            ),
-                          ),
-                        ],
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
                       ),
-                      const SizedBox(
-                        height: 10,
+                      ListTile(
+                        leading: SvgPicture.asset(AppAssets.support),
+                        title: const Text("Support"),
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(AppAssets.twitter),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.5,
-                            child: Text(
-                              globalUser!.twitter ?? "No Account",
-                              overflow: TextOverflow.clip,
-                              maxLines: 1,
-                              style: const TextStyle(
-                                  color: AppColors.gray, fontSize: 18),
-                            ),
-                          ),
-                        ],
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      ListTile(
+                        leading: SvgPicture.asset(AppAssets.logout),
+                        title: const Text("Logout "),
+                        onTap: () {
+                          WidgetsUtils.showCustomDialog(
+                            context,
+                            title: "Logout From app",
+                            hasBtns: false,
+                            children: [
+                              BlocProvider(
+                                create: (context) => di.sl<AuthBloc>(),
+                                child: BlocConsumer<AuthBloc, AuthState>(
+                                  listener: (context, state) {
+                                    if (state is FailureAuthState ||
+                                        state is OfflineFailureAuthState ||
+                                        state
+                                            is InternalServerFailureAuthState ||
+                                        state is UnexpectedFailureAuthState) {
+                                      WidgetsUtils.showSnackBar(
+                                        title: "Failure",
+                                        message: state.message,
+                                        snackBarType: SnackBarType.error,
+                                      );
+                                    } else if (state is SuccessLogoutState) {
+                                      Get.offAllNamed(
+                                          AppPagesRoutes.signInScreen);
+                                      WidgetsUtils.showSnackBar(
+                                        title: "Success ",
+                                        message: state.message,
+                                        snackBarType: SnackBarType.info,
+                                      );
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    if (state is LoadingAuthState) {
+                                      return const LoaderIndicator(
+                                        size: 50,
+                                        lineWidth: 5,
+                                      );
+                                    }
+                                    return Padding(
+                                      padding: const EdgeInsets.all(30)
+                                          .copyWith(bottom: 20),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 3,
+                                            child: MaterialButton(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 10,
+                                              ),
+                                              onPressed: () {
+                                                BlocProvider.of<AuthBloc>(
+                                                        context)
+                                                    .add(
+                                                  const LogoutEvent(),
+                                                );
+                                              },
+                                              color: AppColors.primary,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(30)),
+                                                side: BorderSide(
+                                                    width: 1,
+                                                    color: AppColors.gray),
+                                              ),
+                                              child: const Text(
+                                                "Confirm",
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: AppColors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 15,
+                                          ),
+                                          Expanded(
+                                            flex: 3,
+                                            child: MaterialButton(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                              color: AppColors.white,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(30)),
+                                                side: BorderSide(
+                                                    width: 1,
+                                                    color: AppColors.gray),
+                                              ),
+                                              child: const Text(
+                                                "Cancel",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: AppColors.gray),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                BlocProvider(
-                  create: (context) => di.sl<AuthBloc>(),
-                  child: ListTile(
-                    onTap: () {
-                      BlocProvider.of<AuthBloc>(context).add(
-                        ResendOTPEvent(
-                          ResendOTP(email: globalUser!.email),
-                        ),
-                      );
-                      Get.toNamed(AppPagesRoutes.verifyCodeScreen,
-                          arguments: globalUser!.email);
-                    },
-                    leading: SvgPicture.asset(AppAssets.translate),
-                    title: const Text("Change Lang"),
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Get.toNamed(AppPagesRoutes.verifyCodeScreen,
-                        arguments: globalUser!.email);
-                  },
-                  leading: SvgPicture.asset(AppAssets.resetPassword),
-                  title: const Text("Reset password"),
-                ),
-                const Divider(
-                  height: 0,
-                  thickness: 2,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                ListTile(
-                  leading: SvgPicture.asset(AppAssets.resetPassword),
-                  title: const Text("Reset password"),
-                ),
-                const Divider(
-                  height: 0,
-                  thickness: 2,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                ListTile(
-                  leading: SvgPicture.asset(AppAssets.about),
-                  title: const Text("About"),
-                ),
-                const Divider(
-                  height: 0,
-                  thickness: 2,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                ListTile(
-                  leading: SvgPicture.asset(AppAssets.support),
-                  title: const Text("Support"),
-                ),
-                const Divider(
-                  height: 0,
-                  thickness: 2,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                BlocProvider(
-                  create: (context) {
-                    print('object');
-                    if(isLogoutTap){
-                      return di.sl<AuthBloc>()..add(const LogoutEvent());
-                    }
-                    return di.sl<AuthBloc>();
-                  },
-                  child: ListTile(
-                    leading: SvgPicture.asset(AppAssets.logout),
-                    title: const Text("Logout"),
-                    onTap: () {
-                      setState(() {
-                        isLogoutTap=true;
-                      });
-                    },
-                  ),
-                ),
-                const Divider(
-                  height: 0,
-                  thickness: 2,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
       body: tabs[indexNavBar],
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
