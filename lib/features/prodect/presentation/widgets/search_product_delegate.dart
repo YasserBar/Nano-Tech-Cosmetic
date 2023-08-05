@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
@@ -14,6 +16,8 @@ import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 class SearchProductDelegate extends SearchDelegate {
   ProductBloc bloc = di.sl<ProductBloc>();
+  final FocusNode focusNode = FocusNode();
+
   SearchProductDelegate() : super(searchFieldLabel: 'Find Product');
 
   @override
@@ -25,7 +29,7 @@ class SearchProductDelegate extends SearchDelegate {
           builder: (context, state) {
             return IconButton(
               onPressed: () {
-                print('object');
+                FocusScope.of(context).unfocus();
                 BlocProvider.of<ProductBloc>(context).name = query;
                 BlocProvider.of<ProductBloc>(context)
                     .add(const ShowAllProductsEvent());
@@ -75,6 +79,11 @@ class SearchProductDelegate extends SearchDelegate {
         },
         builder: (context, state) {
           if (state is LoadedProductsState) {
+            if (state.products!.isEmpty) {
+              return Center(
+                child: SvgPicture.asset(AppAssets.nothingHere),
+              );
+            }
             return Container(
               color: AppColors.white,
               child: ListView.builder(

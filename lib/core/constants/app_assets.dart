@@ -38,4 +38,6 @@ abstract class AppAssets {
 
   static const String sale = "$rootSVG/sale.svg";
   static const String menu = "$rootSVG/menu.svg";
+  static const String emptyCart = "$rootSVG/empty_cart.svg";
+  static const String nothingHere = "$rootSVG/nothing_here.svg";
 }

@@ -32,6 +32,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(globalUser!.role);
     return Scaffold(
       backgroundColor:
           isReadMoreMode ? AppColors.materialPrimary.withOpacity(0.9) : null,
@@ -388,7 +389,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ],
                             ),
-                          if (globalUser != null)
+                          if (globalUser != null &&
+                              globalUser!.role != Role.customer)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -419,12 +421,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     onPressed: () {
                                       if (globalUser!.role == Role.company) {
                                         WidgetsUtils.showCustomDialog(context,
-                                            title: "Order by name",
+                                            title: "Order Manufacturing",
                                             okText: "Order",
                                             hasBtnCancel: false,
                                             children: [
                                               const CustomTextField(
-                                                labelText: "New name",
+                                                labelText: "Details order",
+                                                isTextArea: true,
                                               ),
                                               const SizedBox(
                                                 height: 25,
@@ -443,13 +446,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             ]);
                                       } else {
                                         WidgetsUtils.showCustomDialog(context,
-                                            title: "Order Manufacturing",
+                                            title: "Order by name",
                                             okText: "Order",
                                             hasBtnCancel: false,
                                             children: [
                                               const CustomTextField(
-                                                labelText: "Details order",
-                                                isTextArea: true,
+                                                labelText: "New name",
                                               ),
                                               const SizedBox(
                                                 height: 25,
