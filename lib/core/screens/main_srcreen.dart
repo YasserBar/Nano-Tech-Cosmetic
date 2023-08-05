@@ -537,9 +537,17 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: indexNavBar,
         onTap: (value) {
           setState(() {
-            value == 2 && globalUser == null
-                ? signInDialog(context, title: 'My Order')
-                : indexNavBar = value;
+            if (value == 2 && globalUser == null) {
+              signInDialog(context, title: 'My Order');
+            } else {
+              if (Get.previousRoute == AppPagesRoutes.productDetailsScreen) {
+                // Get.removeRoute(AppPagesRoutes.productDetailsScreen);
+              } else if (Get.previousRoute ==
+                  AppPagesRoutes.offerDetailsScreen) {
+                // Get.removeRoute(AppPagesRoutes.offerDetailsScreen);
+              }
+              indexNavBar = value;
+            }
           });
         },
         type: BottomNavigationBarType.fixed,

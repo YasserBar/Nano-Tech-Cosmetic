@@ -121,7 +121,7 @@ class ProductCard extends StatelessWidget {
                             message: state.message,
                             snackBarType: SnackBarType.info,
                           );
-                          Get.toNamed(AppPagesRoutes.mainScreen, arguments: 1);
+                          // Get.toNamed(AppPagesRoutes.mainScreen, arguments: 1);
                         }
                       }, builder: (context, state) {
                         return InkWell(

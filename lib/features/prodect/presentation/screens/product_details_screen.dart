@@ -37,7 +37,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(globalUser!.role);
+    // print(globalUser!.role);
     return Scaffold(
       backgroundColor:
           isReadMoreMode ? AppColors.materialPrimary.withOpacity(0.9) : null,
@@ -68,7 +68,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Positioned(
                     top: -Get.statusBarHeight - 5,
                     child: CachedNetworkImage(
-                      imageUrl: product.imageUrl!,
+                      imageUrl: product.imageUrl,
                       width: Get.width,
                       height: Get.height * 0.5,
                     ),
