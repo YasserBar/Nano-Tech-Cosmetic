@@ -18,6 +18,13 @@ import 'package:nano_tech_cosmetic/features/auth/domain/usecases/resendOTP_useca
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/resetPassword_usecase.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/usecases/verifyOTP_uasecase.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:nano_tech_cosmetic/features/cart/data/data_sources/cart_local_data_source.dart';
+import 'package:nano_tech_cosmetic/features/cart/data/repository/cart_repo_impl.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/repository/cart_repo.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/usecases/add_item_cart_usecase.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/usecases/delete_item_cart.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/usecases/display_cart_usecase.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/category/data/data_sources/category_remote_data_source.dart';
 import 'package:nano_tech_cosmetic/features/category/data/repository/category_repo_impl.dart';
 import 'package:nano_tech_cosmetic/features/category/domain/repository/category_repo.dart';
@@ -84,6 +91,26 @@ Future<void> init() async {
       () => AuthRemoteDataSourceImplWithHttp(client: sl()));
   sl.registerLazySingleton<AuthLocalDataSource>(
       () => AuthLocalDataSourceImplWithSharedPreferences(pref: sl()));
+
+//! Feature - cart
+// Bloc
+  sl.registerFactory(() => CartBloc(
+      addItemCartUsecase: sl(),
+      deleteItemCartUsecase: sl(),
+      displayCartUsecase: sl()));
+
+// Usecases
+  sl.registerLazySingleton(() => DisplayCartUsecase(sl()));
+  sl.registerLazySingleton(() => AddItemCartUsecase(sl()));
+  sl.registerLazySingleton(() => DeleteItemCartUsecase(sl()));
+
+// Repository
+  sl.registerLazySingleton<CartRepo>(
+      () => CartRepoImpl(localDataSource: sl(), networkInfo: sl()));
+
+// Datasources
+  sl.registerLazySingleton<CartLocalDataSource>(
+      () => CartLocalDataSourceImplWithHttp(pref: sl()));
 
 //! Feature - category
 // Bloc

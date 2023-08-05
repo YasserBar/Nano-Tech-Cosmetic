@@ -60,7 +60,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       mainAxisSpacing: 15,
                       crossAxisSpacing: 15),
                   physics: const BouncingScrollPhysics(),
-                  itemCount: state.loaded ? state.categories!.length : 0,
+                  itemCount: state.categories!.length,
                   itemBuilder: (context, index) => CategoryCard(
                     category: state.categories![index],
                     onTap: () {

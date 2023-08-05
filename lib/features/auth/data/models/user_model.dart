@@ -14,7 +14,7 @@ class UserModel extends User {
     required String? facebook,
     required String? instagram,
     required String? telegram,
-    required String role,
+    required Role role,
     required String token,
     required String refreshToken,
   }) : super(
@@ -29,7 +29,7 @@ class UserModel extends User {
           twitter: twitter,
           instagram: instagram,
           telegram: telegram,
-          role: switchRole(role),
+          role: role,
           token: token,
           refreshToken: refreshToken,
         );
@@ -47,7 +47,7 @@ class UserModel extends User {
       twitter: json["data"]['twiter'] as String?,
       instagram: json["data"]['instagram'] as String?,
       telegram: json["data"]['telegram'] as String?,
-      role: json['Role'] as String,
+      role: switchToRole(json['Role'] as String),
       token: json['token'] as String,
       refreshToken: json['refreshToken'] as String,
     );
@@ -55,30 +55,42 @@ class UserModel extends User {
 
   Map<String, dynamic> toJson() {
     return {
-      'first_name': firstName,
-      'last_name': lastName,
-      'gender': gender,
-      'Birthday': birthday,
-      'address': address,
-      'phone': phone,
-      'email': email,
-      'facebook': facebook,
-      'twiter': twitter,
-      'instagram': instagram,
-      'telegram': telegram,
-      'Role': role,
+      'data': {
+        'first_name': firstName,
+        'last_name': lastName,
+        'gender': gender,
+        'Birthday': birthday,
+        'address': address,
+        'phone': phone,
+        'email': email,
+        'facebook': facebook,
+        'twiter': twitter,
+        'instagram': instagram,
+        'telegram': telegram,
+      },
+      'Role': switchFromRole(role),
       'token': token,
       'refreshToken': refreshToken,
     };
   }
 }
 
-Role switchRole(String role) {
+Role switchToRole(String role) {
   if (role == 'customer') {
     return Role.customer;
   } else if (role == 'salon') {
     return Role.salon;
   } else {
     return Role.company;
+  }
+}
+
+String switchFromRole(Role role) {
+  if (role == Role.customer) {
+    return 'customer';
+  } else if (role == Role.salon) {
+    return 'salon';
+  } else {
+    return 'company';
   }
 }

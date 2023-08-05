@@ -18,15 +18,17 @@ class CategoryCard extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         margin: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
-            color: AppColors.primary2,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: const [
-              BoxShadow(
-                  color: AppColors.secondary2,
-                  offset: Offset(0, 1),
-                  blurRadius: 4,
-                  spreadRadius: 1)
-            ]),
+          color: AppColors.primary2,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [
+            BoxShadow(
+              color: AppColors.secondary2,
+              offset: Offset(0, 1),
+              blurRadius: 4,
+              spreadRadius: 1,
+            ),
+          ],
+        ),
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(

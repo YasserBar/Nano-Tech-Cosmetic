@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
+import 'package:nano_tech_cosmetic/features/auth/data/models/user_model.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dart';
-import 'package:nano_tech_cosmetic/features/localization/local_controller.dart';
+import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 User? globalUser;
@@ -15,7 +18,7 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await di.init();
-
+  _initializeTokenAndCustomer();
   runApp(const MyApp());
 }
 
@@ -24,6 +27,35 @@ void main() async {
 //   FlutterNativeSplash.remove();
 // }
 
+Future<void> _initializeTokenAndCustomer() async {
+  try {
+    UserModel userModel = await di.sl<AuthLocalDataSource>().getCachedUser();
+    if (kDebugMode) {
+      print('userModel');
+      print(userModel);
+    }
+    globalUser = User(
+      firstName: userModel.firstName,
+      lastName: userModel.lastName,
+      gender: userModel.gender,
+      birthday: userModel.birthday,
+      address: userModel.address,
+      phone: userModel.phone,
+      email: userModel.email,
+      facebook: userModel.facebook,
+      twitter: userModel.twitter,
+      instagram: userModel.instagram,
+      telegram: userModel.telegram,
+      role: userModel.role,
+      token: userModel.token,
+      refreshToken: userModel.refreshToken,
+    );
+  } catch (e) {
+    if (kDebugMode) {
+      print(e);
+    }
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -32,7 +64,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     LocaleController controller = Get.put(LocaleController());
     return GetMaterialApp(
-      title: 'Name',
+      title: 'Nano Tech Cosmetic',
       debugShowCheckedModeBanner: false,
       locale: controller.language,
       theme: controller.appTheme,

@@ -38,8 +38,6 @@ class AuthRepoImpl implements AuthRepo {
     final LoginModel loginModel = LoginModel(login.email, login.password);
 
     if (await networkInfo.isConnected) {
-
-
       try {
         final UserModel userModel = await remoteDataSource.login(loginModel);
         globalUser = userModel;
@@ -67,11 +65,11 @@ class AuthRepoImpl implements AuthRepo {
         final Either<Failure, Unit> either = await refreshToken();
         return either.fold(
           (failure) => Left(failure),
-          (unit) async {
+          (done) async {
             try {
-              unit = await remoteDataSource.logout();
+              await remoteDataSource.logout();
               localDataSource.removeCachedUser();
-              return Right(unit);
+              return const Right(unit);
             } on UnauthorizedException {
               return Left(UnauthorizedFailure());
             } catch (e) {
@@ -106,8 +104,8 @@ class AuthRepoImpl implements AuthRepo {
 
     if (await networkInfo.isConnected) {
       try {
-        final Unit unit = await remoteDataSource.register(registerModel, roll);
-        return Right(unit);
+        await remoteDataSource.register(registerModel, roll);
+        return const Right(unit);
       } catch (e) {
         return Left(switchException(e));
       }
@@ -122,8 +120,8 @@ class AuthRepoImpl implements AuthRepo {
 
     if (await networkInfo.isConnected) {
       try {
-        final Unit unit = await remoteDataSource.resendOTP(registerModel);
-        return Right(unit);
+        await remoteDataSource.resendOTP(registerModel);
+        return const Right(unit);
       } catch (e) {
         return Left(switchException(e));
       }
@@ -140,18 +138,17 @@ class AuthRepoImpl implements AuthRepo {
 
     if (await networkInfo.isConnected) {
       try {
-        final Unit unit =
-            await remoteDataSource.resetPassword(resetPasswordModel);
-        return Right(unit);
+        await remoteDataSource.resetPassword(resetPasswordModel);
+        return const Right(unit);
       } on UnauthorizedException {
         final Either<Failure, Unit> either = await refreshToken();
         return either.fold(
           (failure) => Left(failure),
-          (unit) async {
+          (done) async {
             try {
-              unit = await remoteDataSource.logout();
+              await remoteDataSource.logout();
               localDataSource.removeCachedUser();
-              return Right(unit);
+              return const Right(unit);
             } on UnauthorizedException {
               return Left(UnauthorizedFailure());
             } catch (e) {

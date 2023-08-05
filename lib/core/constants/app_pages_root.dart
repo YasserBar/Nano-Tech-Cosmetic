@@ -11,7 +11,7 @@ import 'package:nano_tech_cosmetic/features/auth/presentation/screens/signup_scr
 import 'package:nano_tech_cosmetic/features/auth/presentation/screens/verify_code_screen.dart';
 import 'package:nano_tech_cosmetic/features/category/presentation/screens/categories_screen.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offer_details_screen.dart';
-import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_cart_screen.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/screens/my_cart_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/order_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/product_details_screen.dart';
