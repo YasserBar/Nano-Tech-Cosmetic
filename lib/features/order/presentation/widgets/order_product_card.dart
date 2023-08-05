@@ -58,17 +58,17 @@ class OrderProductCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: -4,
-                    right: -4,
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      decoration: const BoxDecoration(
-                          color: AppColors.primary2,
-                          shape: BoxShape.circle),
-                    ),
-                  ),
+                  // Positioned(
+                  //   bottom: -4,
+                  //   right: -4,
+                  //   child: Container(
+                  //     height: 20,
+                  //     width: 20,
+                  //     decoration: const BoxDecoration(
+                  //         color: AppColors.primary2,
+                  //         shape: BoxShape.circle),
+                  //   ),
+                  // ),
                 ],
               ),
               const VerticalDivider(

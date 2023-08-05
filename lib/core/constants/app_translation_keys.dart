@@ -1,1 +1,85 @@
-class AppTranslationKeys {}
+
+
+class AppTranslationKeys {
+
+  static const String singIn = 'singIn';
+  static const String email = 'email';
+  static const String password = 'password';
+  static const String doYouHaveAnAccount = 'doYouHaveAnAccount';
+
+  static const String forgetPassword = 'forgetPassword';
+  static const String sendCode = 'sendCode';
+  static const String weSendVerifyCodeTo = 'weSendVerifyCodeTo';
+  static const String verifyCode = 'verifyCode';
+  static const String resend = 'resend';
+
+  static const String reset = 'reset';
+  static const String confirmPassword = 'confirmPassword';
+
+  static const String customer = 'customer';
+  static const String salon = 'salon';
+  static const String company = 'company';
+  static const String next = 'next';
+
+  static const String singUp = 'singUp';
+  static const String firstName = 'firstName';
+  static const String lastName = 'lastName';
+  static const String address = 'address';
+  static const String birthDate = 'birthDate';
+  static const String gender = 'gender';
+  static const String male = 'male';
+  static const String female = 'female';
+  static const String phoneNumber = 'phoneNumber';
+  static const String instagram = 'instagram';
+  static const String twitter = 'twitter';
+  static const String facebook = 'facebook';
+  static const String telegram = 'telegram';
+
+  static const String changeLang = 'changeLang';
+  static const String resetPassword = 'resetPassword';
+  static const String about = 'about';
+  static const String support = 'support';
+  static const String logout = 'logout';
+
+  static const String home = 'home';
+  static const String welcome = 'welcome';
+  static const String findProduct = 'findProduct';
+  static const String doNotHaveAnAccount = 'doNotHaveAnAccount';
+  static const String ads = 'ads';
+  static const String seeAll = 'seeAll';
+  static const String allAds = 'allAds';
+  static const String products = 'product';
+  static const String categories = 'categories';
+  static const String rating = 'rating';
+
+  static const String myCart = 'myCart';
+  static const String total = 'total';
+  static const String amount = 'amount';
+  static const String order = 'order';
+  static const String confirm = 'confirm';
+  static const String cancel = 'cancel';
+  static const String addToCart = 'addToCart';
+    static const String specialOrder = 'specialOrder';
+
+  static const String myOrders = 'myOrders';
+  static const String orderDetails = 'orderDetails';
+  static const String response = 'response';
+  static const String orderManufacturing = 'orderManufacturing';
+  static const String orderByName = 'orderByName';
+  static const String notes = 'notes';
+  static const String newName = 'newName';
+
+  static const String offers = 'offers';
+
+  static const String profile = 'profile';
+  static const String offline = "offline";
+  static const String wrongData = "wrongData";
+  static const String unexpectedException = "unexpectedException";
+  static const String internalServerError = "internalServerError";
+  static const String notFound = "notFound";
+  static const String forbidden = "forbidden";
+  static const String unauthorized = "unauthorized";
+  static const String badRequest = "badRequest";
+  static const String success = "success";
+
+}

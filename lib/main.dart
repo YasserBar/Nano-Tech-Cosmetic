@@ -1,11 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_themes.dart';
-import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dart';
+import 'package:nano_tech_cosmetic/features/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 User? globalUser;
@@ -32,10 +30,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocaleController controller = Get.put(LocaleController());
     return GetMaterialApp(
       title: 'Name',
       debugShowCheckedModeBanner: false,
-      theme: AppThemes.themeEnglish,
+      locale: controller.language,
+      theme: controller.appTheme,
       getPages: AppPagesRoutes.appPages,
       initialRoute: "/",
     );
