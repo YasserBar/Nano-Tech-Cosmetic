@@ -14,18 +14,18 @@ class AppValidator {
     return null;
   }
 
-  static String? validateRequired(String? inputEmail) {
-    if (inputEmail == null || inputEmail.isEmpty) {
-      return 'مطلوب';
-    }
-    return null;
-  }
-
   static String? validateName(String? inputName) {
     if (inputName == null || inputName.isEmpty) {
       return 'الاسم مطلوب';
     } else if (!RegExp(nameRegex).hasMatch(inputName)) {
       return 'الاسم غير صالح';
+    }
+    return null;
+  }
+
+  static String? validateRequired(String? inputEmail) {
+    if (inputEmail == null || inputEmail.isEmpty) {
+      return 'مطلوب';
     }
     return null;
   }

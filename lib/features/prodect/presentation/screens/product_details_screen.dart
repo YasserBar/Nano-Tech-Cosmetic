@@ -6,10 +6,15 @@ import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_event.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_state.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/entities/product_entity.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/entities/rate_product_entity.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_bloc.dart';
@@ -368,23 +373,64 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                MaterialButton(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 15,
-                                    horizontal: 35,
-                                  ),
-                                  onPressed: () {},
-                                  color: AppColors.white,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    side: BorderSide(
-                                        width: 1, color: AppColors.gray),
-                                  ),
-                                  child: const Text(
-                                    "add to cart",
-                                    style: TextStyle(
-                                        fontSize: 20, color: AppColors.gray),
+                                BlocProvider(
+                                  create: (context) => di.sl<CartBloc>(),
+                                  child: BlocConsumer<CartBloc, CartState>(
+                                    listener: (context, state) {
+                                      if (state is FailureCartState ||
+                                          state is EmptyCacheFailureCartState) {
+                                        WidgetsUtils.showSnackBar(
+                                          title: "Failure",
+                                          message: state.message,
+                                          snackBarType: SnackBarType.error,
+                                        );
+                                      } else if (state
+                                          is SuccessAddItemCartState) {
+                                        WidgetsUtils.showSnackBar(
+                                          title: "Success add item to cart",
+                                          message: state.message,
+                                          snackBarType: SnackBarType.info,
+                                        );
+                                        Get.toNamed(
+                                            AppPagesRoutes.myCartScreen);
+                                      }
+                                    },
+                                    builder: (context, state) {
+                                      return MaterialButton(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 15,
+                                          horizontal: 35,
+                                        ),
+                                        onPressed: () {
+                                          BlocProvider.of<CartBloc>(context)
+                                              .add(
+                                            AddItemCartEvent(
+                                              itemCart: ItemCart(
+                                                id: product.id,
+                                                title: product.name,
+                                                price: product.price,
+                                                imageUrl: product.imageUrl,
+                                                account: 1,
+                                                isProduct: true,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        color: AppColors.white,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          side: BorderSide(
+                                              width: 1, color: AppColors.gray),
+                                        ),
+                                        child: const Text(
+                                          "add to cart",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: AppColors.gray),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ],

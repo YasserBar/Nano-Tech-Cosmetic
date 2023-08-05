@@ -7,12 +7,14 @@ class ItemCartModel extends ItemCart {
     required int price,
     required String? imageUrl,
     required int account,
+    bool isProduct = true,
   }) : super(
           id: id,
           title: title,
           price: price,
           imageUrl: imageUrl,
           account: account,
+          isProduct: isProduct,
         );
 
   factory ItemCartModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class ItemCartModel extends ItemCart {
       price: json['price'] as int,
       imageUrl: json['image_url'] as String?,
       account: json['account'] as int,
+      isProduct: json['isProduct'] as bool? ?? true,
     );
   }
 
@@ -32,6 +35,7 @@ class ItemCartModel extends ItemCart {
       'price': price,
       'image_url': imageUrl,
       "account": account,
+      "isProduct": isProduct,
     };
   }
 }

@@ -20,7 +20,6 @@ class AdsScreen extends StatefulWidget {
 }
 
 class _AdsScreenState extends State<AdsScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +54,7 @@ class _AdsScreenState extends State<AdsScreen> {
                       mainAxisSpacing: 15,
                       crossAxisSpacing: 15),
                   physics: const BouncingScrollPhysics(),
-                  itemCount: state.loaded ? state.ads?.length : 0,
+                  itemCount: state.ads?.length,
                   itemBuilder: (context, index) => AdCard(
                     ad: state.ads![index],
                   ),

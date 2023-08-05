@@ -8,7 +8,7 @@ class DisplayCartUsecase {
 
   DisplayCartUsecase(this.repo);
 
-  Future<Either<Failure, Cart>> call(int page) async {
+  Future<Either<Failure, Cart>> call() async {
     return await repo.dispalyCart();
   }
 }

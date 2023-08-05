@@ -55,7 +55,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     horizontal: AppDimensions.sidesBodyPadding,
                   ),
                   physics: const BouncingScrollPhysics(),
-                  itemCount: state.loaded ? state.products!.length : 0,
+                  itemCount: state.products!.length,
                   itemBuilder: (context, index) => ProductCard(
                     product: state.products![index],
                   ),

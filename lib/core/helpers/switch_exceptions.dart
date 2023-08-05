@@ -8,6 +8,8 @@ Failure switchException(Object exception) {
     return ForbiddenFailure();
   } else if (exception is NotFoundException) {
     return NotFoundFailure();
+  } else if (exception is EmptyCacheException) {
+    return EmptyCacheFailure();
   } else if (exception is InternalServerErrorException) {
     return InternalServerErrorFailure();
   } else {

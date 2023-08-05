@@ -6,6 +6,7 @@ class ItemCart extends Equatable {
   final int price;
   final String? imageUrl;
   final int account;
+  final bool isProduct;
 
   const ItemCart({
     required this.id,
@@ -13,6 +14,7 @@ class ItemCart extends Equatable {
     required this.price,
     required this.imageUrl,
     required this.account,
+    required this.isProduct,
   });
 
   @override
@@ -22,5 +24,6 @@ class ItemCart extends Equatable {
         price,
         imageUrl,
         account,
+        isProduct,
       ];
 }

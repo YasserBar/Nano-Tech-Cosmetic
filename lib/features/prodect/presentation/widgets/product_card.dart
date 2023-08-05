@@ -1,10 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_event.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_state.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/entities/product_entity.dart';
+import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -72,10 +80,10 @@ class ProductCard extends StatelessWidget {
                       children: [
                         Text(
                           product.name,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    fontSize: 20,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(fontSize: 20),
                         ),
                         Text(
                           "${product.price} D.I",
@@ -96,11 +104,46 @@ class ProductCard extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    InkWell(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.add_shopping_cart_outlined,
-                      ),
+                    BlocProvider(
+                      create: (context) => di.sl<CartBloc>(),
+                      child: BlocConsumer<CartBloc, CartState>(
+                          listener: (context, state) {
+                        if (state is FailureCartState ||
+                            state is EmptyCacheFailureCartState) {
+                          WidgetsUtils.showSnackBar(
+                            title: "Failure",
+                            message: state.message,
+                            snackBarType: SnackBarType.error,
+                          );
+                        } else if (state is SuccessAddItemCartState) {
+                          WidgetsUtils.showSnackBar(
+                            title: "Success add item to cart",
+                            message: state.message,
+                            snackBarType: SnackBarType.info,
+                          );
+                          Get.toNamed(AppPagesRoutes.myCartScreen);
+                        }
+                      }, builder: (context, state) {
+                        return InkWell(
+                          onTap: () {
+                            BlocProvider.of<CartBloc>(context).add(
+                              AddItemCartEvent(
+                                itemCart: ItemCart(
+                                  id: product.id,
+                                  title: product.name,
+                                  price: product.price,
+                                  imageUrl: product.imageUrl,
+                                  account: 1,
+                                  isProduct: true,
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Icon(
+                            Icons.add_shopping_cart_outlined,
+                          ),
+                        );
+                      }),
                     ),
                   ],
                 ),
