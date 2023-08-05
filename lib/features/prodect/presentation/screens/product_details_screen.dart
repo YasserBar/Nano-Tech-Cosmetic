@@ -391,8 +391,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           message: state.message,
                                           snackBarType: SnackBarType.info,
                                         );
-                                        Get.toNamed(
-                                            AppPagesRoutes.myCartScreen);
+                                        Get.toNamed(AppPagesRoutes.mainScreen,
+                                            arguments: 1);
                                       }
                                     },
                                     builder: (context, state) {

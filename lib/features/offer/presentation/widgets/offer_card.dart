@@ -1,9 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_event.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_state.dart';
 import 'package:nano_tech_cosmetic/features/offer/domain/entities/offer_entity.dart';
+import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 class OfferCard extends StatelessWidget {
   final Offer offer;
@@ -91,11 +99,46 @@ class OfferCard extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    InkWell(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.add_shopping_cart_outlined,
-                      ),
+                    BlocProvider(
+                      create: (context) => di.sl<CartBloc>(),
+                      child: BlocConsumer<CartBloc, CartState>(
+                          listener: (context, state) {
+                        if (state is FailureCartState ||
+                            state is EmptyCacheFailureCartState) {
+                          WidgetsUtils.showSnackBar(
+                            title: "Failure",
+                            message: state.message,
+                            snackBarType: SnackBarType.error,
+                          );
+                        } else if (state is SuccessAddItemCartState) {
+                          WidgetsUtils.showSnackBar(
+                            title: "Success add item to cart",
+                            message: state.message,
+                            snackBarType: SnackBarType.info,
+                          );
+                          Get.toNamed(AppPagesRoutes.mainScreen, arguments: 1);
+                        }
+                      }, builder: (context, state) {
+                        return InkWell(
+                          onTap: () {
+                            BlocProvider.of<CartBloc>(context).add(
+                              AddItemCartEvent(
+                                itemCart: ItemCart(
+                                  id: offer.id,
+                                  title: offer.title,
+                                  price: int.parse(offer.price),
+                                  imageUrl: offer.imageUrl,
+                                  account: 1,
+                                  isProduct: true,
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Icon(
+                            Icons.add_shopping_cart_outlined,
+                          ),
+                        );
+                      }),
                     ),
                   ],
                 ),

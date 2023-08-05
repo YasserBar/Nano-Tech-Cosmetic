@@ -9,7 +9,7 @@ import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dar
 import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
-User? globalUser;
+User? globalUser;//TODO: يجب وضعها  فارغة عند كل حدث في الرموت و الوكل في البداية مباشرة
 String? globalMessage;
 
 void main() async {

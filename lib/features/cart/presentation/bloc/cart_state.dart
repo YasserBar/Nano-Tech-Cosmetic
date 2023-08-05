@@ -3,41 +3,48 @@ import 'package:nano_tech_cosmetic/core/constants/app_messages.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/cart_entity.dart';
 
 abstract class CartState extends Equatable {
-  final Cart? cart;
   final String message;
-  const CartState(this.cart, {required this.message});
+  const CartState({required this.message});
 
   @override
-  List<Object> get props => [cart!, message];
+  List<Object> get props => [message];
 }
 
 class CartInitial extends CartState {
-  const CartInitial(super.cart, {required super.message});
+  const CartInitial({required super.message});
 }
 
 class LoadingCartState extends CartState {
-  const LoadingCartState(super.cart, {required super.message});
+  const LoadingCartState({required super.message});
 }
 
 class FailureCartState extends CartState {
-  const FailureCartState(super.cart, {required super.message});
+  const FailureCartState({required super.message});
 }
 
 class EmptyCacheFailureCartState extends CartState {
-  const EmptyCacheFailureCartState(super.cart,
+  const EmptyCacheFailureCartState(
       {super.message = AppMessages.EmptyCache_MESSAGE});
 }
 
-class LoadedCartState extends CartState {
-  const LoadedCartState(super.cart, {required super.message});
+abstract class LoadedDeleteCartState extends CartState {
+  final Cart cart;
+  const LoadedDeleteCartState(this.cart, {required super.message});
+
+  @override
+  List<Object> get props => [message];
 }
 
-class SuccessDeleteItemCartState extends CartState {
+class LoadedCartState extends LoadedDeleteCartState {
+  const LoadedCartState(super.cart,
+      {super.message = AppMessages.LOADED_CART_MESSAGE});
+}
+
+class SuccessDeleteItemCartState extends LoadedDeleteCartState {
   const SuccessDeleteItemCartState(super.cart,
       {super.message = AppMessages.DELETE_ITEM_MESSAGE});
 }
 
 class SuccessAddItemCartState extends CartState {
-  const SuccessAddItemCartState(super.cart,
-      {super.message = AppMessages.ADD_ITEM_MESSAGE});
+  const SuccessAddItemCartState({super.message = AppMessages.ADD_ITEM_MESSAGE});
 }
