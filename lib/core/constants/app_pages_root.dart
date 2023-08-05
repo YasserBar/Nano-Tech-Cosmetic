@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/screens/main_srcreen.dart';
 import 'package:nano_tech_cosmetic/features/ad/presentation/screens/Ads_screen.dart';

@@ -17,6 +17,7 @@ class AppMessages {
   static const String Offline =
       "لا يمكن الاتصال بالإنترنت. يرجى التحقق من اتصالك بالشبكة وإعادة المحاولة لاحق";
   static const String EmptyCache_MESSAGE = "لا يوجد بيانات مخزنة حالياً";
+  static const String LOADED_CART_MESSAGE = "تم جلب البيانات بنجاح";
   static const String DELETE_ITEM_MESSAGE = "تم حذف العنصر بنجاح";
   static const String ADD_ITEM_MESSAGE = "تم اضافة العنصر بنجاح";
 }

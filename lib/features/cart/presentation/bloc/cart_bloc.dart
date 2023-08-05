@@ -16,32 +16,33 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     required this.deleteItemCartUsecase,
     required this.addItemCartUsecase,
     required this.displayCartUsecase,
-  }) : super(const CartInitial(null, message: 'init state')) {
+  }) : super(const CartInitial(message: 'init state')) {
     on<DisplayCartEvent>((event, emit) async {
-      emit(const LoadingCartState(null, message: "loading"));
+      emit(const LoadingCartState(message: "loading"));
       final failureOrCart = await displayCartUsecase();
       failureOrCart.fold((failure) {
         emit(switchFailure(failure));
       }, (cart) {
-        emit(LoadedCartState(cart, message: globalMessage!));
+        emit(LoadedCartState(cart));
       });
     });
     on<DeleteItemCartEvent>((event, emit) async {
-      emit(const LoadingCartState(null, message: "loading"));
-      final failureOrDone = await deleteItemCartUsecase(event.itemCart);
-      failureOrDone.fold((failure) {
+      emit(const LoadingCartState(message: "loading"));
+      final failureOrCart =
+          await deleteItemCartUsecase(event.index, event.price);
+      failureOrCart.fold((failure) {
         emit(switchFailure(failure));
       }, (cart) {
-        emit(SuccessDeleteItemCartState(null, message: globalMessage!));
+        emit(SuccessDeleteItemCartState(cart));
       });
     });
     on<AddItemCartEvent>((event, emit) async {
-      emit(const LoadingCartState(null, message: "loading"));
+      emit(const LoadingCartState(message: "loading"));
       final failureOrCategories = await addItemCartUsecase(event.itemCart);
       failureOrCategories.fold((failure) {
         emit(switchFailure(failure));
       }, (cart) {
-        emit(SuccessAddItemCartState(null, message: globalMessage!));
+        emit(const SuccessAddItemCartState());
       });
     });
   }
@@ -49,7 +50,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
 CartState switchFailure(failure) {
   if (failure is EmptyCacheFailure) {
-    return const EmptyCacheFailureCartState(null);
+    return const EmptyCacheFailureCartState();
   }
-  return FailureCartState(null, message: globalMessage ?? "No any message");
+  return FailureCartState(message: globalMessage ?? "No any message");
 }

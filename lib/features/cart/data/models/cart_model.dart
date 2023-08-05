@@ -10,23 +10,24 @@ class CartModel extends Cart {
           itemsCart: itemsCart,
         );
   factory CartModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> productIds = json['product_ids'];
-    List<dynamic> quantities = json['quantities'];
+    List<dynamic> itemsCartJson = json['itemsCart'];
 
-    assert(productIds.length == quantities.length);
-
-    List<ItemCartModel> parsedProductIds = productIds.cast<ItemCartModel>();
-
+    List<ItemCartModel> parsedItemsCart = itemsCartJson
+        .map((itemJson) => ItemCartModel.fromJson(itemJson))
+        .toList();
     return CartModel(
       totalPrice: json['totalPrice'] as int,
-      itemsCart: parsedProductIds,
+      itemsCart: parsedItemsCart,
     );
   }
 
   Map<String, dynamic> toJson() {
+    List<ItemCartModel> itemsCartModel = itemsCart as List<ItemCartModel>;
+    List<Map<String, dynamic>> itemsCartJson =
+        itemsCartModel.map((item) => item.toJson()).toList();
     return {
       'totalPrice': totalPrice,
-      'itemsCart': itemsCart,
+      'itemsCart': itemsCartJson,
     };
   }
 }

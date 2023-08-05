@@ -33,9 +33,8 @@ class MyCartScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is LoadedCartState) {
-            int totalPrice =
-                state.cart!.itemsCart.fold(0, (sum, item) => sum + item.price);
+          print("00000000000000000000000000$state");
+          if (state is LoadedDeleteCartState) {
             return Column(
               children: [
                 SizedBox(
@@ -47,9 +46,10 @@ class MyCartScreen extends StatelessWidget {
                         horizontal: AppDimensions.sidesBodyPadding,
                       ),
                       physics: const BouncingScrollPhysics(),
-                      itemCount: state.cart!.itemsCart.length,
+                      itemCount: state.cart.itemsCart.length,
                       itemBuilder: (context, index) => ItemCard(
-                        itemCart: state.cart!.itemsCart[index],
+                        itemCart: state.cart.itemsCart[index],
+                        index: index,
                       ),
                     ),
                   ),
@@ -73,7 +73,7 @@ class MyCartScreen extends StatelessWidget {
                                   color: AppColors.gray, fontSize: 18),
                             ),
                             Text(
-                              "$totalPrice D.I",
+                              "${state.cart.totalPrice} D.I",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -97,7 +97,7 @@ class MyCartScreen extends StatelessWidget {
                                       children: [
                                           Center(
                                             child: Text(
-                                              "$totalPrice D.I",
+                                              "${state.cart.totalPrice} D.I",
                                               style: const TextStyle(
                                                   color: AppColors.secondary,
                                                   fontSize: 30),
