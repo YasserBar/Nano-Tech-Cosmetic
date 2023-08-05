@@ -32,7 +32,7 @@ abstract class LoadedDeleteCartState extends CartState {
   const LoadedDeleteCartState(this.cart, {required super.message});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, cart.totalPrice];
 }
 
 class LoadedCartState extends LoadedDeleteCartState {

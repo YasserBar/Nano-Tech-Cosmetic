@@ -23,7 +23,7 @@ void signInDialog(BuildContext context, {required String title}) {
             ),
             InkWell(
               onTap: () {
-                Get.toNamed(AppPagesRoutes.signUpScreen);
+                Get.toNamed(AppPagesRoutes.chooseGardScreen);
               },
               child: const Text(
                 "sign up",

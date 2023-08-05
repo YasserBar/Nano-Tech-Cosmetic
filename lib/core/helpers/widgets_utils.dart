@@ -82,7 +82,7 @@ class WidgetsUtils {
                         if (btnOkOnPress != null) {
                           btnOkOnPress.call();
                         }
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                       },
                       color: AppColors.primary,
                       shape: const RoundedRectangleBorder(

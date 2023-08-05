@@ -116,7 +116,7 @@ class OfferCard extends StatelessWidget {
                             message: state.message,
                             snackBarType: SnackBarType.info,
                           );
-                          Get.toNamed(AppPagesRoutes.mainScreen, arguments: 1);
+                          // Get.toNamed(AppPagesRoutes.mainScreen, arguments: 1);
                         }
                       }, builder: (context, state) {
                         return InkWell(
@@ -129,7 +129,7 @@ class OfferCard extends StatelessWidget {
                                   price: int.parse(offer.price),
                                   imageUrl: offer.imageUrl,
                                   account: 1,
-                                  isProduct: true,
+                                  isProduct: false,
                                 ),
                               ),
                             );
