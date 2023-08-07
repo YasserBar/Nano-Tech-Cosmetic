@@ -14,7 +14,6 @@ import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_event.da
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_state.dart';
 import 'package:nano_tech_cosmetic/features/offer/domain/entities/offer_entity.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
-
 class OfferDetailsScreen extends StatefulWidget {
   const OfferDetailsScreen({Key? key}) : super(key: key);
 

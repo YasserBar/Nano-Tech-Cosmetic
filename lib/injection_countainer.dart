@@ -144,7 +144,6 @@ Future<void> init() async {
 
 // //! Feature - order
 // // Bloc
-
 //   sl.registerFactory(() => AvailableTimeBloc(getAvailableTimeUsecase: sl()));
 //   sl.registerFactory(() => ReservationBloc(reservationServiceUsecase: sl()));
 

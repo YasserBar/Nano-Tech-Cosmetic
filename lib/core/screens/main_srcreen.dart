@@ -541,10 +541,10 @@ class _MainScreenState extends State<MainScreen> {
               signInDialog(context, title: 'My Order');
             } else {
               if (Get.previousRoute == AppPagesRoutes.productDetailsScreen) {
-                // Get.removeRoute(AppPagesRoutes.productDetailsScreen);
+                // Get.removeRoute(AppPagesRoutes.productDetailsScreen);//TODO
               } else if (Get.previousRoute ==
                   AppPagesRoutes.offerDetailsScreen) {
-                // Get.removeRoute(AppPagesRoutes.offerDetailsScreen);
+                // Get.removeRoute(AppPagesRoutes.offerDetailsScreen);//TODO
               }
               indexNavBar = value;
             }
