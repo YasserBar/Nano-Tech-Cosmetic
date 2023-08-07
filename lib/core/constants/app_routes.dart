@@ -29,12 +29,13 @@ class AppRoutes {
   //Orders
   static const storeOrder = 'storeOrder';
   static const displayOrder = 'DisplayOrder';
+  static const displayOrderDetails = 'DisplayOrderDetails';
 
   //Orders Salon
   static const addOrderName = 'addOrderName';
   static const displayOrderName = 'DisplayOrderName';
 
   //Orders Salon
-  static const addOrderManufacture = 'addOrderManufacture';
-  static const displayOrderManufacture = 'DisplayOrderManufacture';
+  static const addOrderManufacturing = 'addOrderManufacture';
+  static const displayOrderManufacturing = 'DisplayOrderManufacture';
 }

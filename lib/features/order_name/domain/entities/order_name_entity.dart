@@ -1,28 +1,36 @@
 import 'package:equatable/equatable.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 
-class Order extends Equatable {
+class OrderName extends Equatable {
   final int id;
+  final String newName;
+  final String? note;
+  final int amount;
   final OrderStatus status;
-  final String langCode;
-  final double price;
+  final double? cost;
+  final double? costPrinting;
+  final String? response;
+  final String? startProcessing;
+  final String? endProcessing;
   final int userId;
-  final String response;
-  final String startProcessing;
-  final String endProcessing;
+  final int productId;
   final String createdAt;
   final String updatedAt;
-  final AvailableAmount availableAmount;
+  final bool availableAmount;
 
-  const Order({
+  const OrderName({
     required this.id,
+    required this.newName,
+    required this.note,
+    required this.amount,
     required this.status,
-    required this.langCode,
-    required this.price,
-    required this.userId,
+    required this.cost,
+    required this.costPrinting,
     required this.response,
     required this.startProcessing,
     required this.endProcessing,
+    required this.userId,
+    required this.productId,
     required this.createdAt,
     required this.updatedAt,
     required this.availableAmount,
@@ -31,28 +39,19 @@ class Order extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        newName,
+        note,
+        amount,
         status,
-        langCode,
-        price,
-        userId,
+        cost,
+        costPrinting,
         response,
         startProcessing,
         endProcessing,
+        userId,
+        productId,
         createdAt,
         updatedAt,
         availableAmount,
       ];
-}
-
-class AvailableAmount extends Equatable {
-  final bool state;
-  final List<int> productIdsUnavailable;
-
-  const AvailableAmount({
-    required this.state,
-    required this.productIdsUnavailable,
-  });
-
-  @override
-  List<Object?> get props => [state, productIdsUnavailable];
 }

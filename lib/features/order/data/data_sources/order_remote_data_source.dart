@@ -1,68 +1,86 @@
-// import 'dart:convert';
+import 'dart:convert';
 
-// import 'package:http/http.dart' as http;
-// import 'package:nano_tech_cosmetic/core/constants/app_routes.dart';
-// import 'package:nano_tech_cosmetic/core/helpers/header.dart';
-// import 'package:nano_tech_cosmetic/core/helpers/switch_status_code.dart';
-// import 'package:nano_tech_cosmetic/features/offer/data/models/offer_model.dart';
-// import 'package:nano_tech_cosmetic/main.dart';
+import 'package:dartz/dartz.dart';
+import 'package:http/http.dart' as http;
+import 'package:nano_tech_cosmetic/core/constants/app_routes.dart';
+import 'package:nano_tech_cosmetic/core/helpers/header.dart';
+import 'package:nano_tech_cosmetic/core/helpers/switch_status_code.dart';
+import 'package:nano_tech_cosmetic/features/order/data/models/order_details_model.dart';
+import 'package:nano_tech_cosmetic/features/order/data/models/order_model.dart';
+import 'package:nano_tech_cosmetic/features/order/data/models/request_order_model.dart';
+import 'package:nano_tech_cosmetic/main.dart';
 
-// abstract class OrderRemoteDataSource {
-//   Future<List<OrderModel>> displayOrder(int page, {int? productId});
-//   Future<List<OrderModel>> storeOrder(int page, {int? productId});
-// }
+abstract class OrderRemoteDataSource {
+  Future<List<OrderModel>> displayOrders({required int page, int? status});
+  Future<OrderDetailsModel> displayOrderDetails(
+      {required int page, required int orderId});
+  Future<Unit> storeOrder({required RequestOrderModel requestOrderModel});
+}
 
-// class OrderRemoteDataSourceImplWithHttp extends OrderRemoteDataSource {
-//   final http.Client client;
+class OrderRemoteDataSourceImplWithHttp extends OrderRemoteDataSource {
+  final http.Client client;
 
-//   OrderRemoteDataSourceImplWithHttp({required this.client});
+  OrderRemoteDataSourceImplWithHttp({required this.client});
 
-//   @override
-//   Future<List<OfferModel>> showOffers(int page, {int? productId}) async {
-//     final response = await client.get(
-//         Uri.parse(AppRoutes.baseUrl + AppRoutes.showOffers).replace(
-//             queryParameters: {"page": page, "product_id": productId}
-//                 .map((key, value) => MapEntry(key, value.toString()))),
-//         headers: setHeadersWithTokenAndLang());
-//     try {
-//       final bodyJson = json.decode(response.body);
-//       globalMessage = bodyJson['message'];
-//       switchStatusCode(response);
-//       final dataJson = bodyJson["data"]["data"];
-//       final List<OfferModel> listOfferModel = dataJson
-//           .map<OfferModel>(
-//               (jsonOfferModel) => OfferModel.fromJson(jsonOfferModel))
-//           .toList();
-//       return Future.value(listOfferModel);
-//     } catch (e) {
-//       rethrow;
-//     }
-//   }
-// }
+  @override
+  Future<List<OrderModel>> displayOrders(
+      {required int page, int? status}) async {
+    final response = await client.get(
+        Uri.parse(AppRoutes.baseUrl + AppRoutes.displayOrder).replace(
+            queryParameters: {"page": page, "status": status}
+                .map((key, value) => MapEntry(key, value.toString()))),
+        headers: setHeadersWithTokenAndLang());
+    try {
+      final bodyJson = json.decode(response.body);
+      globalMessage = bodyJson['message'];
+      switchStatusCode(response);
+      final dataJson = bodyJson["order"];
+      final List<OrderModel> listOrderModel = dataJson
+          .map<OrderModel>(
+              (jsonOrderModel) => OrderModel.fromJson(jsonOrderModel))
+          .toList();
+      return Future.value(listOrderModel);
+    } catch (e) {
+      rethrow;
+    }
+  }
 
+  @override
+  Future<Unit> storeOrder(
+      {required RequestOrderModel requestOrderModel}) async {
+    final response = await client.post(
+      Uri.parse(AppRoutes.baseUrl + AppRoutes.storeOrder),
+      body: json.encode(requestOrderModel.toJson()),
+      headers: setHeadersWithTokenAndLang(),
+    );
+    try {
+      final bodyJson = json.decode(response.body);
+      globalMessage = bodyJson['message'];
+      switchStatusCode(response);
+      return Future.value(unit);
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-//   // Future<List<ProductModel>> getOrderDetails(int orderId);
-
-//   // @override
-//   // Future<List<ProductModel>> getOrderDetails(int orderId) async {
-//   //   final response = await client.get(
-//   //       Uri.parse(AppRoutes.baseUrl + AppRoutes.displayOrder).replace(
-//   //           queryParameters: {
-//   //         "orderId": orderId,
-//   //       }.map((key, value) => MapEntry(key, value.toString()))),
-//   //       headers: setHeadersWithTokenAndLang());
-//   //   // print(response.body);
-//   //   try {
-//   //     final bodyJson = json.decode(response.body);
-//   //     globalMessage = bodyJson['message'];
-//   //     switchStatusCode(response);
-//   //     final dataJson = bodyJson["products"];
-//   //     final List<ProductModel> listProductModel = dataJson
-//   //         .map<ProductModel>(
-//   //             (jsonProductModel) => ProductModel.fromJson(jsonProductModel))
-//   //         .toList();
-//   //     return Future.value(listProductModel);
-//   //   } catch (e) {
-//   //     rethrow;
-//   //   }
-//   // }
+  @override
+  Future<OrderDetailsModel> displayOrderDetails(
+      {required int page, required int orderId}) async {
+    final response = await client.get(
+        Uri.parse(AppRoutes.baseUrl + AppRoutes.displayOrderDetails).replace(
+            queryParameters: {
+          "page": page,
+          "orderId": orderId,
+        }.map((key, value) => MapEntry(key, value.toString()))),
+        headers: setHeadersWithTokenAndLang());
+    try {
+      final bodyJson = json.decode(response.body);
+      globalMessage = bodyJson['message'];
+      switchStatusCode(response);
+      final OrderDetailsModel orderDetailsModel = bodyJson["data"];
+      return Future.value(orderDetailsModel);
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
