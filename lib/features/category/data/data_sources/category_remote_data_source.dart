@@ -8,7 +8,7 @@ import 'package:nano_tech_cosmetic/features/category/data/models/category_model.
 import 'package:nano_tech_cosmetic/main.dart';
 
 abstract class CategoryRemoteDataSource {
-  Future<List<CategoryModel>> showAllCategory(int page);
+  Future<List<CategoryModel>> showAllCategory(int page, {String? name});
 }
 
 class CategoryRemoteDataSourceImplWithHttp extends CategoryRemoteDataSource {
@@ -17,10 +17,10 @@ class CategoryRemoteDataSourceImplWithHttp extends CategoryRemoteDataSource {
   CategoryRemoteDataSourceImplWithHttp({required this.client});
 
   @override
-  Future<List<CategoryModel>> showAllCategory(int page) async {
+  Future<List<CategoryModel>> showAllCategory(int page, {String? name}) async {
     final response = await client.get(
         Uri.parse(AppRoutes.baseUrl + AppRoutes.showAllCategory).replace(
-            queryParameters: {"page": page}
+            queryParameters: {"page": page, "name": name}
                 .map((key, value) => MapEntry(key, value.toString()))),
         headers: setHeadersWithTokenAndLang());
     try {

@@ -8,7 +8,7 @@ class ShowAllCategoryUsecase {
 
   ShowAllCategoryUsecase(this.repo);
 
-  Future<Either<Failure, List<Category>>> call(int page) async {
-    return await repo.showAllCategory(page);
+  Future<Either<Failure, List<Category>>> call(int page, {String? name}) async {
+    return await repo.showAllCategory(page, name: name);
   }
 }

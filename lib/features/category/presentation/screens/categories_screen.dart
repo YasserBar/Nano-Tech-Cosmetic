@@ -30,7 +30,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       body: BlocProvider(
         create: (context) => di.sl<CategoryBloc>()
           ..add(
-            const ShowAllCategoriesEvent(),
+            ShowAllCategoriesEvent(),
           ),
         child: BlocConsumer<CategoryBloc, CategoryState>(
           listener: (context, state) {
@@ -64,7 +64,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   itemBuilder: (context, index) => CategoryCard(
                     category: state.categories![index],
                     onTap: () {
-                      Get.toNamed(AppPagesRoutes.productsScreen,arguments: state.categories![index].id);
+                      Get.toNamed(AppPagesRoutes.productsScreen,
+                          arguments: state.categories![index].id);
                     },
                   ),
                 ),
