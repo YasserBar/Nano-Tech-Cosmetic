@@ -17,11 +17,13 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc({required this.showAllCategoryUsecase})
       : super(const CategoryInitial(null, true, true, message: 'init state')) {
     scrollController.addListener(() {
-      if (!isLoadingMore) add(const LoadMoreCategoriesEvent());
+      if (!isLoadingMore)
+        add(LoadMoreCategoriesEvent()); //TODO: تحتاج تعديل في كل الأماكن التي تحوي تحميل المزيد بحيث تكون بارامتر الفلترة يمكن الوصول له نها لكي لايختل الفلترة عند تحميل المزيد name
     });
     on<ShowAllCategoriesEvent>((event, emit) async {
       emit(const LoadingCategoryState(null, true, true, message: "loading"));
-      final failureOrCategories = await showAllCategoryUsecase(page);
+      final failureOrCategories =
+          await showAllCategoryUsecase(page, name: event.name);
       failureOrCategories.fold((failure) {
         emit(switchFailure(failure));
       }, (categories) {
@@ -37,7 +39,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         emit(LoadedCategoriesState(state.categories, true, false,
             message: globalMessage!));
         page++;
-        final failureOrCategories = await showAllCategoryUsecase(page);
+        final failureOrCategories =
+            await showAllCategoryUsecase(page, name: event.name);
         failureOrCategories.fold((failure) {
           page--;
           emit(switchFailure(failure));

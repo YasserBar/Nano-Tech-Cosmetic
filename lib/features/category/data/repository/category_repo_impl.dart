@@ -20,11 +20,12 @@ class CategoryRepoImpl extends CategoryRepo {
   });
 
   @override
-  Future<Either<Failure, List<CategoryModel>>> showAllCategory(int page) async {
+  Future<Either<Failure, List<CategoryModel>>> showAllCategory(int page,
+      {String? name}) async {
     if (await networkInfo.isConnected) {
       try {
         final List<CategoryModel> categories =
-            await remoteDataSource.showAllCategory(page);
+            await remoteDataSource.showAllCategory(page, name: name);
         return Right(categories);
       } on UnauthorizedException {
         final Either<Failure, Unit> either = await authRepo.refreshToken();
