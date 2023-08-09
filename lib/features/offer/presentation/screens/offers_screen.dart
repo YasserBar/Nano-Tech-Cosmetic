@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/bloc/offer_bloc.dart';
@@ -32,7 +34,7 @@ class _OffersScreenState extends State<OffersScreen> {
               state is InternalServerFailureOfferState ||
               state is UnexpectedFailureOfferState) {
             WidgetsUtils.showSnackBar(
-              title: "Failure",
+              title: AppTranslationKeys.failure.tr,
               message: state.message,
               snackBarType: SnackBarType.error,
             );

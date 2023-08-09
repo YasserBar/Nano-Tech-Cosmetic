@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc.dart';
@@ -83,7 +84,7 @@ class OfferCard extends StatelessWidget {
                                   ),
                         ),
                         Text(
-                          "${offer.price} D.I",
+                          "${offer.price} ${AppTranslationKeys.di.tr}",
                           style: const TextStyle(
                             color: AppColors.primary,
                             fontSize: 18,
@@ -106,7 +107,7 @@ class OfferCard extends StatelessWidget {
                         if (state is FailureCartState ||
                             state is EmptyCacheFailureCartState) {
                           WidgetsUtils.showSnackBar(
-                            title: "Failure",
+                            title: AppTranslationKeys.failure.tr,
                             message: state.message,
                             snackBarType: SnackBarType.error,
                           );

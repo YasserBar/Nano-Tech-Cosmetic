@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/core/widgets/secondary_appbar.dart';
@@ -24,14 +26,14 @@ class _AdsScreenState extends State<AdsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: const SecondaryAppbar(title: "All Ads"),
+      appBar: SecondaryAppbar(title: AppTranslationKeys.ads.tr),
       body: BlocProvider(
         create: (context) => di.sl<AdBloc>()..add(const DisplayAdsEvent()),
         child: BlocConsumer<AdBloc, AdState>(
           listener: (context, state) {
             if (state is FailureAdState) {
               WidgetsUtils.showSnackBar(
-                title: "Failure",
+                title: AppTranslationKeys.failure.tr,
                 message: state.message,
                 snackBarType: SnackBarType.error,
               );

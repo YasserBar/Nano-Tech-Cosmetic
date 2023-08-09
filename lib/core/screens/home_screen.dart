@@ -5,6 +5,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/ad/presentation/bloc/ad_bloc.dart';
@@ -49,14 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
           physics: const BouncingScrollPhysics(),
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                left: AppDimensions.sidesBodyPadding,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.sidesBodyPadding,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Welcome!",
+                    AppTranslationKeys.welcome.tr,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
@@ -68,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "Do you have an account? ",
+                          AppTranslationKeys.doYouHaveAnAccount.tr,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         InkWell(
@@ -76,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.toNamed(AppPagesRoutes.signInScreen);
                           },
                           child: Text(
-                            "sign in",
+                            AppTranslationKeys.singIn.tr,
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
                                       color: AppColors.secondary,
@@ -96,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Ads",
+                    AppTranslationKeys.ads.tr,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
@@ -106,9 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Get.toNamed(AppPagesRoutes.adsScreen);
                     },
-                    child: const Text(
-                      "See all",
-                      style: TextStyle(
+                    child: Text(
+                      AppTranslationKeys.seeAll.tr,
+                      style: const TextStyle(
                         fontSize: 18,
                         color: AppColors.secondary,
                       ),
@@ -126,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       state is InternalServerFailureAdState ||
                       state is UnexpectedFailureAdState) {
                     WidgetsUtils.showSnackBar(
-                      title: "Failure",
+                      title: AppTranslationKeys.failure.tr,
                       message: state.message,
                       snackBarType: SnackBarType.error,
                     );
@@ -161,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Product  ",
+                    AppTranslationKeys.products.tr,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
@@ -171,9 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Get.toNamed(AppPagesRoutes.categoriesScreen);
                     },
-                    child: const Text(
-                      "Categories",
-                      style: TextStyle(
+                    child: Text(
+                      AppTranslationKeys.categories.tr,
+                      style: const TextStyle(
                         fontSize: 18,
                         color: AppColors.secondary,
                       ),
@@ -189,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     state is InternalServerFailureProductState ||
                     state is UnexpectedFailureProductState) {
                   WidgetsUtils.showSnackBar(
-                    title: "Failure",
+                    title: AppTranslationKeys.failure.tr,
                     message: state.message,
                     snackBarType: SnackBarType.error,
                   );

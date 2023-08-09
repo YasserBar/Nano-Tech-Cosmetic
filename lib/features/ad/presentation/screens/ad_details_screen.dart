@@ -57,15 +57,21 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
                 Positioned(
                   top: 15,
                   left: 15,
-                  child: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: AppColors.primary,
-                      size: 35,
-                    ),
+                  right: 15,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: AppColors.primary,
+                          size: 35,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Positioned(

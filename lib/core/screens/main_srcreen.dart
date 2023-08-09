@@ -7,6 +7,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/screens/home_screen.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
@@ -14,7 +15,7 @@ import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_event.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
+import 'package:nano_tech_cosmetic/features/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offers_screen.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/screens/my_cart_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
@@ -24,6 +25,7 @@ import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
+
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -75,10 +77,10 @@ class _MainScreenState extends State<MainScreen> {
                 onTap: () {
                   globalUser != null
                       ? scaffoldKey.currentState!.openDrawer()
-                      : signInDialog(context, title: 'Profile');
+                      : signInDialog(context, title: AppTranslationKeys.profile.tr);
                 },
                 child: SvgPicture.asset(
-                  AppAssets.menu,
+                  AppTranslationKeys.menu.tr,
                   height: 35,
                   width: 35,
                 ),
@@ -112,7 +114,13 @@ class _MainScreenState extends State<MainScreen> {
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.white,
-                        offset: Offset(-10, 0),
+                        offset: Offset(-10, -20),
+                        spreadRadius: 10,
+                        blurRadius: 10,
+                      ),
+                      BoxShadow(
+                        color: AppColors.white,
+                        offset: Offset(-10, 20),
                         spreadRadius: 10,
                         blurRadius: 10,
                       ),
@@ -156,24 +164,24 @@ class _MainScreenState extends State<MainScreen> {
                           children: [
                             Row(
                               children: [
-                                const Expanded(
+                                Expanded(
                                   flex: 1,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Birthdate:",
-                                        style: TextStyle(
+                                        "${AppTranslationKeys.birthDate.tr}:",
+                                        style: const TextStyle(
                                           color: AppColors.primary,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
-                                        "Gender:",
-                                        style: TextStyle(
+                                        "${AppTranslationKeys.gender.tr}:",
+                                        style: const TextStyle(
                                           color: AppColors.primary,
                                         ),
                                       ),
@@ -280,7 +288,7 @@ class _MainScreenState extends State<MainScreen> {
                                 SizedBox(
                                   width: Get.width * 0.5,
                                   child: Text(
-                                    globalUser!.instagram ?? "No Account",
+                                    globalUser!.instagram ?? AppTranslationKeys.noAccount.tr,
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: const TextStyle(
@@ -300,7 +308,7 @@ class _MainScreenState extends State<MainScreen> {
                                 ),
                                 SizedBox(
                                   child: Text(
-                                    globalUser!.telegram ?? "No Account",
+                                    globalUser!.telegram ?? AppTranslationKeys.noAccount.tr,
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: const TextStyle(
@@ -321,7 +329,7 @@ class _MainScreenState extends State<MainScreen> {
                                 SizedBox(
                                   width: Get.width * 0.5,
                                   child: Text(
-                                    globalUser!.facebook ?? "No Account",
+                                    globalUser!.facebook ?? AppTranslationKeys.noAccount.tr,
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: const TextStyle(
@@ -342,7 +350,7 @@ class _MainScreenState extends State<MainScreen> {
                                 SizedBox(
                                   width: Get.width * 0.5,
                                   child: Text(
-                                    globalUser!.twitter ?? "No Account",
+                                    globalUser!.twitter ?? AppTranslationKeys.noAccount.tr,
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: const TextStyle(
@@ -364,7 +372,7 @@ class _MainScreenState extends State<MainScreen> {
                           });
                         },
                         leading: SvgPicture.asset(AppAssets.translate),
-                        title: const Text("Change Lang"),
+                        title: Text(AppTranslationKeys.changeLang.tr),
                       ),
                       ListTile(
                         onTap: () {
@@ -372,7 +380,7 @@ class _MainScreenState extends State<MainScreen> {
                               arguments: globalUser!.email);
                         },
                         leading: SvgPicture.asset(AppAssets.resetPassword),
-                        title: const Text("Reset password"),
+                        title: Text(AppTranslationKeys.resetPassword.tr),
                       ),
                       const Divider(
                         height: 0,
@@ -382,7 +390,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       ListTile(
                         leading: SvgPicture.asset(AppAssets.about),
-                        title: const Text("About"),
+                        title: Text(AppTranslationKeys.about.tr),
                       ),
                       const Divider(
                         height: 0,
@@ -392,7 +400,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       ListTile(
                         leading: SvgPicture.asset(AppAssets.support),
-                        title: const Text("Support"),
+                        title: Text(AppTranslationKeys.support.tr),
                       ),
                       const Divider(
                         height: 0,
@@ -402,11 +410,11 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       ListTile(
                         leading: SvgPicture.asset(AppAssets.logout),
-                        title: const Text("Logout "),
+                        title: Text(AppTranslationKeys.logout.tr),
                         onTap: () {
                           WidgetsUtils.showCustomDialog(
                             context,
-                            title: "Logout From app",
+                            title: AppTranslationKeys.logoutFromApp.tr,
                             hasBtns: false,
                             children: [
                               BlocProvider(
@@ -419,7 +427,7 @@ class _MainScreenState extends State<MainScreen> {
                                             is InternalServerFailureAuthState ||
                                         state is UnexpectedFailureAuthState) {
                                       WidgetsUtils.showSnackBar(
-                                        title: "Failure",
+                                        title: AppTranslationKeys.failure.tr,
                                         message: state.message,
                                         snackBarType: SnackBarType.error,
                                       );
@@ -427,7 +435,7 @@ class _MainScreenState extends State<MainScreen> {
                                       Get.offAllNamed(
                                           AppPagesRoutes.signInScreen);
                                       WidgetsUtils.showSnackBar(
-                                        title: "Success ",
+                                        title: AppTranslationKeys.success.tr,
                                         message: state.message,
                                         snackBarType: SnackBarType.info,
                                       );
@@ -468,9 +476,9 @@ class _MainScreenState extends State<MainScreen> {
                                                     width: 1,
                                                     color: AppColors.gray),
                                               ),
-                                              child: const Text(
-                                                "Confirm",
-                                                style: TextStyle(
+                                              child: Text(
+                                                AppTranslationKeys.confirm.tr,
+                                                style: const TextStyle(
                                                   fontSize: 20,
                                                   color: AppColors.white,
                                                 ),
@@ -498,9 +506,9 @@ class _MainScreenState extends State<MainScreen> {
                                                     width: 1,
                                                     color: AppColors.gray),
                                               ),
-                                              child: const Text(
-                                                "Cancel",
-                                                style: TextStyle(
+                                              child: Text(
+                                                AppTranslationKeys.cancel.tr,
+                                                style: const TextStyle(
                                                     fontSize: 20,
                                                     color: AppColors.gray),
                                               ),
@@ -538,7 +546,7 @@ class _MainScreenState extends State<MainScreen> {
         onTap: (value) {
           setState(() {
             if (value == 2 && globalUser == null) {
-              signInDialog(context, title: 'My Order');
+              signInDialog(context, title: AppTranslationKeys.myOrders.tr);
             } else {
               if (Get.previousRoute == AppPagesRoutes.productDetailsScreen) {
                 // Get.removeRoute(AppPagesRoutes.productDetailsScreen);//TODO
@@ -552,27 +560,27 @@ class _MainScreenState extends State<MainScreen> {
         },
         type: BottomNavigationBarType.fixed,
         items: [
-          const BottomNavigationBarItem(
-              icon: Icon(
+          BottomNavigationBarItem(
+              icon: const Icon(
                 Icons.home_outlined,
               ),
-              label: "Home"),
-          const BottomNavigationBarItem(
-              icon: Icon(
+              label: AppTranslationKeys.home.tr),
+          BottomNavigationBarItem(
+              icon: const Icon(
                 Icons.shopping_cart_outlined,
               ),
-              label: "My Cart"),
-          const BottomNavigationBarItem(
-              icon: Icon(
+              label: AppTranslationKeys.myCart.tr),
+          BottomNavigationBarItem(
+              icon: const Icon(
                 Icons.assignment_outlined,
               ),
-              label: "My Orders"),
+              label: AppTranslationKeys.myOrders.tr),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 AppAssets.sale,
                 color: indexNavBar == 3 ? AppColors.primary : AppColors.gray,
               ),
-              label: "Offers"),
+              label: AppTranslationKeys.offers.tr),
         ],
       ),
     );

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/pickers.dart';
 import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
@@ -52,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             listener: (context, state) {
               if (state is FailureAuthState) {
                 WidgetsUtils.showSnackBar(
-                  title: "Failure",
+                  title: AppTranslationKeys.failure.tr,
                   message: state.message,
                   snackBarType: SnackBarType.error,
                 );
@@ -60,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Get.toNamed(AppPagesRoutes.verifyCodeScreen,
                     arguments: emailController.text);
                 WidgetsUtils.showSnackBar(
-                  title: "Success",
+                  title: AppTranslationKeys.success.tr,
                   message: state.message,
                   snackBarType: SnackBarType.info,
                 );
@@ -87,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               CustomTextField(
-                                labelText: "First name",
+                                labelText: AppTranslationKeys.firstName.tr,
                                 controller: firstNameController,
                                 validator: (val) =>
                                     AppValidator.validateName(val),
@@ -96,7 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Last name",
+                                labelText: AppTranslationKeys.lastName.tr,
                                 controller: lastNameController,
                                 validator: (val) =>
                                     AppValidator.validateLastName(val),
@@ -105,14 +105,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Address",
+                                labelText: AppTranslationKeys.address.tr,
                                 controller: addressController,
                               ),
                               const SizedBox(
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Birth date",
+                                labelText: AppTranslationKeys.birthDate.tr,
                                 controller: birthdayController,
                                 onTap: () async {
                                   String? date =
@@ -125,12 +125,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               const SizedBox(
                                 height: 25,
                               ),
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Gender",
-                                    style: TextStyle(
+                                    AppTranslationKeys.gender.tr,
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       color: AppColors.gray,
                                       fontWeight: FontWeight.w600,
@@ -166,9 +166,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         });
                                       },
                                     ),
-                                    const Text(
-                                      "Female",
-                                      style: TextStyle(
+                                    Text(
+                                      AppTranslationKeys.female.tr,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         color: AppColors.gray,
                                         fontWeight: FontWeight.w600,
@@ -198,9 +198,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         });
                                       },
                                     ),
-                                    const Text(
-                                      "Male",
-                                      style: TextStyle(
+                                    Text(
+                                      AppTranslationKeys.male.tr,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         color: AppColors.gray,
                                         fontWeight: FontWeight.w600,
@@ -222,7 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 15,
                               ),
                               CustomTextField(
-                                labelText: "Email",
+                                labelText: AppTranslationKeys.email.tr,
                                 controller: emailController,
                                 inputType: TextInputType.emailAddress,
                                 validator: (val) =>
@@ -232,7 +232,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Password",
+                                labelText: AppTranslationKeys.password.tr,
                                 controller: passwordController,
                                 isObscureText: true,
                                 validator: (val) =>
@@ -242,7 +242,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Confirm Password",
+                                labelText: AppTranslationKeys.confirmPassword.tr,
                                 controller: confirmPasswordController,
                                 isObscureText: true,
                                 validator: (val) =>
@@ -253,7 +253,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Phone Number",
+                                labelText: AppTranslationKeys.phoneNumber.tr,
                                 controller: phoneController,
                                 validator: (val) =>
                                     AppValidator.validatePhone(val),
@@ -262,7 +262,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Instagram",
+                                labelText: AppTranslationKeys.instagram.tr,
                                 controller: instagramController,
                                 validator: (val) =>
                                     AppValidator.validateRequired(val),
@@ -271,7 +271,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Twitter",
+                                labelText: AppTranslationKeys.twitter.tr,
                                 controller: twitterController,
                                 validator: (val) =>
                                     AppValidator.validateRequired(val),
@@ -280,7 +280,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Facebook",
+                                labelText: AppTranslationKeys.facebook.tr,
                                 controller: facebookController,
                                 validator: (val) =>
                                     AppValidator.validateRequired(val),
@@ -289,7 +289,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 25,
                               ),
                               CustomTextField(
-                                labelText: "Telegram",
+                                labelText: AppTranslationKeys.telegram.tr,
                                 controller: telegramController,
                                 validator: (val) =>
                                     AppValidator.validateRequired(val),
@@ -309,7 +309,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: CustomButtonAuth(
-                      text: "Sign up",
+                      text: AppTranslationKeys.singUp.tr,
                       onPressed: () {
                         BlocProvider.of<AuthBloc>(context).add(
                           RegisterEvent(

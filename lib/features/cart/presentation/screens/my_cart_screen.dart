@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
@@ -26,7 +30,7 @@ class MyCartScreen extends StatelessWidget {
           if (state is FailureCartState ||
               state is EmptyCacheFailureCartState) {
             WidgetsUtils.showSnackBar(
-              title: "Failure",
+              title: AppTranslationKeys.failure.tr,
               message: state.message,
               snackBarType: SnackBarType.error,
             );
@@ -67,13 +71,13 @@ class MyCartScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Text(
-                              "Total",
-                              style: TextStyle(
+                            Text(
+                              AppTranslationKeys.total.tr,
+                              style: const TextStyle(
                                   color: AppColors.gray, fontSize: 18),
                             ),
                             Text(
-                              "${state.cart.totalPrice} D.I",
+                              "${state.cart.totalPrice} ${AppTranslationKeys.di.tr}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -93,31 +97,31 @@ class MyCartScreen extends StatelessWidget {
                             onPressed: () {
                               globalUser != null
                                   ? WidgetsUtils.showCustomDialog(context,
-                                      title: "Total",
+                                      title: AppTranslationKeys.total.tr,
                                       children: [
                                           Center(
                                             child: Text(
-                                              "${state.cart.totalPrice} D.I",
+                                              "${state.cart.totalPrice} ${AppTranslationKeys.di.tr}",
                                               style: const TextStyle(
                                                   color: AppColors.secondary,
                                                   fontSize: 30),
                                             ),
                                           )
                                         ])
-                                  : signInDialog(context, title: "Order");
+                                  : signInDialog(context, title: AppTranslationKeys.myOrders.tr);
                             },
                             color: AppColors.primary,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                                 side: const BorderSide(
                                     color: AppColors.gray, width: 1)),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
                                 vertical: 15,
                               ),
                               child: Text(
-                                "Order",
-                                style: TextStyle(
+                                AppTranslationKeys.order.tr,
+                                style: const TextStyle(
                                   color: AppColors.white,
                                 ),
                               ),
@@ -132,12 +136,7 @@ class MyCartScreen extends StatelessWidget {
             );
           } else if (state is EmptyCacheFailureCartState) {
             return SizedBox(
-              child: Center(
-                  child: Text(
-                state.message,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 25),
-              )),
+              child: Center(child: SvgPicture.asset(AppAssets.emptyCart)),
             );
           }
           return const LoaderIndicator();

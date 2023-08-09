@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
@@ -86,7 +87,7 @@ class ProductCard extends StatelessWidget {
                               .copyWith(fontSize: 20),
                         ),
                         Text(
-                          "${product.price} D.I",
+                          "${product.price} ${AppTranslationKeys.di.tr}",
                           style: const TextStyle(
                             color: AppColors.primary,
                             fontSize: 18,

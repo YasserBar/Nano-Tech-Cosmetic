@@ -5,6 +5,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/core/widgets/secondary_appbar.dart';
@@ -26,7 +27,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: const SecondaryAppbar(title: "Categories"),
+      appBar: SecondaryAppbar(title: AppTranslationKeys.categories.tr),
       body: BlocProvider(
         create: (context) => di.sl<CategoryBloc>()
           ..add(
@@ -39,7 +40,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 state is InternalServerFailureCategoryState ||
                 state is UnexpectedFailureCategoryState) {
               WidgetsUtils.showSnackBar(
-                title: "Failure",
+                title: AppTranslationKeys.failure.tr,
                 message: state.message,
                 snackBarType: SnackBarType.error,
               );

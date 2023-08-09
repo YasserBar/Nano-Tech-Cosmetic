@@ -3,9 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_button_auth.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/gard_card.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/gard_description_text.dart';
@@ -58,7 +58,7 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                           GardCard(
                             selectedIcon: AppAssets.customerFill,
                             unSelectedIcon: AppAssets.customerOutlined,
-                            label: "Customer",
+                            label: AppTranslationKeys.customer.tr,
                             isSelected: isCustomer,
                             onSelected: (p0) {
                               setState(() {
@@ -71,7 +71,7 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                           GardCard(
                             selectedIcon: AppAssets.salonFill,
                             unSelectedIcon: AppAssets.salonOutlined,
-                            label: "Salon",
+                            label: AppTranslationKeys.salon.tr,
                             isSelected: isSalon,
                             onSelected: (p0) {
                               setState(() {
@@ -84,7 +84,7 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                           GardCard(
                             selectedIcon: AppAssets.companyFill,
                             unSelectedIcon: AppAssets.companyOutlined,
-                            label: "Company",
+                            label: AppTranslationKeys.company.tr,
                             isSelected: isCompany,
                             onSelected: (p0) {
                               setState(() {
@@ -99,15 +99,15 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                       const Spacer(
                         flex: 1,
                       ),
-                      const Column(children: [
+                      Column(children: [
                         GardDescriptionText(
-                          text: "Buy your cosmetics directly from the source",
+                          text: AppTranslationKeys.buyYourCosmetics.tr,
                         ),
                         GardDescriptionText(
-                          text: "Enjoy unique GardDescription shopping",
+                          text: AppTranslationKeys.enjoyUniqueShopping.tr,
                         ),
                         GardDescriptionText(
-                          text: "Get direct service",
+                          text: AppTranslationKeys.getDirectService.tr,
                         ),
                       ]),
                       const Spacer(
@@ -116,7 +116,7 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
                         child: CustomButtonAuth(
-                          text: "Next",
+                          text: AppTranslationKeys.next.tr,
                           onPressed: () {
                             Get.toNamed(AppPagesRoutes.signUpScreen,
                                 arguments: isCustomer
