@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 
 class OrderProductCard extends StatelessWidget {
   final String image;
@@ -91,7 +93,7 @@ class OrderProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "$price D.I",
+                          "$price ${AppTranslationKeys.di.tr}",
                           style: const TextStyle(
                             color: AppColors.primary,
                             fontSize: 18,

@@ -6,6 +6,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
@@ -65,15 +66,21 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                 Positioned(
                   top: 15,
                   left: 15,
-                  child: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: AppColors.primary,
-                      size: 35,
-                    ),
+                  right: 15,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: AppColors.primary,
+                          size: 35,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Positioned(
@@ -129,11 +136,10 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                 height: 10,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "${offer.price} D.I",
+                                    "${offer.price} ${AppTranslationKeys.di.tr}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge!
@@ -143,7 +149,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                             letterSpacing: 2),
                                   ),
                                   Text(
-                                    "${offer.oldPrice}D.I",
+                                    "${offer.oldPrice} ${AppTranslationKeys.di.tr}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge!
@@ -193,7 +199,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                         snackBarType: SnackBarType.error,
                                       );
                                     } else if (state
-                                        is SuccessAddItemCartState) {
+                                    is SuccessAddItemCartState) {
                                       WidgetsUtils.showSnackBar(
                                         title: "Success add item to cart",
                                         message: state.message,
@@ -230,9 +236,9 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                         side: BorderSide(
                                             width: 1, color: AppColors.gray),
                                       ),
-                                      child: const Text(
-                                        "add to cart",
-                                        style: TextStyle(
+                                      child: Text(
+                                        AppTranslationKeys.addToCart.tr,
+                                        style: const TextStyle(
                                             fontSize: 20,
                                             color: AppColors.gray),
                                       ),

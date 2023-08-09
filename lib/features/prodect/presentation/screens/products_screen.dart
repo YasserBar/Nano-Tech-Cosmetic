@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/core/widgets/secondary_appbar.dart';
@@ -39,7 +40,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 state is InternalServerFailureProductState ||
                 state is UnexpectedFailureProductState) {
               WidgetsUtils.showSnackBar(
-                title: "Failure",
+                title: AppTranslationKeys.failure.tr,
                 message: state.message,
                 snackBarType: SnackBarType.error,
               );

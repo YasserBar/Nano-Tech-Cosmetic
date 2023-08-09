@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
@@ -32,7 +33,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   state is InternalServerFailureAuthState ||
                   state is UnexpectedFailureAuthState) {
                 WidgetsUtils.showSnackBar(
-                  title: "Failure",
+                  title: AppTranslationKeys.failure.tr,
                   message: state.message,
                   snackBarType: SnackBarType.error,
                 );
@@ -40,7 +41,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                 Get.toNamed(AppPagesRoutes.verifyCodeScreen,
                     arguments: emailController.text);
                 WidgetsUtils.showSnackBar(
-                  title: "Success",
+                  title: AppTranslationKeys.success.tr,
                   message: state.message,
                   snackBarType: SnackBarType.info,
                 );
@@ -54,7 +55,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomTextField(
-                    labelText: "Email",
+                    labelText: AppTranslationKeys.email.tr,
                     controller: emailController,
                     inputType: TextInputType.emailAddress,
                     validator: (val) => AppValidator.validateEmail(val),
@@ -63,7 +64,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     height: 75,
                   ),
                   CustomButtonAuth(
-                    text: "Send Code",
+                    text: AppTranslationKeys.sendCode.tr,
                     onPressed: () {
                       BlocProvider.of<AuthBloc>(context).add(
                         ResendOTPEvent(ResendOTP(email: emailController.text)),

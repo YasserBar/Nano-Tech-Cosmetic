@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
@@ -34,14 +35,14 @@ class SignInScreen extends StatelessWidget {
                   state is InternalServerFailureAuthState ||
                   state is UnexpectedFailureAuthState) {
                 WidgetsUtils.showSnackBar(
-                  title: "Failure",
+                  title: AppTranslationKeys.failure.tr,
                   message: state.message,
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessLoginState) {
                 Get.offAllNamed(AppPagesRoutes.mainScreen);
                 WidgetsUtils.showSnackBar(
-                  title: "Success",
+                  title: AppTranslationKeys.success.tr,
                   message: state.message,
                   snackBarType: SnackBarType.info,
                 );
@@ -54,7 +55,7 @@ class SignInScreen extends StatelessWidget {
               return Column(
                 children: [
                   CustomTextField(
-                    labelText: "Email",
+                    labelText: AppTranslationKeys.email.tr,
                     inputType: TextInputType.emailAddress,
                     controller: emailController,
                     validator: (val) => AppValidator.validateEmail(val),
@@ -63,7 +64,7 @@ class SignInScreen extends StatelessWidget {
                     height: 25,
                   ),
                   CustomTextField(
-                    labelText: "Password",
+                    labelText: AppTranslationKeys.password.tr,
                     isObscureText: true,
                     controller: passwordController,
                     validator: (val) => AppValidator.validatePassword(val),
@@ -79,7 +80,7 @@ class SignInScreen extends StatelessWidget {
                           Get.toNamed(AppPagesRoutes.forgetPasswordScreen);
                         },
                         child: Text(
-                          "Forget Password",
+                          AppTranslationKeys.forgetPassword.tr,
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -96,7 +97,7 @@ class SignInScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account? ",
+                        AppTranslationKeys.doNotHaveAnAccount.tr,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       InkWell(
@@ -104,7 +105,7 @@ class SignInScreen extends StatelessWidget {
                           Get.toNamed(AppPagesRoutes.chooseGardScreen);
                         },
                         child: Text(
-                          "sign up",
+                          AppTranslationKeys.singUp.tr,
                           style:
                               Theme.of(context).textTheme.bodySmall!.copyWith(
                                     color: AppColors.secondary,
@@ -117,7 +118,7 @@ class SignInScreen extends StatelessWidget {
                     height: 50,
                   ),
                   CustomButtonAuth(
-                    text: "Sign in",
+                    text: AppTranslationKeys.singIn.tr,
                     onPressed: () {
                       BlocProvider.of<AuthBloc>(context).add(
                         LoginEvent(

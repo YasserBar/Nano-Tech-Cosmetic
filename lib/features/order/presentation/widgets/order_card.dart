@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 
 class OrderCard extends StatelessWidget {
   final String price;
@@ -52,7 +54,7 @@ class OrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "$price D.I",
+                    "$price ${AppTranslationKeys.di.tr}",
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: 22,
                           color: AppColors.primary,
