@@ -66,6 +66,8 @@ class AppTranslationKeys {
   static const String total = 'total';
   static const String amount = 'amount';
   static const String order = 'order';
+  static const String specialOrders = 'specialOrders';
+  static const String cartOrders = 'cartOrders';
   static const String confirm = 'confirm';
   static const String cancel = 'cancel';
   static const String addToCart = 'addToCart';
@@ -78,6 +80,10 @@ class AppTranslationKeys {
   static const String orderByName = 'orderByName';
   static const String notes = 'notes';
   static const String newName = 'newName';
+  static const String waiting = 'waiting';
+  static const String processing = 'processing';
+  static const String rejected = 'rejected';
+  static const String done = 'done';
 
   static const String offers = 'offers';
 

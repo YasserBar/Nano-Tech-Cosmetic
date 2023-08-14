@@ -138,6 +138,10 @@ class MyCartScreen extends StatelessWidget {
             return SizedBox(
               child: Center(child: SvgPicture.asset(AppAssets.emptyCart)),
             );
+          } else if (state is FailureCartState) {
+            return SizedBox(
+              child: Center(child: SvgPicture.asset(AppAssets.caution)),
+            );
           }
           return const LoaderIndicator();
         },

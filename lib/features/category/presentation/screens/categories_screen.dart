@@ -64,10 +64,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   itemCount: state.categories!.length,
                   itemBuilder: (context, index) => CategoryCard(
                     category: state.categories![index],
-                    onTap: () {
-                      Get.toNamed(AppPagesRoutes.productsScreen,
-                          arguments: state.categories![index].id);
-                    },
                   ),
                 ),
               );

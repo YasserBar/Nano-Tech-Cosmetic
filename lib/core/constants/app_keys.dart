@@ -6,4 +6,8 @@ class AppKeys {
   static const String CACHED_CART = 'CACHED_CART';
 
   static const String LANG = 'LANG';
+
+  static const String ORDER_TYPE = 'ORDER_TYPE';
+
+  static const String ORDER = 'ORDER';
 }

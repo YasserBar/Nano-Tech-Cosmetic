@@ -18,6 +18,13 @@ class ItemCartModel extends ItemCart {
         );
 
   factory ItemCartModel.fromJson(Map<String, dynamic> json) {
+    print(json['id']);
+    print(json['title']);
+    print(json['price']);
+    print(json['image_url']);
+    print(json['account']);
+    print(json['isProduct']);
+    print('object2');
     return ItemCartModel(
       id: json['id'] as int,
       title: json['title'] as String,

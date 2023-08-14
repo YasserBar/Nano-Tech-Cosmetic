@@ -4,7 +4,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 
 abstract class AppThemes {
   static ThemeData themeEnglish = ThemeData(
-    scaffoldBackgroundColor: AppColors.materialPrimary.shade50,
+    scaffoldBackgroundColor: AppColors.white,
     splashColor: AppColors.materialPrimary.shade200,
     canvasColor: AppColors.materialPrimary.shade50,
     iconTheme: const IconThemeData(
@@ -111,7 +111,7 @@ abstract class AppThemes {
     timePickerTheme: const TimePickerThemeData(),
   );
   static ThemeData themeArabic = ThemeData(
-    scaffoldBackgroundColor: AppColors.materialPrimary.shade50,
+    scaffoldBackgroundColor: AppColors.white,
     splashColor: AppColors.materialPrimary.shade200,
     canvasColor: AppColors.materialPrimary.shade50,
     iconTheme: const IconThemeData(
