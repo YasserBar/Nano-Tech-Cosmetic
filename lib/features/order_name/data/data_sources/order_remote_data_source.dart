@@ -28,7 +28,7 @@ class OrderNameRemoteDataSourceImplWithHttp extends OrderNameRemoteDataSource {
         Uri.parse(AppRoutes.baseUrl + AppRoutes.displayOrderName).replace(
             queryParameters: {"page": page, "status": status}
                 .map((key, value) => MapEntry(key, value.toString()))),
-        headers: setHeadersWithTokenAndLang());
+        headers: setHeadersWithToken());
     try {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message'];
@@ -50,7 +50,7 @@ class OrderNameRemoteDataSourceImplWithHttp extends OrderNameRemoteDataSource {
     final response = await client.post(
       Uri.parse(AppRoutes.baseUrl + AppRoutes.addOrderName),
       body: json.encode(requestOrderNameModel.toJson()),
-      headers: setHeadersWithTokenAndLang(),
+      headers: setHeadersWithToken(),
     );
     try {
       final bodyJson = json.decode(response.body);

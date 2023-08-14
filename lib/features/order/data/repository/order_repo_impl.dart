@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get_connect/http/src/exceptions/exceptions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/errors/failures.dart';
@@ -34,8 +35,11 @@ class OrderRepoImpl extends OrderRepo {
     }
     if (await networkInfo.isConnected) {
       try {
-        final List<OrderModel> orders = await remoteDataSource.displayOrders(
-            page: page, status: status);
+        final List<OrderModel> orders =
+            await remoteDataSource.displayOrders(page: page, status: status);
+        // if (kDebugMode) {
+        //   print("step 2===== $orders");
+        // }
         return Right(orders);
       } on UnauthorizedException {
         final Either<Failure, Unit> either = await authRepo.refreshToken();
