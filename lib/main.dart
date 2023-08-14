@@ -11,7 +11,8 @@ import 'package:nano_tech_cosmetic/core/constants/app_translations.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
-User?globalUser; //TODO: يجب وضعها  فارغة عند كل حدث في الرموت و الوكل في البداية مباشرة
+User?
+    globalUser; //TODO: يجب وضعها  فارغة عند كل حدث في الرموت و الوكل في البداية مباشرة
 String? globalMessage;
 
 void main() async {
@@ -55,12 +56,17 @@ void initializeTokenAndCustomer() async {
     }
   }
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     LocaleController controller = Get.put(LocaleController());
+    if (kDebugMode) {
+      print("===================================");
+      print(controller.language.toString());
+    }
     return GetMaterialApp(
       title: 'Nano Tech Cosmetic',
       debugShowCheckedModeBanner: false,
