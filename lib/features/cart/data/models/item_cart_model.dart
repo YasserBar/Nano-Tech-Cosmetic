@@ -4,6 +4,7 @@ class ItemCartModel extends ItemCart {
   ItemCartModel({
     required int id,
     required String title,
+    required String titleEn,
     required int price,
     required String? imageUrl,
     required int account,
@@ -11,6 +12,7 @@ class ItemCartModel extends ItemCart {
   }) : super(
           id: id,
           title: title,
+          titleEn: titleEn,
           price: price,
           imageUrl: imageUrl,
           account: account,
@@ -28,6 +30,7 @@ class ItemCartModel extends ItemCart {
     return ItemCartModel(
       id: json['id'] as int,
       title: json['title'] as String,
+      titleEn: json['title_en'] as String,
       price: json['price'] as int,
       imageUrl: json['image_url'] as String?,
       account: json['account'] as int,
@@ -39,6 +42,7 @@ class ItemCartModel extends ItemCart {
     return {
       'id': id,
       'title': title,
+      'title_en': titleEn,
       'price': price,
       'image_url': imageUrl,
       "account": account,

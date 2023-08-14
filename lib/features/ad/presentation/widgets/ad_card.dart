@@ -5,6 +5,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/ad/domain/entities/ad_entity.dart';
 
 class AdCard extends StatelessWidget {
@@ -14,9 +15,11 @@ class AdCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocaleController controller = Get.put(LocaleController());
+
     return InkWell(
       onTap: () {
-        Get.toNamed(AppPagesRoutes.adDetailsScreen,arguments: ad);
+        Get.toNamed(AppPagesRoutes.adDetailsScreen, arguments: ad);
       },
       child: Container(
         padding: const EdgeInsets.all(5),
@@ -65,7 +68,7 @@ class AdCard extends StatelessWidget {
               SizedBox(
                 width: 140,
                 child: Text(
-                  ad.title,
+                  controller.language == 'ar' ? ad.title : ad.titleEn,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,

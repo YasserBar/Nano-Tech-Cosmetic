@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 class ItemCart extends Equatable {
   final int id;
   final String title;
+  final String titleEn;
   final int price;
   final String? imageUrl;
   int account;
@@ -11,6 +12,7 @@ class ItemCart extends Equatable {
    ItemCart({
     required this.id,
     required this.title,
+    required this.titleEn,
     required this.price,
     required this.imageUrl,
     required this.account,
@@ -21,6 +23,7 @@ class ItemCart extends Equatable {
   List<Object?> get props => [
         id,
         title,
+        titleEn,
         price,
         imageUrl,
         account,

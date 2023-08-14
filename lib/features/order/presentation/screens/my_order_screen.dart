@@ -186,7 +186,7 @@ class _MyOrderScreenState extends State<MyOrderScreen>
       create: (context) =>
       di.sl<OrderBloc>()
         ..add(
-          DisplayOrderEvent(orderStatus: OrderStatus.rejected),
+          DisplayOrderEvent(orderStatus: OrderStatus.all),
         ),
       child: BlocConsumer<OrderBloc, OrderState>(
         listener: (context, state) {
