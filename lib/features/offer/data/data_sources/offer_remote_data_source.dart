@@ -23,7 +23,7 @@ class OfferRemoteDataSourceImplWithHttp extends OfferRemoteDataSource {
     Uri.parse(AppRoutes.baseUrl + AppRoutes.showOffers).replace(
             queryParameters: {"page": page}
                 .map((key, value) => MapEntry(key, value.toString()))),
-        headers: setHeadersWithTokenAndLang());
+        headers: setHeaders());
     try {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message'];

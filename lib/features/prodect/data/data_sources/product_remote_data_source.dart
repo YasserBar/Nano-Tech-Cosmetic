@@ -27,7 +27,7 @@ class ProductRemoteDataSourceImplWithHttp extends ProductRemoteDataSource {
         Uri.parse(AppRoutes.baseUrl + AppRoutes.rateProduct).replace(
             queryParameters: {"product_id": rateProduct.productId, "rating": rateProduct.rate}
                 .map((key, value) => MapEntry(key, value.toString()))),
-        headers: setHeadersWithTokenAndLang());
+        headers: setHeaders());
     try {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message'];
@@ -49,7 +49,7 @@ class ProductRemoteDataSourceImplWithHttp extends ProductRemoteDataSource {
           "name": name
         }.map((key, value) =>
                 MapEntry(key, value == null ? '' : value.toString()))),
-        headers: setHeadersWithTokenAndLang());
+        headers: setHeaders());
     // print(response.body);
     try {
       final bodyJson = json.decode(response.body);

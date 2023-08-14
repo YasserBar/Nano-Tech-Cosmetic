@@ -30,7 +30,7 @@ class OrderManufacturingRemoteDataSourceImplWithHttp
             .replace(
                 queryParameters: {"page": page, "status": status}
                     .map((key, value) => MapEntry(key, value.toString()))),
-        headers: setHeadersWithTokenAndLang());
+        headers: setHeadersWithToken());
     try {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message'];
@@ -53,7 +53,7 @@ class OrderManufacturingRemoteDataSourceImplWithHttp
     final response = await client.post(
       Uri.parse(AppRoutes.baseUrl + AppRoutes.addOrderManufacturing),
       body: json.encode(requestOrderManufacturingModel.toJson()),
-      headers: setHeadersWithTokenAndLang(),
+      headers: setHeadersWithToken(),
     );
     try {
       final bodyJson = json.decode(response.body);

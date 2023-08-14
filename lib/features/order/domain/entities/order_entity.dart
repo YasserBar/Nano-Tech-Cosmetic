@@ -5,14 +5,14 @@ class Order extends Equatable {
   final int id;
   final OrderStatus status;
   final String langCode;
-  final double price;
+  final int price;
   final int userId;
-  final String response;
-  final String startProcessing;
-  final String endProcessing;
+  final String? response;
+  final String? startProcessing;
+  final String? endProcessing;
   final String createdAt;
   final String updatedAt;
-  final AvailableAmount availableAmount;
+  // final AvailableAmount availableAmount;
 
   const Order({
     required this.id,
@@ -25,7 +25,7 @@ class Order extends Equatable {
     required this.endProcessing,
     required this.createdAt,
     required this.updatedAt,
-    required this.availableAmount,
+    // required this.availableAmount,
   });
 
   @override
@@ -40,19 +40,19 @@ class Order extends Equatable {
         endProcessing,
         createdAt,
         updatedAt,
-        availableAmount,
+        // availableAmount,
       ];
 }
 
-class AvailableAmount extends Equatable {
-  final bool state;
-  final List<int> productIdsUnavailable;
+// class AvailableAmount extends Equatable {
+//   final bool state;
+//   // final List<int> productIdsUnavailable;
 
-  const AvailableAmount({
-    required this.state,
-    required this.productIdsUnavailable,
-  });
+//   const AvailableAmount({
+//     required this.state,
+//     // required this.productIdsUnavailable,
+//   });
 
-  @override
-  List<Object?> get props => [state, productIdsUnavailable];
-}
+//   @override
+//   List<Object?> get props => [state];
+// }
