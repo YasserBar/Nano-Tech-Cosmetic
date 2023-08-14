@@ -38,6 +38,13 @@ import 'package:nano_tech_cosmetic/features/offer/data/repository/offer_repo_imp
 import 'package:nano_tech_cosmetic/features/offer/domain/repository/offer_repo.dart';
 import 'package:nano_tech_cosmetic/features/offer/domain/usecases/show_offers_usecase.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/bloc/offer_bloc.dart';
+import 'package:nano_tech_cosmetic/features/order/data/data_sources/order_remote_data_source.dart';
+import 'package:nano_tech_cosmetic/features/order/data/repository/order_repo_impl.dart';
+import 'package:nano_tech_cosmetic/features/order/domain/repository/order_repo.dart';
+import 'package:nano_tech_cosmetic/features/order/domain/usecases/display_order_details_usecase.dart';
+import 'package:nano_tech_cosmetic/features/order/domain/usecases/display_orders_usecase.dart';
+import 'package:nano_tech_cosmetic/features/order/domain/usecases/store_order_usecase.dart';
+import 'package:nano_tech_cosmetic/features/order/presentation/bloc/order_bloc.dart';
 import 'package:nano_tech_cosmetic/features/prodect/data/data_sources/product_remote_data_source.dart';
 import 'package:nano_tech_cosmetic/features/prodect/data/repository/product_repo_impl.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/repository/product_repo.dart';
@@ -157,38 +164,28 @@ Future<void> init() async {
       () => OfferRemoteDataSourceImplWithHttp(client: sl()));
 
 // //! Feature - order
-// // Bloc
-//   sl.registerFactory(() => AvailableTimeBloc(getAvailableTimeUsecase: sl()));
-//   sl.registerFactory(() => ReservationBloc(reservationServiceUsecase: sl()));
-
-//   sl.registerFactory(() => FoundationServicesBloc(
-//         getAllServiceForFoundationUsecase: sl(),
-//       ));
-//   sl.registerFactory(() => AddServiceFoundationBloc(
-//         addServiceToFoundationUsecase: sl(),
-//       ));
-//   sl.registerFactory(() => EditServiceFoundationBloc(
-//         editServiceUsecase: sl(),
-//       ));
-//   sl.registerFactory(() => StopServiceBloc(
-//         stopServiceUsecase: sl(),
-//       ));
+// Bloc
+  sl.registerFactory(() => OrderBloc(
+        displayOrderDetailsUsecase: sl(),
+        displayOrdersUsecase: sl(),
+        storeOrderUsecase: sl(),
+      ));
 
 // // Usecases
-//   sl.registerLazySingleton(() => AddServiceToFoundationUsecase(sl()));
-//   sl.registerLazySingleton(() => EditServiceUsecase(sl()));
-//   sl.registerLazySingleton(() => GetAllServiceForFoundationUsecase(sl()));
-//   sl.registerLazySingleton(() => GetAvailableTimeUsecase(sl()));
-//   sl.registerLazySingleton(() => ReservationServiceUsecase(sl()));
-//   sl.registerLazySingleton(() => StopServiceUsecase(sl()));
+  sl.registerLazySingleton(() => DisplayOrderDetailsUsecase(sl()));
+  sl.registerLazySingleton(() => DisplayOrdersUsecase(sl()));
+  sl.registerLazySingleton(() => StoreOrderUsecase(sl()));
 
-// // Repository
-//   sl.registerLazySingleton<ServiceRepo>(
-//       () => ServiceRepoImpl(sl(), sl(), sl()));
+// Repository
+  sl.registerLazySingleton<OrderRepo>(() => OrderRepoImpl(
+        authRepo: sl(),
+        networkInfo: sl(),
+        remoteDataSource: sl(),
+      ));
 
-// // Datasources
-//   sl.registerLazySingleton<ServiceRemoteDataSource>(
-//       () => ServiceRemoteDataSourceImplWithHttp(client: sl()));
+// Datasources
+  sl.registerLazySingleton<OrderRemoteDataSource>(
+      () => OrderRemoteDataSourceImplWithHttp(client: sl()));
 
 //! Feature - prodect
 // Bloc

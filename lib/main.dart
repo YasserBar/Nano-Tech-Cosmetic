@@ -4,14 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
-import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/models/user_model.dart';
+import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translations.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
+import 'package:nano_tech_cosmetic/features/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
-User?
-    globalUser; //TODO: يجب وضعها  فارغة عند كل حدث في الرموت و الوكل في البداية مباشرة
+User?globalUser; //TODO: يجب وضعها  فارغة عند كل حدث في الرموت و الوكل في البداية مباشرة
 String? globalMessage;
 
 void main() async {
@@ -55,7 +55,6 @@ void initializeTokenAndCustomer() async {
     }
   }
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -66,6 +65,7 @@ class MyApp extends StatelessWidget {
       title: 'Nano Tech Cosmetic',
       debugShowCheckedModeBanner: false,
       locale: controller.language,
+      translations: AppTranslations(),
       theme: controller.appTheme,
       getPages: AppPagesRoutes.appPages,
       initialRoute: "/",

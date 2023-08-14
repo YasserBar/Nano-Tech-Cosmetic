@@ -2,9 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
@@ -45,7 +49,8 @@ class MyCartScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is LoadedCartState) {
             if (kDebugMode) {
-              print("00000000000000000000000000${state.cart!.itemsCart.length}");
+              print(
+                  "00000000000000000000000000${state.cart!.itemsCart.length}");
             }
             return Column(
               children: [
@@ -110,7 +115,7 @@ class MyCartScreen extends StatelessWidget {
                                       .cart!.itemsCart[stateItem.index!].price;
                                 }
                                 return Text(
-                                  "${state.cart!.totalPrice} D.I",
+                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -126,7 +131,7 @@ class MyCartScreen extends StatelessWidget {
                                       .cart!.itemsCart[stateItem.index!].price;
                                 }
                                 return Text(
-                                  "${state.cart!.totalPrice} D.I",
+                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -144,7 +149,7 @@ class MyCartScreen extends StatelessWidget {
                                           .account);
                                 }
                                 return Text(
-                                  "${state.cart!.totalPrice} D.I",
+                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -155,7 +160,7 @@ class MyCartScreen extends StatelessWidget {
                                 );
                               }
                               return Text(
-                                "${state.cart!.totalPrice} D.I",
+                                "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge!
@@ -180,27 +185,28 @@ class MyCartScreen extends StatelessWidget {
                                       children: [
                                           Center(
                                             child: Text(
-                                              "${state.cart!.totalPrice} D.I",
+                                              "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
                                               style: const TextStyle(
                                                   color: AppColors.secondary,
                                                   fontSize: 30),
                                             ),
                                           )
                                         ])
-                                  : signInDialog(context, title: "Order");
+                                  : signInDialog(context,
+                                      title: AppTranslationKeys.myOrders.tr);
                             },
                             color: AppColors.primary,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                                 side: const BorderSide(
                                     color: AppColors.gray, width: 1)),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
                                 vertical: 15,
                               ),
                               child: Text(
-                                "Order",
-                                style: TextStyle(
+                                AppTranslationKeys.order.tr,
+                                style: const TextStyle(
                                   color: AppColors.white,
                                 ),
                               ),
@@ -215,12 +221,11 @@ class MyCartScreen extends StatelessWidget {
             );
           } else if (state is EmptyCacheFailureCartState) {
             return SizedBox(
-              child: Center(
-                  child: Text(
-                state.message,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 25),
-              )),
+              child: Center(child: SvgPicture.asset(AppAssets.emptyCart)),
+            );
+          } else if (state is FailureCartState) {
+            return SizedBox(
+              child: Center(child: SvgPicture.asset(AppAssets.caution)),
             );
           }
           return const LoaderIndicator();

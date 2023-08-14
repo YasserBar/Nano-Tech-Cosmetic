@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/resend_otp_entity.dart';
@@ -48,7 +49,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             listener: (context, state) {
               if (state is FailureAuthState) {
                 WidgetsUtils.showSnackBar(
-                  title: "Failure",
+                  title: AppTranslationKeys.failure.tr,
                   message: state.message,
                   snackBarType: SnackBarType.error,
                 );
@@ -59,7 +60,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   Get.toNamed(AppPagesRoutes.resetPasswordScreen);
                 }
                 WidgetsUtils.showSnackBar(
-                  title: "Success",
+                  title: AppTranslationKeys.success.tr,
                   message: state.message,
                   snackBarType: SnackBarType.info,
                 );
@@ -73,7 +74,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "We send verify code to",
+                    AppTranslationKeys.weSendVerifyCodeTo.tr,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           fontSize: 20,
@@ -90,12 +91,12 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   const SizedBox(
                     height: 25,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Verify Code",
-                        style: TextStyle(
+                        AppTranslationKeys.verifyCode.tr,
+                        style: const TextStyle(
                           fontSize: 18,
                           color: AppColors.gray,
                           fontWeight: FontWeight.w600,
@@ -137,9 +138,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                             ),
                           );
                         },
-                        child: const Text(
-                          "resend",
-                          style: TextStyle(
+                        child: Text(
+                          AppTranslationKeys.resend.tr,
+                          style: const TextStyle(
                             fontSize: 16,
                             color: AppColors.secondary,
                             fontWeight: FontWeight.w600,

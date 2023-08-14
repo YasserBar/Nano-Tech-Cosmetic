@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
@@ -31,7 +33,7 @@ class ResetPasswordScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is FailureAuthState) {
                 WidgetsUtils.showSnackBar(
-                  title: "Failure",
+                  title: AppTranslationKeys.failure.tr,
                   message: state.message,
                   snackBarType: SnackBarType.error,
                 );
@@ -39,7 +41,7 @@ class ResetPasswordScreen extends StatelessWidget {
                 // print("ssss");
                 Get.toNamed(AppPagesRoutes.mainScreen);
                 WidgetsUtils.showSnackBar(
-                  title: "Success",
+                  title: AppTranslationKeys.success.tr,
                   message: state.message,
                   snackBarType: SnackBarType.info,
                 );
@@ -52,7 +54,7 @@ class ResetPasswordScreen extends StatelessWidget {
               return Column(
                 children: [
                   CustomTextField(
-                    labelText: "Password",
+                    labelText: AppTranslationKeys.password.tr,
                     isObscureText: true,
                     controller: passwordController,
                     validator: (val) => AppValidator.validatePassword(val),
@@ -61,7 +63,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     height: 25,
                   ),
                   CustomTextField(
-                    labelText: "Confirm password",
+                    labelText: AppTranslationKeys.confirmPassword.tr,
                     controller: confirmPasswordController,
                     isObscureText: true,
                     validator: (val) => AppValidator.validateConflictPassword(
@@ -70,17 +72,38 @@ class ResetPasswordScreen extends StatelessWidget {
                   const SizedBox(
                     height: 25,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.offAllNamed(AppPagesRoutes.mainScreen);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            AppTranslationKeys.skip.tr,
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: AppColors.secondary,
+                                      fontSize: 14,
+                                    ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 50,
                   ),
                   CustomButtonAuth(
-                    text: "Reset",
+                    text: AppTranslationKeys.reset.tr,
                     onPressed: () {
                       if (passwordController.text !=
                           confirmPasswordController.text) {
                         WidgetsUtils.showSnackBar(
-                          title: "Failure",
-                          message: "Password not match confirm password",
+                          title: AppTranslationKeys.failure.tr,
+                          message: AppTranslationKeys.passwordNotMatch.tr,
                           snackBarType: SnackBarType.error,
                         );
                       }

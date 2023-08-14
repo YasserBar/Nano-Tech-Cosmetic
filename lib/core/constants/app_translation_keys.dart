@@ -14,11 +14,16 @@ class AppTranslationKeys {
   static const String resend = 'resend';
 
   static const String reset = 'reset';
+  static const String skip = 'skip';
+  static const String passwordNotMatch = 'Password not match confirm password';
   static const String confirmPassword = 'confirmPassword';
 
   static const String customer = 'customer';
   static const String salon = 'salon';
   static const String company = 'company';
+  static const String buyYourCosmetics = 'buyYourCosmetics';
+  static const String enjoyUniqueShopping = 'enjoyUniqueShopping';
+  static const String getDirectService = 'getDirectService';
   static const String next = 'next';
 
   static const String singUp = 'singUp';
@@ -34,14 +39,17 @@ class AppTranslationKeys {
   static const String twitter = 'twitter';
   static const String facebook = 'facebook';
   static const String telegram = 'telegram';
+  static const String noAccount = 'noAccount';
 
   static const String changeLang = 'changeLang';
   static const String resetPassword = 'resetPassword';
   static const String about = 'about';
   static const String support = 'support';
   static const String logout = 'logout';
+  static const String logoutFromApp = 'logoutFromApp';
 
   static const String home = 'home';
+  static const String menu = 'menu';
   static const String welcome = 'welcome';
   static const String findProduct = 'findProduct';
   static const String doNotHaveAnAccount = 'doNotHaveAnAccount';
@@ -51,11 +59,15 @@ class AppTranslationKeys {
   static const String products = 'product';
   static const String categories = 'categories';
   static const String rating = 'rating';
+  static const String ratingProduct = 'ratingProduct';
+  static const String di = 'DI';
 
   static const String myCart = 'myCart';
   static const String total = 'total';
   static const String amount = 'amount';
   static const String order = 'order';
+  static const String specialOrders = 'specialOrders';
+  static const String cartOrders = 'cartOrders';
   static const String confirm = 'confirm';
   static const String cancel = 'cancel';
   static const String addToCart = 'addToCart';
@@ -68,18 +80,23 @@ class AppTranslationKeys {
   static const String orderByName = 'orderByName';
   static const String notes = 'notes';
   static const String newName = 'newName';
+  static const String waiting = 'waiting';
+  static const String processing = 'processing';
+  static const String rejected = 'rejected';
+  static const String done = 'done';
 
   static const String offers = 'offers';
 
   static const String profile = 'profile';
-  static const String offline = "offline";
-  static const String wrongData = "wrongData";
-  static const String unexpectedException = "unexpectedException";
-  static const String internalServerError = "internalServerError";
-  static const String notFound = "notFound";
-  static const String forbidden = "forbidden";
-  static const String unauthorized = "unauthorized";
-  static const String badRequest = "badRequest";
-  static const String success = "success";
+  static const String offline = 'offline';
+  static const String wrongData = 'wrongData';
+  static const String unexpectedException = 'unexpectedException';
+  static const String internalServerError = 'internalServerError';
+  static const String notFound = 'notFound';
+  static const String forbidden = 'forbidden';
+  static const String unauthorized = 'unauthorized';
+  static const String badRequest = 'badRequest';
+  static const String success = 'success';
+  static const String failure = 'failure';
 
 }
