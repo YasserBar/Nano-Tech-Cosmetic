@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
-import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
+import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_event.dart';
@@ -23,11 +24,10 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LocaleController controller = Get.put(LocaleController());
-
     return BlocConsumer<ItemCartBloc, ItemCartState>(
       listener: (context, state) {
         if ((state is FailureItemCartState ||
-                state is EmptyCacheFailureItemCartState) &&
+            state is EmptyCacheFailureItemCartState) &&
             state.index != null &&
             state.index == index) {
           WidgetsUtils.showSnackBar(
@@ -108,125 +108,150 @@ class ItemCard extends StatelessWidget {
                   )),
               child: IntrinsicHeight(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Stack(
-                      clipBehavior: Clip.none,
+                    Row(
                       children: [
-                        Container(
-                          height: 85,
-                          width: 85,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.horizontal(
-                              left: Radius.circular(15),
-                            ),
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider(
-                                  itemCart.imageUrl!),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          // Positioned(
-                          //   bottom: -4,
-                          //   right: -4,
-                          //   child: Container(
-                          //     height: 20,
-                          //     width: 20,
-                          //     decoration: const BoxDecoration(
-                          //         color: AppColors.primary2,
-                          //         shape: BoxShape.circle),
-                          //   ),
-                          // ),
-                        ),
-                      ],
-                    ),
-                    const VerticalDivider(
-                      thickness: 1,
-                      width: 20,
-                      color: AppColors.gray,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          controller.language == 'ar'
-                              ? itemCart.title
-                              : itemCart.titleEn,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    fontSize: 20,
-                                  ),
-                        ),
-                        Text(
-                          "${itemCart.price} ${AppTranslationKeys.di.tr}",
-                          style: const TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            BlocProvider.of<ItemCartBloc>(context)
-                                .add(IncreaseItemCartEvent(index: index));
-                          },
-                          child: const Icon(
-                            Icons.add_box,
-                            color: AppColors.success1,
-                          ),
-                        ),
-                        BlocBuilder<ItemCartBloc, ItemCartState>(
-                            builder: (context, state) {
-                          if (state is SuccessDecreaseItemCartState) {
-                            if (state.index != null && state.index == index) {
-                              itemCart.account -= 1;
-                            }
-                            return Text(
-                              itemCart.account.toString(),
-                              style: const TextStyle(
-                                color: AppColors.secondary,
-                                fontSize: 16,
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              height: 85,
+                              width: 85,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.horizontal(
+                                  left: Get.locale!.languageCode == 'en'
+                                      ? const Radius.circular(15)
+                                      : const Radius.circular(0),
+                                  right: Get.locale!.languageCode == 'ar'
+                                      ? const Radius.circular(15)
+                                      : const Radius.circular(0),
+                                ),
+                                image: itemCart.imageUrl != null
+                                    ? DecorationImage(
+                                  image:
+                                  CachedNetworkImageProvider(itemCart.imageUrl!),
+                                  fit: BoxFit.cover,
+                                )
+                                    : const DecorationImage(
+                                  image:
+                                  AssetImage(AppAssets.image1),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            );
-                          }
-                          if (state is SuccessIncreaseItemCartState) {
-                            if (state.index != null && state.index == index) {
-                              itemCart.account += 1;
-                            }
-                            return Text(
-                              itemCart.account.toString(),
-                              style: const TextStyle(
-                                color: AppColors.secondary,
-                                fontSize: 16,
-                              ),
-                            );
-                          }
-                          return Text(
-                            itemCart.account.toString(),
-                            style: const TextStyle(
-                              color: AppColors.secondary,
-                              fontSize: 16,
+                              // Positioned(
+                              //   bottom: -4,
+                              //   right: -4,
+                              //   child: Container(
+                              //     height: 20,
+                              //     width: 20,
+                              //     decoration: const BoxDecoration(
+                              //         color: AppColors.primary2,
+                              //         shape: BoxShape.circle),
+                              //   ),
+                              // ),
                             ),
-                          );
-                        }),
-                        InkWell(
-                          onTap: () {
-                            if (itemCart.account > 1) {
-                              BlocProvider.of<ItemCartBloc>(context)
-                                  .add(DecreaseItemCartEvent(index: index));
-                            }
-                          },
-                          child: const Icon(
-                            Icons.indeterminate_check_box_rounded,
-                            color: AppColors.danger1,
-                          ),
+                          ],
+                        ),
+                        const VerticalDivider(
+                          thickness: 1,
+                          width: 20,
+                          color: AppColors.gray,
                         ),
                       ],
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                controller.language == 'ar'
+                                    ? itemCart.title
+                                    : itemCart.titleEn,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Text(
+                                "${itemCart.price} ${AppTranslationKeys.di.tr}",
+                                style: const TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  BlocProvider.of<ItemCartBloc>(context)
+                                      .add(IncreaseItemCartEvent(index: index));
+                                },
+                                child: const Icon(
+                                  Icons.add_box,
+                                  color: AppColors.success1,
+                                ),
+                              ),
+                              BlocBuilder<ItemCartBloc, ItemCartState>(
+                                  builder: (context, state) {
+                                    if (state is SuccessDecreaseItemCartState) {
+                                      if (state.index != null &&
+                                          state.index == index) {
+                                        itemCart.account -= 1;
+                                      }
+                                      return Text(
+                                        itemCart.account.toString(),
+                                        style: const TextStyle(
+                                          color: AppColors.secondary,
+                                          fontSize: 16,
+                                        ),
+                                      );
+                                    }
+                                    if (state is SuccessIncreaseItemCartState) {
+                                      if (state.index != null &&
+                                          state.index == index) {
+                                        itemCart.account += 1;
+                                      }
+                                      return Text(
+                                        itemCart.account.toString(),
+                                        style: const TextStyle(
+                                          color: AppColors.secondary,
+                                          fontSize: 16,
+                                        ),
+                                      );
+                                    }
+                                    return Text(
+                                      itemCart.account.toString(),
+                                      style: const TextStyle(
+                                        color: AppColors.secondary,
+                                        fontSize: 16,
+                                      ),
+                                    );
+                                  }),
+                              InkWell(
+                                onTap: () {
+                                  if (itemCart.account > 1) {
+                                    BlocProvider.of<ItemCartBloc>(context).add(
+                                        DecreaseItemCartEvent(index: index));
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.indeterminate_check_box_rounded,
+                                  color: AppColors.danger1,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

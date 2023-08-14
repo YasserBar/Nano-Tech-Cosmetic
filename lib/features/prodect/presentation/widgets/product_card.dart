@@ -62,8 +62,13 @@ class ProductCard extends StatelessWidget {
                       height: 85,
                       width: 85,
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.horizontal(
-                          left: Radius.circular(15),
+                        borderRadius: BorderRadius.horizontal(
+                          left: Get.locale!.languageCode == 'en'
+                              ? const Radius.circular(15)
+                              : const Radius.circular(0),
+                          right: Get.locale!.languageCode == 'ar'
+                              ? const Radius.circular(15)
+                              : const Radius.circular(0),
                         ),
                         image: DecorationImage(
                           image: CachedNetworkImageProvider(

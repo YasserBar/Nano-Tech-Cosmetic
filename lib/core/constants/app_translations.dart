@@ -170,7 +170,7 @@ class AppTranslations extends Translations {
           AppTranslationKeys.specialOrders: 'الطلبات الخاصة',
           AppTranslationKeys.confirm: 'تأكيد',
           AppTranslationKeys.cancel: 'إلغاء',
-          AppTranslationKeys.addToCart: 'إضافة إلى السلة',
+          AppTranslationKeys.addToCart: 'إضافة للسلة',
           AppTranslationKeys.specialOrder: 'طلب خاص',
 
           AppTranslationKeys.myOrders: 'طلباتي',

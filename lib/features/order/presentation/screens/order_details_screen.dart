@@ -38,7 +38,7 @@ class OrderDetailsScreen extends StatelessWidget {
                           const TextStyle(color: AppColors.black, fontSize: 20),
                     ),
                     Text(
-                      "240.000 ${AppTranslationKeys.di.tr}",
+                      "${Get.arguments[AppKeys.ORDER].price} ${AppTranslationKeys.di.tr}",
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             fontSize: 26,
                             color: AppColors.primary,
@@ -53,13 +53,21 @@ class OrderDetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      OrderStatus.rejected.getVale().tr,
-                      style: TextStyle(color: OrderStatus.rejected.getColor(), fontSize: 20),
+                      (Get.arguments[AppKeys.ORDER].status as OrderStatus)
+                          .getVale()
+                          .tr,
+                      style: TextStyle(
+                          color: (Get.arguments[AppKeys.ORDER].status
+                                  as OrderStatus)
+                              .getColor(),
+                          fontSize: 20),
                     ),
-                    const Text(
-                      "21-3-2023",
-                      style:
-                          TextStyle(color: AppColors.secondary, fontSize: 20),
+                    Text(
+                      Get.arguments[AppKeys.ORDER].createdAt
+                          .toString()
+                          .substring(0, 10),
+                      style: const TextStyle(
+                          color: AppColors.secondary, fontSize: 20),
                     )
                   ],
                 ),
@@ -151,9 +159,9 @@ class OrderDetailsScreen extends StatelessWidget {
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  "Your order will prepare you can show status of...",
-                  style: TextStyle(color: AppColors.gray, fontSize: 16),
+                Text(
+                  Get.arguments[AppKeys.ORDER].response ?? "================",
+                  style: const TextStyle(color: AppColors.gray, fontSize: 16),
                   maxLines: 3,
                 )
               ],
