@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -47,7 +48,9 @@ class _MyOrderScreenState extends State<MyOrderScreen>
             dividerColor: AppColors.black,
             controller: tabController,
             onTap: (value) {
-              print(widget.orderStatusFilter);
+              if (kDebugMode) {
+                print(widget.orderStatusFilter);
+              }
             },
             isScrollable: false,
             unselectedLabelStyle:
@@ -80,9 +83,9 @@ class _MyOrderScreenState extends State<MyOrderScreen>
         BlocProvider(
           create: (context) =>
           di.sl<OrderBloc>()
-            // ..add(
-            //   DisplayOrderEvent(orderStatus: OrderStatus.rejected),
-            // )
+            ..add(
+              DisplayOrderEvent(orderStatus: OrderStatus.all),
+            )
           ,
           child: BlocConsumer<OrderBloc, OrderState>(
             listener: (context, state) {
@@ -113,7 +116,7 @@ class _MyOrderScreenState extends State<MyOrderScreen>
                     itemBuilder: (context, index) =>
                         OrderCard(
                           price: state.orders![index].price.toString(),
-                          response: state.orders![index].response,
+                          response: state.orders![index].response??"================",
                           date: state.orders![index].createdAt,
                           status: state.orders![index].status,
                           onTap: () {
@@ -214,7 +217,7 @@ class _MyOrderScreenState extends State<MyOrderScreen>
                 itemBuilder: (context, index) =>
                     OrderCard(
                       price: state.orders![index].price.toString(),
-                      response: state.orders![index].response,
+                      response: state.orders![index].response??"*******************",
                       date: state.orders![index].createdAt,
                       status: state.orders![index].status,
                       onTap: () {

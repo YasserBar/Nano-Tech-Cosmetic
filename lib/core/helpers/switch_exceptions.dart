@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:nano_tech_cosmetic/core/errors/exception.dart';
 import 'package:nano_tech_cosmetic/core/errors/failures.dart';
 
@@ -13,7 +14,9 @@ Failure switchException(Object exception) {
   } else if (exception is InternalServerErrorException) {
     return InternalServerErrorFailure();
   } else {
-    // print(exception);
+    if (kDebugMode) {
+      print(exception);
+    }
     return UnexpectedFailure();
   }
 }

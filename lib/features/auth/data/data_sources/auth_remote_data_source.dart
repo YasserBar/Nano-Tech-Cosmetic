@@ -107,7 +107,7 @@ class AuthRemoteDataSourceImplWithHttp extends AuthRemoteDataSource {
 
   @override
   Future<Unit> register(RegisterModel registerModel, Role roll) async {
-    final String rootRegister ;
+    final String rootRegister;
     switch (roll) {
       case Role.customer:
         rootRegister = AppRoutes.registerUser;
@@ -118,7 +118,6 @@ class AuthRemoteDataSourceImplWithHttp extends AuthRemoteDataSource {
       case Role.company:
         rootRegister = AppRoutes.registerCompany;
         break;
-     
     }
 
     final response = await client.post(
@@ -156,7 +155,9 @@ class AuthRemoteDataSourceImplWithHttp extends AuthRemoteDataSource {
   Future<AuthModel> refreshToken() async {
     final response = await client.get(
         Uri.parse(AppRoutes.baseUrl + AppRoutes.refreshToken),
-        headers: setHeadersWithToken()); //!TODO==================refreshToken
+        headers: setHeadersWithToken(
+            token: globalUser!
+                .refreshToken)); //!TODO==================refreshToken
     try {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message']; //TODO=================Message

@@ -107,76 +107,21 @@ class ItemCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Stack(
+                      clipBehavior: Clip.none,
                       children: [
-                        Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Container(
-                              height: 85,
-                              width: 85,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.horizontal(
-                                  left: Radius.circular(15),
-                                ),
-                                image: DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                      itemCart.imageUrl!),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              // Positioned(
-                              //   bottom: -4,
-                              //   right: -4,
-                              //   child: Container(
-                              //     height: 20,
-                              //     width: 20,
-                              //     decoration: const BoxDecoration(
-                              //         color: AppColors.primary2,
-                              //         shape: BoxShape.circle),
-                              //   ),
-                              // ),
+                        Container(
+                          height: 85,
+                          width: 85,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.horizontal(
+                              left: Radius.circular(15),
                             ),
-                          ],
-                        ),
-                        const VerticalDivider(
-                          thickness: 1,
-                          width: 20,
-                          color: AppColors.gray,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              itemCart.title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    fontSize: 20,
-                                  ),
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                  itemCart.imageUrl!),
+                              fit: BoxFit.cover,
                             ),
-                            Text(
-                              "${itemCart.price} ${AppTranslationKeys.di.tr}",
-                              style: const TextStyle(
-                                color: AppColors.primary,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: const Icon(
-                            Icons.add_box,
-                            color: AppColors.success1,
                           ),
                           // Positioned(
                           //   bottom: -4,
