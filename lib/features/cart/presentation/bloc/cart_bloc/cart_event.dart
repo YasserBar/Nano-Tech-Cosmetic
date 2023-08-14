@@ -8,15 +8,6 @@ abstract class CartEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class DeleteItemCartEvent extends CartEvent {
-  int price;
-  int index;
-  DeleteItemCartEvent({required this.index, required this.price});
-
-  @override
-  List<Object> get props => [index];
-}
-
 class AddItemCartEvent extends CartEvent {
   ItemCart itemCart;
   AddItemCartEvent({required this.itemCart});

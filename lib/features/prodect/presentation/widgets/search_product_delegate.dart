@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
-import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
-import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/category/presentation/bloc/category_bloc.dart';
 import 'package:nano_tech_cosmetic/features/category/presentation/bloc/category_event.dart';
 import 'package:nano_tech_cosmetic/features/category/presentation/bloc/category_state.dart';
-import 'package:nano_tech_cosmetic/features/category/presentation/widgets/category_card.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_bloc.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_event.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_state.dart';
-import 'package:nano_tech_cosmetic/features/prodect/presentation/widgets/product_card.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 class SearchProductDelegate extends SearchDelegate {
