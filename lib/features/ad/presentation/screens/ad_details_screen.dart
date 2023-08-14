@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
+import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/ad/domain/entities/ad_entity.dart';
 
 class AdDetailsScreen extends StatefulWidget {
@@ -19,6 +20,8 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    LocaleController controller = Get.put(LocaleController());
+
     return Scaffold(
       backgroundColor:
           isReadMoreMode ? AppColors.materialPrimary.withOpacity(0.9) : null,
@@ -96,7 +99,8 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
                               : const BorderRadius.vertical(
                                   top: Radius.circular(50),
                                 ),
-                          border: Border.all(color: AppColors.primary, width: 5)),
+                          border:
+                              Border.all(color: AppColors.primary, width: 5)),
                       duration: const Duration(microseconds: 600),
                       onEnd: () {
                         setState(() {
@@ -115,7 +119,9 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
                             children: [
                               Center(
                                 child: Text(
-                                  ad.title,
+                                  controller.language == 'ar'
+                                      ? ad.title
+                                      : ad.titleEn,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -127,7 +133,9 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
                                 height: 5,
                               ),
                               Text(
-                                ad.description,
+                                controller.language == 'ar'
+                                    ? ad.description
+                                    : ad.descriptionEn,
                                 maxLines: isReadMoreMode && isEnd ? null : 4,
                                 overflow: isReadMoreMode && isEnd
                                     ? TextOverflow.visible

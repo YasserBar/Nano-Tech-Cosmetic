@@ -9,12 +9,14 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_event.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_state.dart';
 import 'package:nano_tech_cosmetic/features/offer/domain/entities/offer_entity.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
+
 class OfferDetailsScreen extends StatefulWidget {
   const OfferDetailsScreen({Key? key}) : super(key: key);
 
@@ -28,6 +30,8 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    LocaleController controller = Get.put(LocaleController());
+
     return Scaffold(
       backgroundColor:
           isReadMoreMode ? AppColors.materialPrimary.withOpacity(0.9) : null,
@@ -124,7 +128,9 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                             children: [
                               Center(
                                 child: Text(
-                                  offer.title,
+                                  controller.language == 'ar'
+                                      ? offer.title
+                                      : offer.titleEn,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -136,7 +142,8 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                 height: 10,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "${offer.price} ${AppTranslationKeys.di.tr}",
@@ -169,7 +176,9 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                 height: 15,
                               ),
                               Text(
-                                offer.description,
+                                controller.language == 'ar'
+                                    ? offer.description
+                                    : offer.descriptionEn,
                                 maxLines: isReadMoreMode && isEnd ? null : 4,
                                 overflow: isReadMoreMode && isEnd
                                     ? TextOverflow.visible
@@ -199,7 +208,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                         snackBarType: SnackBarType.error,
                                       );
                                     } else if (state
-                                    is SuccessAddItemCartState) {
+                                        is SuccessAddItemCartState) {
                                       WidgetsUtils.showSnackBar(
                                         title: "Success add item to cart",
                                         message: state.message,
@@ -221,6 +230,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                             itemCart: ItemCart(
                                               id: offer.id,
                                               title: offer.title,
+                                              titleEn: offer.titleEn,
                                               price: int.parse(offer.price),
                                               imageUrl: offer.imageUrl,
                                               account: 1,

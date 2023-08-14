@@ -42,3 +42,6 @@ class LocaleController extends GetxController {
     Get.updateLocale(locale);
   }
 }
+
+
+

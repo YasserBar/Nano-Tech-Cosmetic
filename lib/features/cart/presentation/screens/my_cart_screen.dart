@@ -26,6 +26,7 @@ class MyCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -161,6 +162,13 @@ class MyCartScreen extends StatelessWidget {
                         builder: (context, stateItem) {
                       if (stateItem is SuccessDeleteItemCartState) {
                         state.cart!.itemsCart.removeAt(stateItem.index!);
+                        if (state.cart!.itemsCart.isEmpty) {
+                          state.cart = null;
+                          return SizedBox(
+                            child: Center(
+                                child: SvgPicture.asset(AppAssets.emptyCart)),
+                          );
+                        }
                       }
                       return Padding(
                         padding: const EdgeInsets.symmetric(

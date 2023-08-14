@@ -24,6 +24,7 @@ class CartRepoImpl extends CartRepo {
     ItemCartModel itemCartModel = ItemCartModel(
         id: itemCart.id,
         title: itemCart.title,
+        titleEn: itemCart.titleEn,
         price: itemCart.price,
         imageUrl: itemCart.imageUrl,
         account: itemCart.account);
@@ -38,7 +39,7 @@ class CartRepoImpl extends CartRepo {
   @override
   Future<Either<Failure, Unit>> deleteItemCart(int index) async {
     try {
-     await localDataSource.deleteItemCart(index);
+      await localDataSource.deleteItemCart(index);
       return const Right(unit);
     } catch (e) {
       return Left(switchException(e));

@@ -215,12 +215,16 @@ class _MainScreenState extends State<MainScreen> {
                             const SizedBox(
                               width: 10,
                             ),
-                            Text(
-                              "${globalUser!.firstName} ${globalUser!.lastName}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(fontSize: 22),
+                            SizedBox(
+                              width: Get.width * 0.5,
+                              child: Text(
+                                "${globalUser!.firstName} ${globalUser!.lastName}",
+                                overflow: TextOverflow.clip,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontSize: 22),
+                              ),
                             ),
                           ],
                         ),
