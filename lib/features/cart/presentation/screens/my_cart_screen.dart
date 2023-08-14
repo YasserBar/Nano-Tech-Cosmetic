@@ -50,129 +50,156 @@ class MyCartScreen extends StatelessWidget {
           if (state is LoadedCartState) {
             if (kDebugMode) {
               print(
-                  "00000000000000000000000000${state.cart!.itemsCart.length}");
+                  "000000  00000000000000000000${state.cart!.itemsCart.length}");
             }
-            return Column(
-              children: [
-                SizedBox(
-                  height: AppDimensions.bodyHeightWithNav * 0.75,
-                  child: SlidableAutoCloseBehavior(
+            return Scaffold(
+              floatingActionButton: FloatingActionButton.extended(
+                onPressed: () {
+                  globalUser != null
+                      ? WidgetsUtils.showCustomDialog(context,
+                      title: "Total",
+                      children: [
+                        Center(
+                          child: Text(
+                            "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                            style: const TextStyle(
+                                color: AppColors.secondary, fontSize: 30),
+                          ),
+                        )
+                      ])
+                      : signInDialog(context,
+                      title: AppTranslationKeys.myOrders.tr);
+                },
+                label: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    AppTranslationKeys.order.tr,
+                    style: const TextStyle(
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+                elevation: 10,
+              ),
+              body: ListView(
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppDimensions.sidesBodyPadding,
+                      vertical: 30
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Total",
+                          style: TextStyle(color: AppColors.gray, fontSize: 22),
+                        ),
+                        BlocBuilder<ItemCartBloc, ItemCartState>(
+                            builder: (context, stateItem) {
+                          if (stateItem is SuccessDecreaseItemCartState) {
+                            if (stateItem.index != null) {
+                              state.cart!.totalPrice -=
+                                  state.cart!.itemsCart[stateItem.index!].price;
+                            }
+                            return Text(
+                              "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                              style:
+                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                        fontSize: 26,
+                                        color: AppColors.primary,
+                                      ),
+                            );
+                          }
+                          if (stateItem is SuccessIncreaseItemCartState) {
+                            if (stateItem.index != null) {
+                              state.cart!.totalPrice +=
+                                  state.cart!.itemsCart[stateItem.index!].price;
+                            }
+                            return Text(
+                              "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                              style:
+                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                        fontSize: 26,
+                                        color: AppColors.primary,
+                                      ),
+                            );
+                          }
+                          if (stateItem is SuccessDeleteItemCartState) {
+                            if (stateItem.index != null) {
+                              state.cart!.totalPrice -=
+                                  (state.cart!.itemsCart[stateItem.index!].price *
+                                      state.cart!.itemsCart[stateItem.index!]
+                                          .account);
+                            }
+                            return Text(
+                              "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                              style:
+                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                        fontSize: 26,
+                                        color: AppColors.primary,
+                                      ),
+                            );
+                          }
+                          return Text(
+                            "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      fontSize: 26,
+                                      color: AppColors.primary,
+                                    ),
+                          );
+                        })
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                      height: 0, thickness: 2, indent: 15, endIndent: 15),
+                  SlidableAutoCloseBehavior(
                     child: BlocBuilder<ItemCartBloc, ItemCartState>(
                         builder: (context, stateItem) {
                       if (stateItem is SuccessDeleteItemCartState) {
                         state.cart!.itemsCart.removeAt(stateItem.index!);
-                        return ListView.builder(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: AppDimensions.appbarBodyPadding,
-                            horizontal: AppDimensions.sidesBodyPadding,
-                          ),
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: state.cart!.itemsCart.length,
-                          itemBuilder: (context, index) => ItemCard(
-                            itemCart: state.cart!.itemsCart[index],
-                            index: index,
-                          ),
-                        );
                       }
-                      return ListView.builder(
+                      return Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: AppDimensions.appbarBodyPadding,
                           horizontal: AppDimensions.sidesBodyPadding,
                         ),
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: state.cart!.itemsCart.length,
-                        itemBuilder: (context, index) => ItemCard(
-                          itemCart: state.cart!.itemsCart[index],
-                          index: index,
+                        child: Column(
+                          children: List.generate(
+                              state.cart!.itemsCart.length,
+                              (index) => ItemCard(
+                                    itemCart: state.cart!.itemsCart[index],
+                                    index: index,
+                                  )),
                         ),
                       );
                     }),
                   ),
-                ),
-                const Divider(
-                    height: 0, thickness: 2, indent: 15, endIndent: 15),
-                Container(
-                  height: AppDimensions.bodyHeightWithNav * 0.25 - 55,
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Text(
-                              "Total",
-                              style: TextStyle(
-                                  color: AppColors.gray, fontSize: 18),
-                            ),
-                            BlocBuilder<ItemCartBloc, ItemCartState>(
-                                builder: (context, stateItem) {
-                              if (stateItem is SuccessDecreaseItemCartState) {
-                                if (stateItem.index != null) {
-                                  state.cart!.totalPrice -= state
-                                      .cart!.itemsCart[stateItem.index!].price;
-                                }
-                                return Text(
-                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        fontSize: 26,
-                                        color: AppColors.primary,
-                                      ),
-                                );
-                              }
-                              if (stateItem is SuccessIncreaseItemCartState) {
-                                if (stateItem.index != null) {
-                                  state.cart!.totalPrice += state
-                                      .cart!.itemsCart[stateItem.index!].price;
-                                }
-                                return Text(
-                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        fontSize: 26,
-                                        color: AppColors.primary,
-                                      ),
-                                );
-                              }
-                              if (stateItem is SuccessDeleteItemCartState) {
-                                if (stateItem.index != null) {
-                                  state.cart!.totalPrice -= (state.cart!
-                                          .itemsCart[stateItem.index!].price *
-                                      state.cart!.itemsCart[stateItem.index!]
-                                          .account);
-                                }
-                                return Text(
-                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        fontSize: 26,
-                                        color: AppColors.primary,
-                                      ),
-                                );
-                              }
-                              return Text(
-                                "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                      fontSize: 26,
-                                      color: AppColors.primary,
-                                    ),
-                              );
-                            })
-                          ],
-                        ),
-                      ),
+                ],
+              ),
+            );
+          } else if (state is EmptyCacheFailureCartState) {
+            return SizedBox(
+              child: Center(child: SvgPicture.asset(AppAssets.emptyCart)),
+            );
+          } else if (state is FailureCartState) {
+            return SizedBox(
+              child: Center(child: SvgPicture.asset(AppAssets.caution)),
+            );
+          }
+          return const LoaderIndicator();
+        },
+      ),
+    );
+  }
+}
+
+
+/*
+
                       Expanded(
                         flex: 1,
                         child: SizedBox(
@@ -214,23 +241,5 @@ class MyCartScreen extends StatelessWidget {
                           ),
                         ),
                       )
-                    ],
-                  ),
-                )
-              ],
-            );
-          } else if (state is EmptyCacheFailureCartState) {
-            return SizedBox(
-              child: Center(child: SvgPicture.asset(AppAssets.emptyCart)),
-            );
-          } else if (state is FailureCartState) {
-            return SizedBox(
-              child: Center(child: SvgPicture.asset(AppAssets.caution)),
-            );
-          }
-          return const LoaderIndicator();
-        },
-      ),
-    );
-  }
-}
+
+ */

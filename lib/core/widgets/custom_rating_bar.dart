@@ -29,15 +29,15 @@ class CustomRatingBar extends StatelessWidget {
         ratingWidget: RatingWidget(
           full: const Icon(
             Icons.star_outlined,
-            color: AppColors.yellowAccent,
+            color: AppColors.amber,
           ),
           half: const Icon(
             Icons.star_half_outlined,
-            color: AppColors.yellowAccent,
+            color: AppColors.amber,
           ),
           empty: const Icon(
             Icons.star_outline_outlined,
-            color: AppColors.yellowAccent,
+            color: AppColors.amber,
           ),
         ),
         ignoreGestures: ignoreGestures,
