@@ -162,7 +162,7 @@ class AppTranslations extends Translations {
           AppTranslationKeys.ratingProduct: 'تقيم منتج',
           AppTranslationKeys.di: 'د.ع',
 
-          AppTranslationKeys.myCart: 'سلتي',
+          AppTranslationKeys.myCart: 'السلة',
           AppTranslationKeys.total: 'الأجمالي',
           AppTranslationKeys.amount: 'الكمية',
           AppTranslationKeys.order: 'اطلب',
