@@ -39,8 +39,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LocaleController controller = Get.put(LocaleController());
-
     // print(globalUser!.role);
     return Scaffold(
       backgroundColor:
@@ -138,7 +136,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             children: [
                               Center(
                                 child: Text(
-                                  controller.language == 'ar'
+                                  Get.locale!.languageCode == 'ar'
                                       ? product.name
                                       : product.nameEn,
                                   style: Theme.of(context)
@@ -373,7 +371,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 height: 15,
                               ),
                               Text(
-                              controller.language == 'ar'?  product.description:product.descriptionEn,
+                                Get.locale!.languageCode == 'ar'
+                                    ? product.description
+                                    : product.descriptionEn,
                                 maxLines: isReadMoreMode && isEnd ? null : 4,
                                 overflow: isReadMoreMode && isEnd
                                     ? TextOverflow.visible

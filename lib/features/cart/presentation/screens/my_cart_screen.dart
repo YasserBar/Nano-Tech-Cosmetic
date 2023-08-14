@@ -8,6 +8,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
@@ -30,7 +31,6 @@ class MyCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -72,6 +72,9 @@ class MyCartScreen extends StatelessWidget {
                         snackBarType: SnackBarType.error,
                       );
                     } else if (state1 is SuccessStoreOrderState) {
+                      BlocProvider.of<CartBloc>(context)
+                          .add(const DeleteCartEvent());
+                      Get.offAndToNamed(AppPagesRoutes.mainScreen,arguments: 2);
                       WidgetsUtils.showSnackBar(
                         title: AppTranslationKeys.success.tr,
                         message: state1.message,

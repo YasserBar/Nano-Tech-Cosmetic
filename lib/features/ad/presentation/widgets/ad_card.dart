@@ -15,7 +15,6 @@ class AdCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocaleController controller = Get.put(LocaleController());
 
     return InkWell(
       onTap: () {
@@ -68,7 +67,7 @@ class AdCard extends StatelessWidget {
               SizedBox(
                 width: 140,
                 child: Text(
-                  controller.language == 'ar' ? ad.title : ad.titleEn,
+                  Get.locale!.languageCode == 'ar' ? ad.title : ad.titleEn,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,

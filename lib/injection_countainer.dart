@@ -23,6 +23,7 @@ import 'package:nano_tech_cosmetic/features/cart/data/repository/cart_repo_impl.
 import 'package:nano_tech_cosmetic/features/cart/domain/repository/cart_repo.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/usecases/add_item_cart_usecase.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/usecases/decrease_item_cart.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/usecases/delete_cart.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/usecases/delete_item_cart.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/usecases/display_cart_usecase.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/usecases/increase_item_cart.dart';
@@ -108,6 +109,7 @@ Future<void> init() async {
     () => CartBloc(
       addItemCartUsecase: sl(),
       displayCartUsecase: sl(),
+      deleteCartUsecase: sl(),
     ),
   );
   sl.registerFactory(
@@ -124,6 +126,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteItemCartUsecase(sl()));
   sl.registerLazySingleton(() => IncreaseItemCartUsecase(sl()));
   sl.registerLazySingleton(() => DecreaseItemCartUsecase(sl()));
+  sl.registerLazySingleton(() => DeleteCartUsecase(sl()));
 
 // Repository
   sl.registerLazySingleton<CartRepo>(
