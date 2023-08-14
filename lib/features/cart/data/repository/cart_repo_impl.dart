@@ -78,4 +78,14 @@ class CartRepoImpl extends CartRepo {
       return Left(switchException(e));
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> deleteCart() async {
+    try {
+      await localDataSource.deleteCart();
+      return const Right(unit);
+    } catch (e) {
+      return Left(switchException(e));
+    }
+  }
 }

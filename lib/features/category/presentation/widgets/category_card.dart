@@ -13,7 +13,6 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocaleController controller = Get.put(LocaleController());
 
     return InkWell(
       onTap: () {
@@ -65,7 +64,7 @@ class CategoryCard extends StatelessWidget {
               SizedBox(
                 width: 140,
                 child: Text(
-                  controller.language == 'ar' ? category.name : category.nameEn,
+                 Get.locale!.languageCode == 'ar' category.name : category.nameEn,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

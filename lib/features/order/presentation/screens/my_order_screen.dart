@@ -15,10 +15,13 @@ import 'package:nano_tech_cosmetic/features/order/presentation/bloc/order_event.
 import 'package:nano_tech_cosmetic/features/order/presentation/bloc/order_state.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/widgets/order_card.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
+import 'package:nano_tech_cosmetic/features/order/domain/entities/order_entity.dart'
+as o;
 import 'package:nano_tech_cosmetic/main.dart';
 
 class MyOrderScreen extends StatefulWidget {
   OrderStatus orderStatusFilter;
+
   MyOrderScreen({Key? key, required this.orderStatusFilter}) : super(key: key);
 
   @override
@@ -37,7 +40,8 @@ class _MyOrderScreenState extends State<MyOrderScreen>
 
   @override
   Widget build(BuildContext context) {
-    return globalUser != null && globalUser!.role != Role.customer ? Scaffold(
+    return globalUser != null && globalUser!.role != Role.customer
+        ? Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(Get.width, Get.height * 0.1),
         child: Padding(
@@ -54,18 +58,10 @@ class _MyOrderScreenState extends State<MyOrderScreen>
             },
             isScrollable: false,
             unselectedLabelStyle:
-            Theme
-                .of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(
+            Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: AppColors.gray,
             ),
-            labelStyle: Theme
-                .of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(
+            labelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: AppColors.primary,
             ),
             tabs: [
@@ -81,12 +77,10 @@ class _MyOrderScreenState extends State<MyOrderScreen>
       ),
       body: TabBarView(controller: tabController, children: [
         BlocProvider(
-          create: (context) =>
-          di.sl<OrderBloc>()
+          create: (context) => di.sl<OrderBloc>()
             ..add(
               DisplayOrderEvent(orderStatus: OrderStatus.all),
-            )
-          ,
+            ),
           child: BlocConsumer<OrderBloc, OrderState>(
             listener: (context, state) {
               if (state is FailureOrderState ||
@@ -112,18 +106,22 @@ class _MyOrderScreenState extends State<MyOrderScreen>
                       horizontal: AppDimensions.sidesBodyPadding,
                     ),
                     physics: const BouncingScrollPhysics(),
-                    itemCount: state.orders != null ? state.orders!.length : 0,
-                    itemBuilder: (context, index) =>
-                        OrderCard(
-                          price: state.orders![index].price.toString(),
-                          response: state.orders![index].response??"================",
-                          date: state.orders![index].createdAt,
-                          status: state.orders![index].status,
-                          onTap: () {
-                            Get.toNamed(AppPagesRoutes.orderDetailsScreen,
-                                arguments: state.orders);
-                          },
-                        ),
+                    itemCount:
+                    state.orders != null ? state.orders!.length : 0,
+                    itemBuilder: (context, index) => OrderCard(
+                      price: state.orders![index].price.toString(),
+                      response: state.orders![index].response ??
+                          "================",
+                      date: state.orders![index].createdAt,
+                      status: state.orders![index].status,
+                      onTap: () {
+                        Get.toNamed(AppPagesRoutes.orderDetailsScreen,
+                            arguments: {
+                              AppKeys.ORDER: state.orders![index],
+                              AppKeys.ORDER_TYPE: OrderType.normal,
+                            });
+                      },
+                    ),
                   ),
                 );
               }
@@ -131,31 +129,7 @@ class _MyOrderScreenState extends State<MyOrderScreen>
             },
           ),
         ),
-        if(globalUser!.role== Role.company)
-          RefreshIndicator(
-          color: AppColors.primary,
-          backgroundColor: AppColors.white,
-          onRefresh: () async {},
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(
-              vertical: AppDimensions.appbarBodyPadding,
-              horizontal: AppDimensions.sidesBodyPadding,
-            ),
-            physics: const BouncingScrollPhysics(),
-            itemCount: 10,
-            itemBuilder: (context, index) =>
-                OrderCard(
-                  price: "3500",
-                  response: "Your order will prepare you\n can show status of...  ",
-                  date: "21-3-2023",
-                  status: OrderStatus.rejected,
-                  onTap: () {
-                    Get.toNamed(AppPagesRoutes.orderDetailsScreen);
-                  },
-                ),
-          ),
-        ),
-        if(globalUser!.role== Role.salon)
+        if (globalUser!.role == Role.company)
           RefreshIndicator(
             color: AppColors.primary,
             backgroundColor: AppColors.white,
@@ -167,24 +141,74 @@ class _MyOrderScreenState extends State<MyOrderScreen>
               ),
               physics: const BouncingScrollPhysics(),
               itemCount: 10,
-              itemBuilder: (context, index) =>
-                  OrderCard(
-                    price: "3500",
-                    response: "Your order will prepare you\n can show status of...  ",
-                    date: "21-3-2023",
-                    status: OrderStatus.rejected,
-                    onTap: () {
-                      Get.toNamed(AppPagesRoutes.orderDetailsScreen,arguments: {
-                        AppKeys.ORDER_TYPE:OrderType.manufacturing
+              itemBuilder: (context, index) => OrderCard(
+                price: "3500",
+                response:
+                "Your order will prepare you\n can show status of...  ",
+                date: "21-03-2023",
+                status: OrderStatus.rejected,
+                onTap: () {
+                  Get.toNamed(AppPagesRoutes.orderDetailsScreen,
+                      arguments: {
+                        AppKeys.ORDER: const o.Order(
+                            id: 1,
+                            endProcessing: '',
+                            createdAt: '21-03-2023',
+                            langCode: '',
+                            price: 3500,
+                            response: '*********',
+                            status: OrderStatus.rejected,
+                            updatedAt: '21-03-2023',
+                            userId: 1,
+                            startProcessing: ''),
+                        AppKeys.ORDER_TYPE: OrderType.manufacturing,
                       });
-                    },
-                  ),
+                },
+              ),
+            ),
+          ),
+        if (globalUser!.role == Role.salon)
+          RefreshIndicator(
+            color: AppColors.primary,
+            backgroundColor: AppColors.white,
+            onRefresh: () async {},
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(
+                vertical: AppDimensions.appbarBodyPadding,
+                horizontal: AppDimensions.sidesBodyPadding,
+              ),
+              physics: const BouncingScrollPhysics(),
+              itemCount: 10,
+              itemBuilder: (context, index) => OrderCard(
+                price: "3500",
+                response:
+                "Your order will prepare you\n can show status of...  ",
+                date: "21-03-2023",
+                status: OrderStatus.rejected,
+                onTap: () {
+                  Get.toNamed(AppPagesRoutes.orderDetailsScreen,
+                      arguments: {
+                        AppKeys.ORDER: const o.Order(
+                            id: 1,
+                            endProcessing: '',
+                            createdAt: '21-03-2023',
+                            langCode: '',
+                            price: 3500,
+                            response: '*********',
+                            status: OrderStatus.rejected,
+                            updatedAt: '21-03-2023',
+                            userId: 1,
+                            startProcessing: ''),
+                        AppKeys.ORDER_TYPE: OrderType.manufacturing,
+                      });
+                },
+              ),
             ),
           ),
       ]),
-    ):BlocProvider(
-      create: (context) =>
-      di.sl<OrderBloc>()
+    )
+        : BlocProvider(
+      create: (context) => di.sl<OrderBloc>()
         ..add(
           DisplayOrderEvent(orderStatus: OrderStatus.all),
         ),
@@ -213,18 +237,22 @@ class _MyOrderScreenState extends State<MyOrderScreen>
                   horizontal: AppDimensions.sidesBodyPadding,
                 ),
                 physics: const BouncingScrollPhysics(),
-                itemCount: state.orders != null ? state.orders!.length : 0,
-                itemBuilder: (context, index) =>
-                    OrderCard(
-                      price: state.orders![index].price.toString(),
-                      response: state.orders![index].response??"*******************",
-                      date: state.orders![index].createdAt,
-                      status: state.orders![index].status,
-                      onTap: () {
-                        Get.toNamed(AppPagesRoutes.orderDetailsScreen,
-                            arguments: state.orders);
-                      },
-                    ),
+                itemCount:
+                state.orders != null ? state.orders!.length : 0,
+                itemBuilder: (context, index) => OrderCard(
+                  price: state.orders![index].price.toString(),
+                  response: state.orders![index].response ??
+                      "*******************",
+                  date: state.orders![index].createdAt,
+                  status: state.orders![index].status,
+                  onTap: () {
+                    Get.toNamed(AppPagesRoutes.orderDetailsScreen,
+                        arguments: {
+                          AppKeys.ORDER: state.orders,
+                          AppKeys.ORDER_TYPE: OrderType.normal,
+                        });
+                  },
+                ),
               ),
             );
           }

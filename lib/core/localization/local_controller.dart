@@ -13,6 +13,7 @@ class LocaleController extends GetxController {
   @override
   void onInit() {
     String? sharedPrefLang = sharedPreferences.getString(AppKeys.LANG);
+
     if (sharedPrefLang == "ar") {
       language = const Locale("ar");
       appTheme = AppThemes.themeArabic;

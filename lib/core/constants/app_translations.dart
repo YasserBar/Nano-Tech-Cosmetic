@@ -162,7 +162,7 @@ class AppTranslations extends Translations {
           AppTranslationKeys.ratingProduct: 'تقيم منتج',
           AppTranslationKeys.di: 'د.ع',
 
-          AppTranslationKeys.myCart: 'سلتي',
+          AppTranslationKeys.myCart: 'السلة',
           AppTranslationKeys.total: 'الأجمالي',
           AppTranslationKeys.amount: 'الكمية',
           AppTranslationKeys.order: 'اطلب',
@@ -170,7 +170,7 @@ class AppTranslations extends Translations {
           AppTranslationKeys.specialOrders: 'الطلبات الخاصة',
           AppTranslationKeys.confirm: 'تأكيد',
           AppTranslationKeys.cancel: 'إلغاء',
-          AppTranslationKeys.addToCart: 'إضافة إلى السلة',
+          AppTranslationKeys.addToCart: 'إضافة للسلة',
           AppTranslationKeys.specialOrder: 'طلب خاص',
 
           AppTranslationKeys.myOrders: 'طلباتي',

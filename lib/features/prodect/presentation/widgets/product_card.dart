@@ -23,8 +23,6 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocaleController controller = Get.put(LocaleController());
-
     return InkWell(
       onTap: () {
         Get.toNamed(AppPagesRoutes.productDetailsScreen, arguments: product);
@@ -62,8 +60,13 @@ class ProductCard extends StatelessWidget {
                       height: 85,
                       width: 85,
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.horizontal(
-                          left: Radius.circular(15),
+                        borderRadius: BorderRadius.horizontal(
+                          left: Get.locale!.languageCode == 'en'
+                              ? const Radius.circular(15)
+                              : const Radius.circular(0),
+                          right: Get.locale!.languageCode == 'ar'
+                              ? const Radius.circular(15)
+                              : const Radius.circular(0),
                         ),
                         image: DecorationImage(
                           image: CachedNetworkImageProvider(
@@ -83,7 +86,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          controller.language == 'ar'
+                          Get.locale!.languageCode == 'ar'
                               ? product.name
                               : product.nameEn,
                           style: Theme.of(context)

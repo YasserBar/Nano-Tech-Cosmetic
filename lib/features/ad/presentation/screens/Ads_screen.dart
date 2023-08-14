@@ -52,7 +52,7 @@ class _AdsScreenState extends State<AdsScreen> {
                   ),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 0.85,
+                      childAspectRatio: 0.8,
                       mainAxisSpacing: 15,
                       crossAxisSpacing: 15),
                   physics: const BouncingScrollPhysics(),

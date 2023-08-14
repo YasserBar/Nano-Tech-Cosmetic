@@ -20,13 +20,13 @@ class OffersScreen extends StatefulWidget {
 }
 
 class _OffersScreenState extends State<OffersScreen> {
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => di.sl<OfferBloc>()..add(
-        ShowOffersEvent(),
-      ),
+      create: (context) => di.sl<OfferBloc>()
+        ..add(
+          ShowOffersEvent(),
+        ),
       child: BlocConsumer<OfferBloc, OfferState>(
         listener: (context, state) {
           if (state is FailureOfferState ||
@@ -50,7 +50,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   horizontal: AppDimensions.sidesBodyPadding,
                 ),
                 physics: const BouncingScrollPhysics(),
-                itemCount: state.offer!.length,
+                itemCount: state.offer != null ? state.offer!.length : 0,
                 itemBuilder: (context, index) => OfferCard(
                   offer: state.offer![index],
                 ),

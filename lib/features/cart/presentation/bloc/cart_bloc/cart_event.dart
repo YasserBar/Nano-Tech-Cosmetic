@@ -22,3 +22,10 @@ class DisplayCartEvent extends CartEvent {
   @override
   List<Object> get props => [];
 }
+
+class DeleteCartEvent extends CartEvent {
+  const DeleteCartEvent();
+
+  @override
+  List<Object> get props => [];
+}

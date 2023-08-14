@@ -47,3 +47,11 @@ class SuccessAddItemCartState extends CartState {
       required super.cart,
       super.message = AppMessages.ADD_ITEM_MESSAGE});
 }
+
+
+class SuccessDeleteCartState extends CartState {
+  SuccessDeleteCartState(
+      {required super.index,
+      required super.cart,
+      super.message = AppMessages.ADD_ITEM_MESSAGE});
+}
