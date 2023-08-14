@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
@@ -61,13 +62,25 @@ class OfferCard extends StatelessWidget {
                       height: 100,
                       width: 85,
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.horizontal(
-                          left: Radius.circular(15),
+                        borderRadius: BorderRadius.horizontal(
+                          left: Get.locale!.languageCode == 'en'
+                              ? const Radius.circular(15)
+                              : const Radius.circular(0),
+                          right: Get.locale!.languageCode == 'ar'
+                              ? const Radius.circular(15)
+                              : const Radius.circular(0),
                         ),
-                        image: DecorationImage(
-                          image: CachedNetworkImageProvider(offer.imageUrl!),
-                          fit: BoxFit.cover,
-                        ),
+                        image: offer.imageUrl != null
+                            ? DecorationImage(
+                                image:
+                                    CachedNetworkImageProvider(offer.imageUrl!),
+                                fit: BoxFit.cover,
+                              )
+                            : const DecorationImage(
+                                image:
+                                    AssetImage(AppAssets.image1),
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                     const VerticalDivider(

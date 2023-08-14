@@ -61,7 +61,7 @@ class OrderCard extends StatelessWidget {
                         ),
                   ),
                   Text(
-                    date,
+                    date.substring(0,10),
                     style: const TextStyle(
                       color: AppColors.secondary,
                       fontSize: 16,

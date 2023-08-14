@@ -18,6 +18,10 @@ import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/car
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_state.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/widgets/item_card.dart';
+import 'package:nano_tech_cosmetic/features/order/domain/entities/request_order_entity.dart';
+import 'package:nano_tech_cosmetic/features/order/presentation/bloc/order_bloc.dart';
+import 'package:nano_tech_cosmetic/features/order/presentation/bloc/order_event.dart';
+import 'package:nano_tech_cosmetic/features/order/presentation/bloc/order_state.dart';
 import 'package:nano_tech_cosmetic/main.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
@@ -54,42 +58,106 @@ class MyCartScreen extends StatelessWidget {
                   "000000  00000000000000000000${state.cart!.itemsCart.length}");
             }
             return Scaffold(
-              floatingActionButton: FloatingActionButton.extended(
-                onPressed: () {
-                  globalUser != null
-                      ? WidgetsUtils.showCustomDialog(context,
-                      title: "Total",
-                      children: [
-                        Center(
-                          child: Text(
-                            "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                            style: const TextStyle(
-                                color: AppColors.secondary, fontSize: 30),
+              floatingActionButton: BlocProvider(
+                create: (context) => di.sl<OrderBloc>(),
+                child: BlocConsumer<OrderBloc, OrderState>(
+                  listener: (context, state1) {
+                    if (state1 is FailureOrderState ||
+                        state is OfflineFailureOrderState ||
+                        state is InternalServerFailureOrderState ||
+                        state is UnexpectedFailureOrderState) {
+                      WidgetsUtils.showSnackBar(
+                        title: AppTranslationKeys.failure.tr,
+                        message: state1.message,
+                        snackBarType: SnackBarType.error,
+                      );
+                    } else if (state1 is SuccessStoreOrderState) {
+                      WidgetsUtils.showSnackBar(
+                        title: AppTranslationKeys.success.tr,
+                        message: state1.message,
+                        snackBarType: SnackBarType.info,
+                      );
+                    }
+                  },
+                  builder: (context, state1) {
+                    return FloatingActionButton.extended(
+                      onPressed: () {
+                        globalUser != null
+                            ? WidgetsUtils.showCustomDialog(
+                                context,
+                                title: "Total",
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                                      style: const TextStyle(
+                                          color: AppColors.secondary,
+                                          fontSize: 30),
+                                    ),
+                                  )
+                                ],
+                                btnOkOnPress: () {
+                                  Get.back();
+                                  BlocProvider.of<OrderBloc>(context)
+                                      .add(StoreOrderEvent(
+                                          requestOrder: RequestOrder(
+                                    colorIds: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => element.isProduct)
+                                            .toList())
+                                        .map((e) => -1)
+                                        .toList(),
+                                    productIds: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => element.isProduct)
+                                            .toList())
+                                        .map((e) => e.id)
+                                        .toList(),
+                                    quantitiesProducts: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => element.isProduct)
+                                            .toList())
+                                        .map((e) => e.account)
+                                        .toList(),
+                                    offerIds: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => !element.isProduct)
+                                            .toList())
+                                        .map((e) => e.id)
+                                        .toList(),
+                                    quantitiesOffers: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => !element.isProduct)
+                                            .toList())
+                                        .map((e) => e.account)
+                                        .toList(),
+                                  )));
+                                },
+                              )
+                            : signInDialog(context,
+                                title: AppTranslationKeys.myOrders.tr);
+                      },
+                      label: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          AppTranslationKeys.order.tr,
+                          style: const TextStyle(
+                            color: AppColors.white,
                           ),
-                        )
-                      ])
-                      : signInDialog(context,
-                      title: AppTranslationKeys.myOrders.tr);
-                },
-                label: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    AppTranslationKeys.order.tr,
-                    style: const TextStyle(
-                      color: AppColors.white,
-                    ),
-                  ),
+                        ),
+                      ),
+                      elevation: 10,
+                    );
+                  },
                 ),
-                elevation: 10,
               ),
               body: ListView(
                 physics: const BouncingScrollPhysics(),
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: AppDimensions.sidesBodyPadding,
-                      vertical: 30
-                    ),
+                        horizontal: AppDimensions.sidesBodyPadding,
+                        vertical: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -106,11 +174,13 @@ class MyCartScreen extends StatelessWidget {
                             }
                             return Text(
                               "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                              style:
-                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                        fontSize: 26,
-                                        color: AppColors.primary,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontSize: 26,
+                                    color: AppColors.primary,
+                                  ),
                             );
                           }
                           if (stateItem is SuccessIncreaseItemCartState) {
@@ -120,27 +190,31 @@ class MyCartScreen extends StatelessWidget {
                             }
                             return Text(
                               "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                              style:
-                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                        fontSize: 26,
-                                        color: AppColors.primary,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontSize: 26,
+                                    color: AppColors.primary,
+                                  ),
                             );
                           }
                           if (stateItem is SuccessDeleteItemCartState) {
                             if (stateItem.index != null) {
-                              state.cart!.totalPrice -=
-                                  (state.cart!.itemsCart[stateItem.index!].price *
-                                      state.cart!.itemsCart[stateItem.index!]
-                                          .account);
+                              state.cart!.totalPrice -= (state
+                                      .cart!.itemsCart[stateItem.index!].price *
+                                  state.cart!.itemsCart[stateItem.index!]
+                                      .account);
                             }
                             return Text(
                               "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                              style:
-                                  Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                        fontSize: 26,
-                                        color: AppColors.primary,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontSize: 26,
+                                    color: AppColors.primary,
+                                  ),
                             );
                           }
                           return Text(
@@ -204,7 +278,6 @@ class MyCartScreen extends StatelessWidget {
     );
   }
 }
-
 
 /*
 
