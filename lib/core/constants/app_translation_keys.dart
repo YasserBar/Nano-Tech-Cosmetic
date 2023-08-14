@@ -68,6 +68,7 @@ class AppTranslationKeys {
   static const String order = 'order';
   static const String specialOrders = 'specialOrders';
   static const String cartOrders = 'cartOrders';
+  static const String delete = 'delete';
   static const String confirm = 'confirm';
   static const String cancel = 'cancel';
   static const String addToCart = 'addToCart';

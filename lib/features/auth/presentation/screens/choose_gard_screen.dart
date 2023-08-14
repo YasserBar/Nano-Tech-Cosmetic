@@ -50,6 +50,7 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                         height: Get.height * 0.2,
                         child: SvgPicture.asset(
                           AppAssets.logo,
+                          fit: BoxFit.fill,
                         ),
                       ),
                       Row(

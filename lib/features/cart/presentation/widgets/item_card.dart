@@ -7,9 +7,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_event.dart';
@@ -85,7 +83,7 @@ class ItemCard extends StatelessWidget {
                   icon: Icons.delete,
                   autoClose: true,
                   flex: 100,
-                  label: 'Delete',
+                  label: AppTranslationKeys.delete.tr,
                 ),
                 SlidableAction(
                   onPressed: (context) {},
@@ -128,13 +126,12 @@ class ItemCard extends StatelessWidget {
                                 ),
                                 image: itemCart.imageUrl != null
                                     ? DecorationImage(
-                                  image:
-                                  CachedNetworkImageProvider(itemCart.imageUrl!),
+                                  image: CachedNetworkImageProvider(
+                                      itemCart.imageUrl!),
                                   fit: BoxFit.cover,
                                 )
                                     : const DecorationImage(
-                                  image:
-                                  AssetImage(AppAssets.image1),
+                                  image: AssetImage(AppAssets.image1),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -167,15 +164,19 @@ class ItemCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(
-                         Get.locale!.languageCode == 'ar'
-                                    ? itemCart.title
-                                    : itemCart.titleEn,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                  fontSize: 20,
+                              SizedBox(
+                                width: Get.width * 0.5,
+                                child: Text(
+                                  Get.locale!.languageCode == 'ar'
+                                      ? itemCart.title
+                                      : itemCart.titleEn,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                    fontSize: 20,
+                                  ),
                                 ),
                               ),
                               Text(

@@ -248,7 +248,7 @@ class _MyOrderScreenState extends State<MyOrderScreen>
                   onTap: () {
                     Get.toNamed(AppPagesRoutes.orderDetailsScreen,
                         arguments: {
-                          AppKeys.ORDER: state.orders,
+                          AppKeys.ORDER: state.orders![index],
                           AppKeys.ORDER_TYPE: OrderType.normal,
                         });
                   },

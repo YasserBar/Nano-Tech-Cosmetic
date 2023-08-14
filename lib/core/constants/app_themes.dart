@@ -90,7 +90,7 @@ abstract class AppThemes {
       ),
     ),
     appBarTheme: AppBarTheme(
-      color: AppColors.materialPrimary.shade50,
+      color: AppColors.white,
       iconTheme: IconThemeData(
         color: AppColors.materialPrimary.shade800,
         size: 25,
@@ -198,7 +198,7 @@ abstract class AppThemes {
       ),
     ),
     appBarTheme: AppBarTheme(
-      color: AppColors.materialPrimary.shade50,
+      color: AppColors.white,
       iconTheme: IconThemeData(
         color: AppColors.materialPrimary.shade800,
         size: 25,
