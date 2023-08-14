@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:nano_tech_cosmetic/core/errors/failures.dart';
 import 'package:nano_tech_cosmetic/core/helpers/network_info.dart';
 import 'package:nano_tech_cosmetic/core/helpers/switch_exceptions.dart';
@@ -35,10 +36,10 @@ class CartRepoImpl extends CartRepo {
   }
 
   @override
-  Future<Either<Failure, Cart>> deleteItemCart(int index, int price) async {
+  Future<Either<Failure, Unit>> deleteItemCart(int index) async {
     try {
-      CartModel cartModel = await localDataSource.deleteItemCart(index, price);
-      return Right(cartModel);
+     await localDataSource.deleteItemCart(index);
+      return const Right(unit);
     } catch (e) {
       return Left(switchException(e));
     }
@@ -50,7 +51,29 @@ class CartRepoImpl extends CartRepo {
       CartModel cartModel = await localDataSource.dispalyCart();
       return Right(cartModel);
     } catch (e) {
-      print("##################$e");
+      if (kDebugMode) {
+        print("##################$e");
+      }
+      return Left(switchException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> decreaseItemCart(int index) async {
+    try {
+      await localDataSource.decreaseItemCart(index);
+      return const Right(unit);
+    } catch (e) {
+      return Left(switchException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> increaseItemCart(int index) async {
+    try {
+      await localDataSource.increaseItemCart(index);
+      return const Right(unit);
+    } catch (e) {
       return Left(switchException(e));
     }
   }

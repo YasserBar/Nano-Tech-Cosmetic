@@ -2,7 +2,7 @@ import 'package:nano_tech_cosmetic/features/cart/data/models/item_cart_model.dar
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/cart_entity.dart';
 
 class CartModel extends Cart {
-  const CartModel({
+  CartModel({
     required int totalPrice,
     required List<ItemCartModel> itemsCart,
   }) : super(
@@ -10,9 +10,12 @@ class CartModel extends Cart {
           itemsCart: itemsCart,
         );
   factory CartModel.fromJson(Map<String, dynamic> json) {
-    List<ItemCartModel> parsedItemsCart = json['itemsCart']
-        .map((itemJson) => ItemCartModel.fromJson(itemJson))
+    List<ItemCartModel> parsedItemsCart = (json['itemsCart'] as List<dynamic>)
+        .map<ItemCartModel>((itemJson) => ItemCartModel.fromJson(itemJson))
         .toList();
+    // List<ItemCartModel> parsedItemsCart = json['itemsCart']
+    //     .map((itemJson) => ItemCartModel.fromJson(itemJson))
+    //     .toList();
     return CartModel(
       totalPrice: json['totalPrice'] as int,
       itemsCart: parsedItemsCart,

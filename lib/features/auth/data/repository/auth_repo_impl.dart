@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/errors/exception.dart';
 import 'package:nano_tech_cosmetic/core/errors/failures.dart';
@@ -41,8 +42,10 @@ class AuthRepoImpl implements AuthRepo {
       try {
         final UserModel userModel = await remoteDataSource.login(loginModel);
         globalUser = userModel;
-        print('out 1    ');
-        print(globalUser);
+        if (kDebugMode) {
+          print('out 1    ');
+          print(globalUser);
+        }
         localDataSource.cacheUser(userModel);
         // print('out 3   ');
         return Right(userModel);

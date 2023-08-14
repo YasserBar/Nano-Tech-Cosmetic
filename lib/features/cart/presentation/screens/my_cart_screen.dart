@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -7,9 +8,11 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
-import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc.dart';
-import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_event.dart';
-import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_state.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_event.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_state.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_bloc.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_state.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/widgets/item_card.dart';
 import 'package:nano_tech_cosmetic/main.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
@@ -19,8 +22,15 @@ class MyCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => di.sl<CartBloc>()..add(const DisplayCartEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => di.sl<CartBloc>()..add(const DisplayCartEvent()),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<ItemCartBloc>(),
+        ),
+      ],
       child: BlocConsumer<CartBloc, CartState>(
         listener: (context, state) {
           if (state is FailureCartState ||
@@ -33,25 +43,45 @@ class MyCartScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          print("00000000000000000000000000$state");
-          if (state is LoadedDeleteCartState) {
+          if (state is LoadedCartState) {
+            if (kDebugMode) {
+              print("00000000000000000000000000${state.cart!.itemsCart.length}");
+            }
             return Column(
               children: [
                 SizedBox(
                   height: AppDimensions.bodyHeightWithNav * 0.75,
                   child: SlidableAutoCloseBehavior(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: AppDimensions.appbarBodyPadding,
-                        horizontal: AppDimensions.sidesBodyPadding,
-                      ),
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: state.cart.itemsCart.length,
-                      itemBuilder: (context, index) => ItemCard(
-                        itemCart: state.cart.itemsCart[index],
-                        index: index,
-                      ),
-                    ),
+                    child: BlocBuilder<ItemCartBloc, ItemCartState>(
+                        builder: (context, stateItem) {
+                      if (stateItem is SuccessDeleteItemCartState) {
+                        state.cart!.itemsCart.removeAt(stateItem.index!);
+                        return ListView.builder(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: AppDimensions.appbarBodyPadding,
+                            horizontal: AppDimensions.sidesBodyPadding,
+                          ),
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: state.cart!.itemsCart.length,
+                          itemBuilder: (context, index) => ItemCard(
+                            itemCart: state.cart!.itemsCart[index],
+                            index: index,
+                          ),
+                        );
+                      }
+                      return ListView.builder(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppDimensions.appbarBodyPadding,
+                          horizontal: AppDimensions.sidesBodyPadding,
+                        ),
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: state.cart!.itemsCart.length,
+                        itemBuilder: (context, index) => ItemCard(
+                          itemCart: state.cart!.itemsCart[index],
+                          index: index,
+                        ),
+                      );
+                    }),
                   ),
                 ),
                 const Divider(
@@ -72,16 +102,69 @@ class MyCartScreen extends StatelessWidget {
                               style: TextStyle(
                                   color: AppColors.gray, fontSize: 18),
                             ),
-                            Text(
-                              "${state.cart.totalPrice} D.I",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    fontSize: 26,
-                                    color: AppColors.primary,
-                                  ),
-                            )
+                            BlocBuilder<ItemCartBloc, ItemCartState>(
+                                builder: (context, stateItem) {
+                              if (stateItem is SuccessDecreaseItemCartState) {
+                                if (stateItem.index != null) {
+                                  state.cart!.totalPrice -= state
+                                      .cart!.itemsCart[stateItem.index!].price;
+                                }
+                                return Text(
+                                  "${state.cart!.totalPrice} D.I",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                        fontSize: 26,
+                                        color: AppColors.primary,
+                                      ),
+                                );
+                              }
+                              if (stateItem is SuccessIncreaseItemCartState) {
+                                if (stateItem.index != null) {
+                                  state.cart!.totalPrice += state
+                                      .cart!.itemsCart[stateItem.index!].price;
+                                }
+                                return Text(
+                                  "${state.cart!.totalPrice} D.I",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                        fontSize: 26,
+                                        color: AppColors.primary,
+                                      ),
+                                );
+                              }
+                              if (stateItem is SuccessDeleteItemCartState) {
+                                if (stateItem.index != null) {
+                                  state.cart!.totalPrice -= (state.cart!
+                                          .itemsCart[stateItem.index!].price *
+                                      state.cart!.itemsCart[stateItem.index!]
+                                          .account);
+                                }
+                                return Text(
+                                  "${state.cart!.totalPrice} D.I",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                        fontSize: 26,
+                                        color: AppColors.primary,
+                                      ),
+                                );
+                              }
+                              return Text(
+                                "${state.cart!.totalPrice} D.I",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontSize: 26,
+                                      color: AppColors.primary,
+                                    ),
+                              );
+                            })
                           ],
                         ),
                       ),
@@ -97,7 +180,7 @@ class MyCartScreen extends StatelessWidget {
                                       children: [
                                           Center(
                                             child: Text(
-                                              "${state.cart.totalPrice} D.I",
+                                              "${state.cart!.totalPrice} D.I",
                                               style: const TextStyle(
                                                   color: AppColors.secondary,
                                                   fontSize: 30),

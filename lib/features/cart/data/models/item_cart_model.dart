@@ -1,7 +1,7 @@
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 
 class ItemCartModel extends ItemCart {
-  const ItemCartModel({
+  ItemCartModel({
     required int id,
     required String title,
     required int price,
