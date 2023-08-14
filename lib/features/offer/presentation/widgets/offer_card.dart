@@ -23,6 +23,8 @@ class OfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocaleController controller = Get.put(LocaleController());
+
     return InkWell(
       onTap: () {
         Get.toNamed(AppPagesRoutes.offerDetailsScreen, arguments: offer);
@@ -75,7 +77,8 @@ class OfferCard extends StatelessWidget {
                                 fit: BoxFit.cover,
                               )
                             : const DecorationImage(
-                                image: AssetImage(AppAssets.image1),
+                                image:
+                                    AssetImage(AppAssets.logo1),
                                 fit: BoxFit.cover,
                               ),
                       ),
@@ -85,32 +88,37 @@ class OfferCard extends StatelessWidget {
                       width: 20,
                       color: AppColors.gray,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          Get.locale!.languageCode == 'ar'
-                              ? offer.title
-                              : offer.titleEn,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    fontSize: 20,
-                                  ),
-                        ),
-                        Text(
-                          "${offer.price} ${AppTranslationKeys.di.tr}",
-                          style: const TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 18,
+                    SizedBox(
+                      width: Get.width*0.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            Get.locale!.languageCode == 'ar'
+                                ? offer.title
+                                : offer.titleEn,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      fontSize: 20,
+                                    ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        Text(
-                           Get.locale!.languageCode == 'ar'
-                              ? offer.description
-                              : offer.descriptionEn,
-                        ),
-                      ],
+                          Text(
+                            "${offer.price} ${AppTranslationKeys.di.tr}",
+                            style: const TextStyle(
+                              color: AppColors.primary,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            Get.locale!.languageCode == 'ar'
+                                ? offer.description
+                                : offer.descriptionEn,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

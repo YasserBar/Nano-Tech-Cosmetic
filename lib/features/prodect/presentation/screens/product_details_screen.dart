@@ -9,7 +9,6 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
@@ -42,7 +41,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     // print(globalUser!.role);
     return Scaffold(
       backgroundColor:
-          isReadMoreMode ? AppColors.materialPrimary.withOpacity(0.9) : null,
+      isReadMoreMode ? AppColors.materialPrimary.withOpacity(0.9) : null,
       body: SafeArea(
         child: WillPopScope(
           onWillPop: () {
@@ -115,8 +114,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         borderRadius: isReadMoreMode
                             ? null
                             : const BorderRadius.vertical(
-                                top: Radius.circular(50),
-                              ),
+                          top: Radius.circular(50),
+                        ),
                       ),
                       duration: const Duration(microseconds: 600),
                       onEnd: () {
@@ -143,7 +142,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       .textTheme
                                       .bodyLarge!
                                       .copyWith(
-                                          color: AppColors.white, fontSize: 36),
+                                      color: AppColors.white, fontSize: 36),
                                 ),
                               ),
                               const SizedBox(
@@ -151,7 +150,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Electronic",
@@ -159,18 +158,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         .textTheme
                                         .bodyMedium!
                                         .copyWith(
-                                            color: AppColors.white,
-                                            fontSize: 24),
+                                        color: AppColors.white,
+                                        fontSize: 24),
                                   ),
                                   CustomRatingBar(
                                     rating:
-                                        double.parse(product.rating.toString()),
+                                    double.parse(product.rating.toString()),
                                     itemSize: 30,
                                     onTap: () {
                                       if (globalUser == null) {
                                         signInDialog(context,
                                             title:
-                                                AppTranslationKeys.rating.tr);
+                                            AppTranslationKeys.rating.tr);
                                       } else {
                                         WidgetsUtils.showCustomDialog(
                                           context,
@@ -187,27 +186,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                     state) {
                                                   if (state is FailureProductState ||
                                                       state
-                                                          is OfflineFailureProductState ||
+                                                      is OfflineFailureProductState ||
                                                       state
-                                                          is InternalServerFailureProductState ||
+                                                      is InternalServerFailureProductState ||
                                                       state
-                                                          is UnexpectedFailureProductState) {
+                                                      is UnexpectedFailureProductState) {
                                                     WidgetsUtils.showSnackBar(
                                                       title: AppTranslationKeys
                                                           .failure.tr,
                                                       message: state.message,
                                                       snackBarType:
-                                                          SnackBarType.error,
+                                                      SnackBarType.error,
                                                     );
                                                   } else if (state
-                                                      is SuccessRatingState) {
+                                                  is SuccessRatingState) {
                                                     Get.back();
                                                     WidgetsUtils.showSnackBar(
                                                       title: AppTranslationKeys
                                                           .success.tr,
                                                       message: state.message,
                                                       snackBarType:
-                                                          SnackBarType.info,
+                                                      SnackBarType.info,
                                                     );
                                                   }
                                                 },
@@ -232,33 +231,34 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                    .all(30)
-                                                                .copyWith(
-                                                                    bottom: 20),
+                                                        const EdgeInsets
+                                                            .all(30)
+                                                            .copyWith(
+                                                            bottom: 20),
                                                         child: Row(
                                                           children: [
                                                             Expanded(
                                                               flex: 3,
                                                               child:
-                                                                  MaterialButton(
+                                                              MaterialButton(
                                                                 padding:
-                                                                    const EdgeInsets
-                                                                        .symmetric(
+                                                                const EdgeInsets
+                                                                    .symmetric(
                                                                   vertical: 10,
                                                                 ),
                                                                 onPressed: () {
+                                                                  Get.back();
                                                                   BlocProvider.of<
-                                                                              ProductBloc>(
-                                                                          context)
+                                                                      ProductBloc>(
+                                                                      context)
                                                                       .add(
                                                                     RateProductEvent(
                                                                       rateProduct:
-                                                                          RateProduct(
+                                                                      RateProduct(
                                                                         productId:
-                                                                            product.id,
+                                                                        product.id,
                                                                         rate:
-                                                                            rating,
+                                                                        rating,
                                                                       ),
                                                                     ),
                                                                   );
@@ -266,17 +266,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                                 color: AppColors
                                                                     .primary,
                                                                 shape:
-                                                                    const RoundedRectangleBorder(
+                                                                const RoundedRectangleBorder(
                                                                   borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              30)),
+                                                                  BorderRadius.all(
+                                                                      Radius.circular(
+                                                                          30)),
                                                                   side:
-                                                                      BorderSide(
+                                                                  BorderSide(
                                                                     width: 1,
                                                                     color:
-                                                                        AppColors
-                                                                            .gray,
+                                                                    AppColors
+                                                                        .gray,
                                                                   ),
                                                                 ),
                                                                 child: Text(
@@ -284,9 +284,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                                       .confirm
                                                                       .tr,
                                                                   style:
-                                                                      const TextStyle(
+                                                                  const TextStyle(
                                                                     fontSize:
-                                                                        20,
+                                                                    20,
                                                                     color: AppColors
                                                                         .white,
                                                                   ),
@@ -299,22 +299,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                             Expanded(
                                                               flex: 3,
                                                               child:
-                                                                  MaterialButton(
+                                                              MaterialButton(
                                                                 padding: const EdgeInsets
-                                                                        .symmetric(
+                                                                    .symmetric(
                                                                     vertical:
-                                                                        10),
+                                                                    10),
                                                                 onPressed: () {
                                                                   Get.back();
                                                                 },
                                                                 color: AppColors
                                                                     .white,
                                                                 shape:
-                                                                    const RoundedRectangleBorder(
+                                                                const RoundedRectangleBorder(
                                                                   borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              30)),
+                                                                  BorderRadius.all(
+                                                                      Radius.circular(
+                                                                          30)),
                                                                   side: BorderSide(
                                                                       width: 1,
                                                                       color: AppColors
@@ -327,7 +327,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                                       .tr,
                                                                   style: const TextStyle(
                                                                       fontSize:
-                                                                          20,
+                                                                      20,
                                                                       color: AppColors
                                                                           .gray),
                                                                 ),
@@ -361,9 +361,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         .textTheme
                                         .bodyLarge!
                                         .copyWith(
-                                            color: AppColors.white,
-                                            fontSize: 30,
-                                            letterSpacing: 2),
+                                        color: AppColors.white,
+                                        fontSize: 30,
+                                        letterSpacing: 2),
                                   ),
                                 ],
                               ),
@@ -382,9 +382,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(
-                                      color: AppColors.white,
-                                      fontSize: 22,
-                                    ),
+                                  color: AppColors.white,
+                                  fontSize: 22,
+                                ),
                               ),
                             ],
                           ),
@@ -400,12 +400,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       if (state is FailureCartState ||
                                           state is EmptyCacheFailureCartState) {
                                         WidgetsUtils.showSnackBar(
-                                          title: "Failure",
+                                          title: AppTranslationKeys.failure.tr,
                                           message: state.message,
                                           snackBarType: SnackBarType.error,
                                         );
                                       } else if (state
-                                          is SuccessAddItemCartState) {
+                                      is SuccessAddItemCartState) {
                                         WidgetsUtils.showSnackBar(
                                           title: "Success add item to cart",
                                           message: state.message,
@@ -444,9 +444,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           side: BorderSide(
                                               width: 1, color: AppColors.gray),
                                         ),
-                                        child: const Text(
-                                          "add to cart",
-                                          style: TextStyle(
+                                        child: Text(
+                                          AppTranslationKeys.addToCart.tr,
+                                          style: const TextStyle(
                                               fontSize: 20,
                                               color: AppColors.gray),
                                         ),
@@ -456,26 +456,74 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ],
                             ),
-                          if (globalUser != null)
+                          if (globalUser != null &&
+                              globalUser!.role != Role.customer)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
-                                  child: MaterialButton(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15, horizontal: 30),
-                                    onPressed: () {},
-                                    color: AppColors.white,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                      side: BorderSide(
-                                          width: 1, color: AppColors.gray),
-                                    ),
-                                    child: Text(
-                                      AppTranslationKeys.addToCart.tr,
-                                      style: const TextStyle(
-                                          fontSize: 20, color: AppColors.gray),
+                                  child: BlocProvider(
+                                    create: (context) => di.sl<CartBloc>(),
+                                    child: BlocConsumer<CartBloc, CartState>(
+                                      listener: (context, state) {
+                                        if (state is FailureCartState ||
+                                            state
+                                            is EmptyCacheFailureCartState) {
+                                          WidgetsUtils.showSnackBar(
+                                            title:
+                                            AppTranslationKeys.failure.tr,
+                                            message: state.message,
+                                            snackBarType: SnackBarType.error,
+                                          );
+                                        } else if (state
+                                        is SuccessAddItemCartState) {
+                                          WidgetsUtils.showSnackBar(
+                                            title: "Success add item to cart",
+                                            message: state.message,
+                                            snackBarType: SnackBarType.info,
+                                          );
+                                          Get.toNamed(AppPagesRoutes.mainScreen,
+                                              arguments: 1);
+                                        }
+                                      },
+                                      builder: (context, state) {
+                                        return MaterialButton(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 15,
+                                            horizontal: 35,
+                                          ),
+                                          onPressed: () {
+                                            BlocProvider.of<CartBloc>(context)
+                                                .add(
+                                              AddItemCartEvent(
+                                                itemCart: ItemCart(
+                                                  id: product.id,
+                                                  title: product.name,
+                                                  titleEn: product.nameEn,
+                                                  price: product.price,
+                                                  imageUrl: product.imageUrl,
+                                                  account: 1,
+                                                  isProduct: true,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          color: AppColors.white,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20)),
+                                            side: BorderSide(
+                                                width: 1,
+                                                color: AppColors.gray),
+                                          ),
+                                          child: Text(
+                                            AppTranslationKeys.addToCart.tr,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: AppColors.gray),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
@@ -509,7 +557,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               ),
                                               CustomTextField(
                                                 labelText:
-                                                    AppTranslationKeys.notes.tr,
+                                                AppTranslationKeys.notes.tr,
                                                 isTextArea: true,
                                               ),
                                             ]);
@@ -538,7 +586,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               ),
                                               CustomTextField(
                                                 labelText:
-                                                    AppTranslationKeys.notes.tr,
+                                                AppTranslationKeys.notes.tr,
                                                 isTextArea: true,
                                               ),
                                             ]);
@@ -547,7 +595,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     color: AppColors.white,
                                     shape: const RoundedRectangleBorder(
                                       borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
+                                      BorderRadius.all(Radius.circular(20)),
                                       side: BorderSide(
                                           width: 1, color: AppColors.gray),
                                     ),

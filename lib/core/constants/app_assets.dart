@@ -2,6 +2,7 @@ abstract class AppAssets {
   // Images
   static const String rootImages = 'assets/images';
   static const String image1 = '$rootImages/image1.png';
+  static const String logo1 = '$rootImages/logo.png';
 
   // SVG
   static const String rootSVG = 'assets/svgs';
