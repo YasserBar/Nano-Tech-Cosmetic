@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class CartLocalDataSource {
   Future<CartModel> deleteItemCart(int index);
+  Future<Unit> deleteCart();
   Future<CartModel> increaseItemCart(int index);
   Future<CartModel> decreaseItemCart(int index);
   Future<Unit> addItemCart(ItemCartModel itemCartModel);
@@ -120,6 +121,16 @@ class CartLocalDataSourceImplWithHttp extends CartLocalDataSource {
           itemsCart: cartModel.itemsCart as List<ItemCartModel>);
       await pref.setString(AppKeys.CACHED_CART, json.encode(cartModel));
       return Future.value(cartModel);
+    } catch (e) {
+      throw EmptyCacheException();
+    }
+  }
+
+  @override
+  Future<Unit> deleteCart() async {
+    try {
+      await pref.remove(AppKeys.CACHED_CART);
+      return Future.value(unit);
     } catch (e) {
       throw EmptyCacheException();
     }

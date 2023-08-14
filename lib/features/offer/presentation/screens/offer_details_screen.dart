@@ -30,7 +30,6 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LocaleController controller = Get.put(LocaleController());
 
     return Scaffold(
       backgroundColor:
@@ -128,7 +127,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                             children: [
                               Center(
                                 child: Text(
-                                  controller.language == 'ar'
+                                   Get.locale!.languageCode == 'ar'
                                       ? offer.title
                                       : offer.titleEn,
                                   style: Theme.of(context)
@@ -176,7 +175,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                 height: 15,
                               ),
                               Text(
-                                controller.language == 'ar'
+                               Get.locale!.languageCode == 'ar'
                                     ? offer.description
                                     : offer.descriptionEn,
                                 maxLines: isReadMoreMode && isEnd ? null : 4,

@@ -23,8 +23,6 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocaleController controller = Get.put(LocaleController());
-
     return InkWell(
       onTap: () {
         Get.toNamed(AppPagesRoutes.productDetailsScreen, arguments: product);
@@ -88,7 +86,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          controller.language == 'ar'
+                          Get.locale!.languageCode == 'ar'
                               ? product.name
                               : product.nameEn,
                           style: Theme.of(context)

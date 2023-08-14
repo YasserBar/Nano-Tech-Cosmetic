@@ -20,7 +20,6 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LocaleController controller = Get.put(LocaleController());
 
     return Scaffold(
       backgroundColor:
@@ -119,7 +118,7 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
                             children: [
                               Center(
                                 child: Text(
-                                  controller.language == 'ar'
+                                  Get.locale!.languageCode == 'ar'
                                       ? ad.title
                                       : ad.titleEn,
                                   style: Theme.of(context)
@@ -133,7 +132,7 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
                                 height: 5,
                               ),
                               Text(
-                                controller.language == 'ar'
+                               Get.locale!.languageCode == 'ar'
                                     ? ad.description
                                     : ad.descriptionEn,
                                 maxLines: isReadMoreMode && isEnd ? null : 4,

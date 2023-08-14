@@ -8,6 +8,7 @@ abstract class CartRepo {
   Future<Either<Failure, Unit>> deleteItemCart(int index);
   Future<Either<Failure, Unit>> increaseItemCart(int index);
   Future<Either<Failure, Unit>> decreaseItemCart(int index);
+  Future<Either<Failure, Unit>> deleteCart();
   Future<Either<Failure, Unit>> addItemCart(ItemCart itemCart);
   Future<Either<Failure, Cart>> dispalyCart();
 }
