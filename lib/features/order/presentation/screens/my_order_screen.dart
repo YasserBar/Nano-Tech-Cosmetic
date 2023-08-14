@@ -17,7 +17,8 @@ import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 import 'package:nano_tech_cosmetic/main.dart';
 
 class MyOrderScreen extends StatefulWidget {
-  const MyOrderScreen({Key? key}) : super(key: key);
+  OrderStatus orderStatusFilter;
+  MyOrderScreen({Key? key, required this.orderStatusFilter}) : super(key: key);
 
   @override
   State<MyOrderScreen> createState() => _MyOrderScreenState();
@@ -46,7 +47,7 @@ class _MyOrderScreenState extends State<MyOrderScreen>
             dividerColor: AppColors.black,
             controller: tabController,
             onTap: (value) {
-              // widget.changeFilter(value == 0 ? 'product' : 'category');
+              print(widget.orderStatusFilter);
             },
             isScrollable: false,
             unselectedLabelStyle:

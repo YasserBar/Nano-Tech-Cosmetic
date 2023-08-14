@@ -34,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
   bool isLogoutTap = false;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   LocaleController localeController = Get.find();
-
+  OrderStatus orderStatusFilter = OrderStatus.all;
   List<Widget> tabs = [];
 
   @override
@@ -43,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
     tabs = [
       const HomeScreen(),
       const MyCartScreen(),
-      const MyOrderScreen(),
+      MyOrderScreen(orderStatusFilter: orderStatusFilter),
       const OffersScreen()
     ];
     super.initState();
@@ -96,16 +96,78 @@ class _MainScreenState extends State<MainScreen> {
               SvgPicture.asset(
                 AppAssets.logoAppBar,
               ),
-              IconButton(
-                onPressed: () {
-                  Get.toNamed(AppPagesRoutes.searchScreen);
-                },
-                icon: const Icon(
-                  Icons.search,
-                  color: AppColors.white,
-                  size: 35,
+              if (indexNavBar != 2)
+                IconButton(
+                  onPressed: () {
+                    Get.toNamed(AppPagesRoutes.searchScreen);
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    color: AppColors.white,
+                    size: 35,
+                  ),
                 ),
-              ),
+              if (indexNavBar == 2)
+                PopupMenuButton<OrderStatus>(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  tooltip: "Operation",
+                  onSelected: (value) async {
+                    setState(() {
+                      orderStatusFilter = value;
+                      tabs = [
+                        const HomeScreen(),
+                        const MyCartScreen(),
+                        MyOrderScreen(orderStatusFilter: orderStatusFilter),
+                        const OffersScreen()
+                      ];
+                    });
+                  },
+                  initialValue: orderStatusFilter,
+                  icon: SvgPicture.asset(orderStatusFilter.getLightIcon()),
+                  itemBuilder: (context) => [
+                    PopupMenuItem<OrderStatus>(
+                        value: OrderStatus.all,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SvgPicture.asset(OrderStatus.all.getIcon()),
+                          ],
+                        )),
+                    PopupMenuItem<OrderStatus>(
+                        value: OrderStatus.waiting,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SvgPicture.asset(OrderStatus.waiting.getIcon()),
+                          ],
+                        )),
+                    PopupMenuItem<OrderStatus>(
+                        value: OrderStatus.processing,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SvgPicture.asset(OrderStatus.processing.getIcon()),
+                          ],
+                        )),
+                    PopupMenuItem<OrderStatus>(
+                        value: OrderStatus.rejected,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SvgPicture.asset(OrderStatus.rejected.getIcon()),
+                          ],
+                        )),
+                    PopupMenuItem<OrderStatus>(
+                        value: OrderStatus.done,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SvgPicture.asset(OrderStatus.done.getIcon()),
+                          ],
+                        )),
+                  ],
+                )
             ],
           ),
         ),

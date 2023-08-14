@@ -18,9 +18,16 @@ abstract class AppAssets {
   static const String salonOutlined = '$rootSVG/salon_outlined.svg';
 
   static const String waitingOrder = '$rootSVG/waiting_order.svg';
+  static const String allOrders = '$rootSVG/all_orders.svg';
   static const String processOrder = '$rootSVG/process_order.svg';
   static const String doneOrder = '$rootSVG/done_order.svg';
   static const String rejectOrder = '$rootSVG/reject_order.svg';
+
+  static const String waitingOrderLight = '$rootSVG/waiting_order_light.svg';
+  static const String allOrdersLight = '$rootSVG/all_orders_light.svg';
+  static const String processOrderLight = '$rootSVG/process_order_light.svg';
+  static const String doneOrderLight = '$rootSVG/done_order_light.svg';
+  static const String rejectOrderLight = '$rootSVG/reject_order_light.svg';
 
   static const String translate = '$rootSVG/translate.svg';
   static const String resetPassword = '$rootSVG/reset_password.svg';
