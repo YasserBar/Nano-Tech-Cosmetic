@@ -20,7 +20,7 @@ abstract class AppColors {
   static const Color white50 = Colors.white54;
 
   static const Color transparent = Colors.transparent;
-  static const Color yellowAccent = Colors.yellowAccent;
+  static const Color amber = Colors.amber;
 
   // Primary Colors
   static const MaterialColor materialPrimary = MaterialColor(0xFFAC3A99, {
