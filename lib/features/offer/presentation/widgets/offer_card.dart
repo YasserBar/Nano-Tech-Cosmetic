@@ -7,6 +7,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_event.dart';
@@ -21,6 +22,8 @@ class OfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocaleController controller = Get.put(LocaleController());
+
     return InkWell(
       onTap: () {
         Get.toNamed(AppPagesRoutes.offerDetailsScreen, arguments: offer);
@@ -77,7 +80,9 @@ class OfferCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          offer.title,
+                          controller.language == 'ar'
+                              ? offer.title
+                              : offer.titleEn,
                           style:
                               Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: 20,
@@ -91,7 +96,9 @@ class OfferCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          offer.description,
+                          controller.language == 'ar'
+                              ? offer.description
+                              : offer.descriptionEn,
                         ),
                       ],
                     ),
@@ -127,6 +134,7 @@ class OfferCard extends StatelessWidget {
                                 itemCart: ItemCart(
                                   id: offer.id,
                                   title: offer.title,
+                                  titleEn: offer.titleEn,
                                   price: int.parse(offer.price),
                                   imageUrl: offer.imageUrl,
                                   account: 1,

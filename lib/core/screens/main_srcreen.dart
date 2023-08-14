@@ -9,13 +9,13 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/core/screens/home_screen.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_event.dart';
-import 'package:nano_tech_cosmetic/features/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offers_screen.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/screens/my_cart_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
@@ -215,12 +215,16 @@ class _MainScreenState extends State<MainScreen> {
                             const SizedBox(
                               width: 10,
                             ),
-                            Text(
-                              "${globalUser!.firstName} ${globalUser!.lastName}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(fontSize: 22),
+                            SizedBox(
+                              width: Get.width * 0.5,
+                              child: Text(
+                                "${globalUser!.firstName} ${globalUser!.lastName}",
+                                overflow: TextOverflow.clip,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontSize: 22),
+                              ),
                             ),
                           ],
                         ),

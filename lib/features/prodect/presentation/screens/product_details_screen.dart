@@ -9,6 +9,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
@@ -38,6 +39,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    LocaleController controller = Get.put(LocaleController());
+
     // print(globalUser!.role);
     return Scaffold(
       backgroundColor:
@@ -135,7 +138,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             children: [
                               Center(
                                 child: Text(
-                                  product.name,
+                                  controller.language == 'ar'
+                                      ? product.name
+                                      : product.nameEn,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -165,11 +170,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     itemSize: 30,
                                     onTap: () {
                                       if (globalUser == null) {
-                                        signInDialog(context, title: AppTranslationKeys.rating.tr);
+                                        signInDialog(context,
+                                            title:
+                                                AppTranslationKeys.rating.tr);
                                       } else {
                                         WidgetsUtils.showCustomDialog(
                                           context,
-                                          title: AppTranslationKeys.ratingProduct.tr,
+                                          title: AppTranslationKeys
+                                              .ratingProduct.tr,
                                           hasBtns: false,
                                           children: [
                                             BlocProvider(
@@ -187,7 +195,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                       state
                                                           is UnexpectedFailureProductState) {
                                                     WidgetsUtils.showSnackBar(
-                                                      title: AppTranslationKeys.failure.tr,
+                                                      title: AppTranslationKeys
+                                                          .failure.tr,
                                                       message: state.message,
                                                       snackBarType:
                                                           SnackBarType.error,
@@ -196,7 +205,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                       is SuccessRatingState) {
                                                     Get.back();
                                                     WidgetsUtils.showSnackBar(
-                                                      title: AppTranslationKeys.success.tr,
+                                                      title: AppTranslationKeys
+                                                          .success.tr,
                                                       message: state.message,
                                                       snackBarType:
                                                           SnackBarType.info,
@@ -272,9 +282,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                                   ),
                                                                 ),
                                                                 child: Text(
-                                                                      AppTranslationKeys.confirm.tr,
+                                                                  AppTranslationKeys
+                                                                      .confirm
+                                                                      .tr,
                                                                   style:
-                                                                  const TextStyle(
+                                                                      const TextStyle(
                                                                     fontSize:
                                                                         20,
                                                                     color: AppColors
@@ -311,10 +323,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                                           .gray),
                                                                 ),
                                                                 child: Text(
-                                                                      AppTranslationKeys
-                                                                          .cancel.tr
-                                                                          .tr,
-                                                                  style:const TextStyle(
+                                                                  AppTranslationKeys
+                                                                      .cancel
+                                                                      .tr
+                                                                      .tr,
+                                                                  style: const TextStyle(
                                                                       fontSize:
                                                                           20,
                                                                       color: AppColors
@@ -360,7 +373,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 height: 15,
                               ),
                               Text(
-                                product.description,
+                              controller.language == 'ar'?  product.description:product.descriptionEn,
                                 maxLines: isReadMoreMode && isEnd ? null : 4,
                                 overflow: isReadMoreMode && isEnd
                                     ? TextOverflow.visible
@@ -392,7 +405,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           snackBarType: SnackBarType.error,
                                         );
                                       } else if (state
-                                      is SuccessAddItemCartState) {
+                                          is SuccessAddItemCartState) {
                                         WidgetsUtils.showSnackBar(
                                           title: "Success add item to cart",
                                           message: state.message,
@@ -415,6 +428,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               itemCart: ItemCart(
                                                 id: product.id,
                                                 title: product.name,
+                                                titleEn: product.nameEn,
                                                 price: product.price,
                                                 imageUrl: product.imageUrl,
                                                 account: 1,
@@ -437,7 +451,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               color: AppColors.gray),
                                         ),
                                       );
-                                    },),
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -457,9 +472,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       side: BorderSide(
                                           width: 1, color: AppColors.gray),
                                     ),
-                                    child:  Text(
+                                    child: Text(
                                       AppTranslationKeys.addToCart.tr,
-                                      style:const TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20, color: AppColors.gray),
                                     ),
                                   ),
@@ -479,34 +494,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             children: [
                                               CustomTextField(
                                                 labelText: AppTranslationKeys
-                                          .orderDetails.tr,
+                                                    .orderDetails.tr,
                                               ),
                                               const SizedBox(
                                                 height: 25,
                                               ),
                                               CustomTextField(
                                                 labelText: AppTranslationKeys
-                                          .amount.tr,
+                                                    .amount.tr,
                                                 inputType: TextInputType.number,
                                               ),
                                               const SizedBox(
                                                 height: 25,
                                               ),
                                               CustomTextField(
-                                                labelText: AppTranslationKeys.notes.tr,
+                                                labelText:
+                                                    AppTranslationKeys.notes.tr,
                                                 isTextArea: true,
                                               ),
                                             ]);
                                       } else {
                                         WidgetsUtils.showCustomDialog(context,
                                             title: AppTranslationKeys
-                                            .orderByName.tr,
-                                            okText:  AppTranslationKeys.order.tr,
+                                                .orderByName.tr,
+                                            okText: AppTranslationKeys.order.tr,
                                             hasBtnCancel: false,
                                             children: [
                                               CustomTextField(
                                                 labelText: AppTranslationKeys
-                                          .newName.tr,
+                                                    .newName.tr,
                                                 isTextArea: true,
                                               ),
                                               const SizedBox(
@@ -514,14 +530,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               ),
                                               CustomTextField(
                                                 labelText: AppTranslationKeys
-                                          .amount.tr,
+                                                    .amount.tr,
                                                 inputType: TextInputType.number,
                                               ),
                                               const SizedBox(
                                                 height: 25,
                                               ),
                                               CustomTextField(
-                                                labelText: AppTranslationKeys.notes.tr,
+                                                labelText:
+                                                    AppTranslationKeys.notes.tr,
                                                 isTextArea: true,
                                               ),
                                             ]);

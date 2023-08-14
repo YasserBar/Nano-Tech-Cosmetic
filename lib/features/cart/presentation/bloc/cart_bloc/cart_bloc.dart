@@ -13,10 +13,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc({
     required this.addItemCartUsecase,
     required this.displayCartUsecase,
-  }) : super(
-            const CartInitial(index: null, cart: null, message: 'init state')) {
+  }) : super(CartInitial(index: null, cart: null, message: 'init state')) {
     on<DisplayCartEvent>((event, emit) async {
-      emit(const LoadingCartState(index: null, cart: null, message: "loading"));
+      emit(LoadingCartState(index: null, cart: null, message: "loading"));
       final failureOrCart = await displayCartUsecase();
       failureOrCart.fold((failure) {
         emit(switchFailure(failure));
@@ -26,7 +25,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     });
 
     on<AddItemCartEvent>((event, emit) async {
-      emit(const LoadingCartState(index: null, cart: null, message: "loading"));
+      emit(LoadingCartState(index: null, cart: null, message: "loading"));
       final failureOrCategories = await addItemCartUsecase(event.itemCart);
       failureOrCategories.fold((failure) {
         emit(switchFailure(failure));
@@ -39,7 +38,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
 CartState switchFailure(failure) {
   if (failure is EmptyCacheFailure) {
-    return const EmptyCacheFailureCartState(
+    return EmptyCacheFailureCartState(
       index: null,
       cart: null,
     );

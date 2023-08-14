@@ -7,6 +7,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
@@ -22,6 +23,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocaleController controller = Get.put(LocaleController());
+
     return InkWell(
       onTap: () {
         Get.toNamed(AppPagesRoutes.productDetailsScreen, arguments: product);
@@ -80,7 +83,9 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          product.name,
+                          controller.language == 'ar'
+                              ? product.name
+                              : product.nameEn,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -132,6 +137,7 @@ class ProductCard extends StatelessWidget {
                                 itemCart: ItemCart(
                                   id: product.id,
                                   title: product.name,
+                                  titleEn: product.nameEn,
                                   price: product.price,
                                   imageUrl: product.imageUrl,
                                   account: 1,
