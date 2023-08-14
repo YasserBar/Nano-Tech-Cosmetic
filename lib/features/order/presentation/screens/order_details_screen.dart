@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/widgets/secondary_appbar.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/widgets/order_product_card.dart';
@@ -32,7 +34,8 @@ class OrderDetailsScreen extends StatelessWidget {
                   children: [
                     Text(
                       AppTranslationKeys.total.tr,
-                      style: const TextStyle(color: AppColors.gray, fontSize: 20),
+                      style:
+                          const TextStyle(color: AppColors.black, fontSize: 20),
                     ),
                     Text(
                       "240.000 ${AppTranslationKeys.di.tr}",
@@ -46,14 +49,14 @@ class OrderDetailsScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Done",
-                      style: TextStyle(color: AppColors.success2, fontSize: 20),
+                      OrderStatus.rejected.getVale().tr,
+                      style: TextStyle(color: OrderStatus.rejected.getColor(), fontSize: 20),
                     ),
-                    Text(
+                    const Text(
                       "21-3-2023",
                       style:
                           TextStyle(color: AppColors.secondary, fontSize: 20),
@@ -61,24 +64,97 @@ class OrderDetailsScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 15,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppTranslationKeys.response.tr,
-                      style: const TextStyle(color: AppColors.gray, fontSize: 20),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Text(
-                      "Your order will prepare you can show status of...",
-                      style: TextStyle(color: AppColors.gray, fontSize: 16),
-                      maxLines: 3,
-                    )
-                  ],
+                if (Get.arguments[AppKeys.ORDER_TYPE] == OrderType.byNewName)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AppTranslationKeys.newName.tr,
+                            style: const TextStyle(
+                                color: AppColors.black, fontSize: 20),
+                          ),
+                          const Text(
+                            "Cream Mini",
+                            style: TextStyle(fontSize: 20),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        AppTranslationKeys.notes.tr,
+                        style: const TextStyle(
+                            color: AppColors.black, fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Text(
+                        "Your order will prepare you can show status of...",
+                        style: TextStyle(color: AppColors.gray, fontSize: 16),
+                        maxLines: 3,
+                      )
+                    ],
+                  ),
+                if (Get.arguments[AppKeys.ORDER_TYPE] ==
+                    OrderType.manufacturing)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        AppTranslationKeys.orderDetails.tr,
+                        style: const TextStyle(
+                            color: AppColors.black, fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Text(
+                        "Your order will prepare you can show status of...",
+                        style: TextStyle(color: AppColors.gray, fontSize: 16),
+                        maxLines: 3,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        AppTranslationKeys.notes.tr,
+                        style: const TextStyle(
+                            color: AppColors.black, fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Text(
+                        "Your order will prepare you can show status of...",
+                        style: TextStyle(color: AppColors.gray, fontSize: 16),
+                        maxLines: 3,
+                      ),
+                    ],
+                  ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  AppTranslationKeys.response.tr,
+                  style: const TextStyle(color: AppColors.black, fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                const Text(
+                  "Your order will prepare you can show status of...",
+                  style: TextStyle(color: AppColors.gray, fontSize: 16),
+                  maxLines: 3,
                 )
               ],
             ),

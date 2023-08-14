@@ -41,4 +41,5 @@ abstract class AppAssets {
   static const String menuEn = '$rootSVG/menu_en.svg';
   static const String emptyCart = '$rootSVG/empty_cart.svg';
   static const String nothingHere = '$rootSVG/nothing_here.svg';
+  static const String caution = '$rootSVG/caution.svg';
 }

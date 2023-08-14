@@ -11,10 +11,10 @@ import 'package:nano_tech_cosmetic/features/auth/presentation/screens/verify_cod
 import 'package:nano_tech_cosmetic/features/category/presentation/screens/categories_screen.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offer_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/screens/my_cart_screen.dart';
-import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/order_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/product_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/products_screen.dart';
+import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/search_screen.dart';
 
 abstract class AppPagesRoutes {
   // Auth
@@ -27,6 +27,7 @@ abstract class AppPagesRoutes {
   static const String chooseGardScreen = "/chooseGardScreen";
 
   static const String mainScreen = "/";
+  static const String searchScreen = "/searchScreen";
   static const String adsScreen = "/adsScreen";
   static const String adDetailsScreen = "/adDetailsScreen";
   static const String myCartScreen = "/myCartScreen";
@@ -74,13 +75,13 @@ abstract class AppPagesRoutes {
       transition: Transition.fadeIn,
     ),
     GetPage(
-      name: myCartScreen,
-      page: () => const MyCartScreen(),
+      name: searchScreen,
+      page: () => const SearchScreen(),
       transition: Transition.fadeIn,
     ),
     GetPage(
-      name: myOrderScreen,
-      page: () => const MyOrderScreen(),
+      name: myCartScreen,
+      page: () => const MyCartScreen(),
       transition: Transition.fadeIn,
     ),
     GetPage(

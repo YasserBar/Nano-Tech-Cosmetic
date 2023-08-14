@@ -19,7 +19,6 @@ import 'package:nano_tech_cosmetic/features/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offers_screen.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/screens/my_cart_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
-import 'package:nano_tech_cosmetic/features/prodect/presentation/widgets/search_product_delegate.dart';
 import 'package:nano_tech_cosmetic/main.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
@@ -36,9 +35,17 @@ class _MainScreenState extends State<MainScreen> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   LocaleController localeController = Get.find();
 
+  List<Widget> tabs = [];
+
   @override
   void initState() {
     _initializeTokenAndCustomer();
+    tabs = [
+      const HomeScreen(),
+      const MyCartScreen(),
+      const MyOrderScreen(),
+      const OffersScreen()
+    ];
     super.initState();
   }
 
@@ -77,7 +84,8 @@ class _MainScreenState extends State<MainScreen> {
                 onTap: () {
                   globalUser != null
                       ? scaffoldKey.currentState!.openDrawer()
-                      : signInDialog(context, title: AppTranslationKeys.profile.tr);
+                      : signInDialog(context,
+                          title: AppTranslationKeys.profile.tr);
                 },
                 child: SvgPicture.asset(
                   AppTranslationKeys.menu.tr,
@@ -90,10 +98,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  showSearch(
-                    context: context,
-                    delegate: SearchProductDelegate(),
-                  );
+                  Get.toNamed(AppPagesRoutes.searchScreen);
                 },
                 icon: const Icon(
                   Icons.search,
@@ -204,7 +209,9 @@ class _MainScreenState extends State<MainScreen> {
                                         height: 5,
                                       ),
                                       Text(
-                                        globalUser!.gender,
+                                        globalUser!.gender == 'female'
+                                            ? AppTranslationKeys.female.tr
+                                            : AppTranslationKeys.male.tr,
                                         style: const TextStyle(
                                           color: AppColors.gray,
                                         ),
@@ -288,7 +295,8 @@ class _MainScreenState extends State<MainScreen> {
                                 SizedBox(
                                   width: Get.width * 0.5,
                                   child: Text(
-                                    globalUser!.instagram ?? AppTranslationKeys.noAccount.tr,
+                                    globalUser!.instagram ??
+                                        AppTranslationKeys.noAccount.tr,
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: const TextStyle(
@@ -308,7 +316,8 @@ class _MainScreenState extends State<MainScreen> {
                                 ),
                                 SizedBox(
                                   child: Text(
-                                    globalUser!.telegram ?? AppTranslationKeys.noAccount.tr,
+                                    globalUser!.telegram ??
+                                        AppTranslationKeys.noAccount.tr,
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: const TextStyle(
@@ -329,7 +338,8 @@ class _MainScreenState extends State<MainScreen> {
                                 SizedBox(
                                   width: Get.width * 0.5,
                                   child: Text(
-                                    globalUser!.facebook ?? AppTranslationKeys.noAccount.tr,
+                                    globalUser!.facebook ??
+                                        AppTranslationKeys.noAccount.tr,
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: const TextStyle(
@@ -350,7 +360,8 @@ class _MainScreenState extends State<MainScreen> {
                                 SizedBox(
                                   width: Get.width * 0.5,
                                   child: Text(
-                                    globalUser!.twitter ?? AppTranslationKeys.noAccount.tr,
+                                    globalUser!.twitter ??
+                                        AppTranslationKeys.noAccount.tr,
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: const TextStyle(
@@ -586,10 +597,3 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-
-List<Widget> tabs = [
-  const HomeScreen(),
-  const MyCartScreen(),
-  const MyOrderScreen(),
-  const OffersScreen()
-];
