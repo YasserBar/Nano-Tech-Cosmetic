@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_themes.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/models/user_model.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translations.dart';
@@ -11,25 +11,22 @@ import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dar
 import 'package:nano_tech_cosmetic/features/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
-User? globalUser;//TODO: يجب وضعها  فارغة عند كل حدث في الرموت و الوكل في البداية مباشرة
+User?globalUser; //TODO: يجب وضعها  فارغة عند كل حدث في الرموت و الوكل في البداية مباشرة
 String? globalMessage;
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await di.init();
-  _initializeTokenAndCustomer();
+  initializeTokenAndCustomer();
   runApp(const MyApp());
 }
 
-// void _initializationSplash() async {
-//   await Future.delayed(const Duration(seconds: 3));
-//   FlutterNativeSplash.remove();
-// }
-
-Future<void> _initializeTokenAndCustomer() async {
+void initializeTokenAndCustomer() async {
+  await Future.delayed(const Duration(seconds: 2));
+  FlutterNativeSplash.remove();
   try {
     UserModel userModel = await di.sl<AuthLocalDataSource>().getCachedUser();
     if (kDebugMode) {

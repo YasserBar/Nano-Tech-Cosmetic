@@ -22,9 +22,12 @@ import 'package:nano_tech_cosmetic/features/cart/data/data_sources/cart_local_da
 import 'package:nano_tech_cosmetic/features/cart/data/repository/cart_repo_impl.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/repository/cart_repo.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/usecases/add_item_cart_usecase.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/usecases/decrease_item_cart.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/usecases/delete_item_cart.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/usecases/display_cart_usecase.dart';
-import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/usecases/increase_item_cart.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
+import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/category/data/data_sources/category_remote_data_source.dart';
 import 'package:nano_tech_cosmetic/features/category/data/repository/category_repo_impl.dart';
 import 'package:nano_tech_cosmetic/features/category/domain/repository/category_repo.dart';
@@ -101,15 +104,26 @@ Future<void> init() async {
 
 //! Feature - cart
 // Bloc
-  sl.registerFactory(() => CartBloc(
+  sl.registerFactory(
+    () => CartBloc(
       addItemCartUsecase: sl(),
+      displayCartUsecase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => ItemCartBloc(
       deleteItemCartUsecase: sl(),
-      displayCartUsecase: sl()));
+      increaseItemCartUsecase: sl(),
+      decreaseItemCartUsecase: sl(),
+    ),
+  );
 
 // Usecases
   sl.registerLazySingleton(() => DisplayCartUsecase(sl()));
   sl.registerLazySingleton(() => AddItemCartUsecase(sl()));
   sl.registerLazySingleton(() => DeleteItemCartUsecase(sl()));
+  sl.registerLazySingleton(() => IncreaseItemCartUsecase(sl()));
+  sl.registerLazySingleton(() => DecreaseItemCartUsecase(sl()));
 
 // Repository
   sl.registerLazySingleton<CartRepo>(

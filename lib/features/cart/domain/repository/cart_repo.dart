@@ -5,7 +5,9 @@ import 'package:nano_tech_cosmetic/features/cart/domain/entities/cart_entity.dar
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 
 abstract class CartRepo {
-  Future<Either<Failure, Cart>> deleteItemCart(int index,int price);
+  Future<Either<Failure, Unit>> deleteItemCart(int index);
+  Future<Either<Failure, Unit>> increaseItemCart(int index);
+  Future<Either<Failure, Unit>> decreaseItemCart(int index);
   Future<Either<Failure, Unit>> addItemCart(ItemCart itemCart);
   Future<Either<Failure, Cart>> dispalyCart();
 }

@@ -5,10 +5,10 @@ class ItemCart extends Equatable {
   final String title;
   final int price;
   final String? imageUrl;
-  final int account;
+  int account;
   final bool isProduct;
 
-  const ItemCart({
+   ItemCart({
     required this.id,
     required this.title,
     required this.price,
