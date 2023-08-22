@@ -64,11 +64,7 @@ class CategoryCard extends StatelessWidget {
               SizedBox(
                 width: 140,
                 child: Text(
-<<<<<<< HEAD
-                 Get.locale!.languageCode == 'ar' category.name : category.nameEn,
-=======
                  Get.locale!.languageCode == 'ar'? category.name : category.nameEn,
->>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

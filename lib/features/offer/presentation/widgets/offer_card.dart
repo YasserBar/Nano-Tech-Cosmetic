@@ -75,12 +75,8 @@ class OfferCard extends StatelessWidget {
                                 fit: BoxFit.cover,
                               )
                             : const DecorationImage(
-<<<<<<< HEAD
-                                image: AssetImage(AppAssets.image1),
-=======
                                 image:
                                     AssetImage(AppAssets.logo1),
->>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
                                 fit: BoxFit.cover,
                               ),
                       ),
@@ -90,34 +86,6 @@ class OfferCard extends StatelessWidget {
                       width: 20,
                       color: AppColors.gray,
                     ),
-<<<<<<< HEAD
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          Get.locale!.languageCode == 'ar'
-                              ? offer.title
-                              : offer.titleEn,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    fontSize: 20,
-                                  ),
-                        ),
-                        Text(
-                          "${offer.price} ${AppTranslationKeys.di.tr}",
-                          style: const TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 18,
-                          ),
-                        ),
-                        Text(
-                           Get.locale!.languageCode == 'ar'
-                              ? offer.description
-                              : offer.descriptionEn,
-                        ),
-                      ],
-=======
                     SizedBox(
                       width: Get.width*0.5,
                       child: Column(
@@ -149,7 +117,6 @@ class OfferCard extends StatelessWidget {
                           ),
                         ],
                       ),
->>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
                     ),
                   ],
                 ),

@@ -29,10 +29,6 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-
-=======
->>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
     return Scaffold(
       backgroundColor:
           isReadMoreMode ? AppColors.materialPrimary.withOpacity(0.9) : null,
@@ -129,11 +125,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                             children: [
                               Center(
                                 child: Text(
-<<<<<<< HEAD
-                                   Get.locale!.languageCode == 'ar'
-=======
                                   Get.locale!.languageCode == 'ar'
->>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
                                       ? offer.title
                                       : offer.titleEn,
                                   style: Theme.of(context)
@@ -181,11 +173,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                 height: 15,
                               ),
                               Text(
-<<<<<<< HEAD
-                               Get.locale!.languageCode == 'ar'
-=======
                                 Get.locale!.languageCode == 'ar'
->>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
                                     ? offer.description
                                     : offer.descriptionEn,
                                 maxLines: isReadMoreMode && isEnd ? null : 4,
