@@ -57,8 +57,8 @@ class OfferCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      height: 100,
-                      width: 85,
+                      height: 80,
+                      width: 80,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.horizontal(
                           left: Get.locale!.languageCode == 'en'
@@ -75,7 +75,12 @@ class OfferCard extends StatelessWidget {
                                 fit: BoxFit.cover,
                               )
                             : const DecorationImage(
+<<<<<<< HEAD
                                 image: AssetImage(AppAssets.image1),
+=======
+                                image:
+                                    AssetImage(AppAssets.logo1),
+>>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
                                 fit: BoxFit.cover,
                               ),
                       ),
@@ -85,6 +90,7 @@ class OfferCard extends StatelessWidget {
                       width: 20,
                       color: AppColors.gray,
                     ),
+<<<<<<< HEAD
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -111,6 +117,39 @@ class OfferCard extends StatelessWidget {
                               : offer.descriptionEn,
                         ),
                       ],
+=======
+                    SizedBox(
+                      width: Get.width*0.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            Get.locale!.languageCode == 'ar'
+                                ? offer.title
+                                : offer.titleEn,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      fontSize: 20,
+                                    ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            "${offer.price} ${AppTranslationKeys.di.tr}",
+                            style: const TextStyle(
+                              color: AppColors.primary,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            Get.locale!.languageCode == 'ar'
+                                ? offer.description
+                                : offer.descriptionEn,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+>>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
                     ),
                   ],
                 ),

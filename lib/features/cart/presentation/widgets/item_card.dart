@@ -7,7 +7,6 @@ import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
@@ -32,7 +31,7 @@ class ItemCard extends StatelessWidget {
             state.index == index) {
           WidgetsUtils.showSnackBar(
             title: "Failure",
-            message: state.message,
+            message: state.message.tr,
             snackBarType: SnackBarType.error,
           );
         }
@@ -41,7 +40,7 @@ class ItemCard extends StatelessWidget {
             state.index == index) {
           WidgetsUtils.showSnackBar(
             title: "Success Delete",
-            message: state.message,
+            message: state.message.tr,
             snackBarType: SnackBarType.info,
           );
         }
@@ -85,7 +84,7 @@ class ItemCard extends StatelessWidget {
                   icon: Icons.delete,
                   autoClose: true,
                   flex: 100,
-                  label: 'Delete',
+                  label: AppTranslationKeys.delete.tr,
                 ),
                 SlidableAction(
                   onPressed: (context) {},
@@ -128,13 +127,12 @@ class ItemCard extends StatelessWidget {
                                 ),
                                 image: itemCart.imageUrl != null
                                     ? DecorationImage(
-                                  image:
-                                  CachedNetworkImageProvider(itemCart.imageUrl!),
+                                  image: CachedNetworkImageProvider(
+                                      itemCart.imageUrl!),
                                   fit: BoxFit.cover,
                                 )
                                     : const DecorationImage(
-                                  image:
-                                  AssetImage(AppAssets.image1),
+                                  image: AssetImage(AppAssets.image1),
                                   fit: BoxFit.cover,
                                 ),
                               ),

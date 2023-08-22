@@ -21,7 +21,7 @@ class CategoryRemoteDataSourceImplWithHttp extends CategoryRemoteDataSource {
     final response = await client.get(
         Uri.parse(AppRoutes.baseUrl + AppRoutes.showAllCategory).replace(
             queryParameters: {"page": page, "name": name}
-                .map((key, value) => MapEntry(key, value.toString()))),
+                .map((key, value) => MapEntry(key,  value == null ? '' : value.toString()))),
         headers: setHeaders());
     try {
       final bodyJson = json.decode(response.body);

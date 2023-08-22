@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -8,15 +9,25 @@ import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
+import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
+import 'package:nano_tech_cosmetic/core/widgets/handle_states_widget.dart';
 import 'package:nano_tech_cosmetic/core/widgets/custom_rating_bar.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
+import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_text_field.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_event.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_state.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/domain/entities/request_order_manufacturing_entity.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/presentation/bloc/order_manufacturing_bloc.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/presentation/bloc/order_manufacturing_event.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/presentation/bloc/order_manufacturing_state.dart';
+import 'package:nano_tech_cosmetic/features/order_name/domain/entities/request_order_name_entity.dart';
+import 'package:nano_tech_cosmetic/features/order_name/presentation/bloc/order_name_bloc.dart';
+import 'package:nano_tech_cosmetic/features/order_name/presentation/bloc/order_name_event.dart';
+import 'package:nano_tech_cosmetic/features/order_name/presentation/bloc/order_name_state.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/entities/product_entity.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/entities/rate_product_entity.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_bloc.dart';
@@ -36,6 +47,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   bool isReadMoreMode = false, isEnd = false;
   Product product = Get.arguments;
   int rating = 0;
+  GlobalKey<FormState> formKeyAddOrderNamed = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyAddOrderManufacturing = GlobalKey<FormState>();
+  TextEditingController amountFieldController = TextEditingController();
+  TextEditingController notesFieldController = TextEditingController();
+  TextEditingController detailsFieldController = TextEditingController();
+  TextEditingController nameFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,24 +74,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           child: Scaffold(
             body: Stack(
               children: [
-                if (product.imageUrl == null)
-                  Positioned(
-                    top: -Get.statusBarHeight - 5,
-                    child: Image.asset(
-                      AppAssets.image1,
-                      width: Get.width,
-                      height: Get.height * 0.6,
-                    ),
+                Positioned(
+                  top: -Get.statusBarHeight - 5,
+                  child: Image.asset(
+                    AppAssets.image1,
+                    width: Get.width,
+                    height: Get.height * 0.6,
                   ),
-                if (product.imageUrl != null)
-                  Positioned(
-                    top: -Get.statusBarHeight - 5,
-                    child: CachedNetworkImage(
-                      imageUrl: product.imageUrl,
-                      width: Get.width,
-                      height: Get.height * 0.5,
-                    ),
+                ),
+                Positioned(
+                  top: -Get.statusBarHeight - 5,
+                  child: CachedNetworkImage(
+                    imageUrl: product.imageUrl,
+                    width: Get.width,
+                    height: Get.height * 0.5,
                   ),
+                ),
                 Positioned(
                   top: 15,
                   left: 15,
@@ -166,186 +181,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     rating:
                                         double.parse(product.rating.toString()),
                                     itemSize: 30,
-                                    onTap: () {
-                                      if (globalUser == null) {
-                                        signInDialog(context,
-                                            title:
-                                                AppTranslationKeys.rating.tr);
-                                      } else {
-                                        WidgetsUtils.showCustomDialog(
-                                          context,
-                                          title: AppTranslationKeys
-                                              .ratingProduct.tr,
-                                          hasBtns: false,
-                                          children: [
-                                            BlocProvider(
-                                              create: (context) =>
-                                                  di.sl<ProductBloc>(),
-                                              child: BlocConsumer<ProductBloc,
-                                                  ProductState>(
-                                                listener: (BuildContext context,
-                                                    state) {
-                                                  if (state is FailureProductState ||
-                                                      state
-                                                          is OfflineFailureProductState ||
-                                                      state
-                                                          is InternalServerFailureProductState ||
-                                                      state
-                                                          is UnexpectedFailureProductState) {
-                                                    WidgetsUtils.showSnackBar(
-                                                      title: AppTranslationKeys
-                                                          .failure.tr,
-                                                      message: state.message,
-                                                      snackBarType:
-                                                          SnackBarType.error,
-                                                    );
-                                                  } else if (state
-                                                      is SuccessRatingState) {
-                                                    Get.back();
-                                                    WidgetsUtils.showSnackBar(
-                                                      title: AppTranslationKeys
-                                                          .success.tr,
-                                                      message: state.message,
-                                                      snackBarType:
-                                                          SnackBarType.info,
-                                                    );
-                                                  }
-                                                },
-                                                builder: (BuildContext context,
-                                                    ProductState state) {
-                                                  return Column(
-                                                    children: [
-                                                      Center(
-                                                        child: CustomRatingBar(
-                                                          rating: double.parse(
-                                                            product.rating
-                                                                .toString(),
-                                                          ),
-                                                          itemSize: 40,
-                                                          ignoreGestures: false,
-                                                          onRatingUpdate:
-                                                              (double rating) {
-                                                            this.rating =
-                                                                rating.floor();
-                                                          },
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .all(30)
-                                                                .copyWith(
-                                                                    bottom: 20),
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child:
-                                                                  MaterialButton(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .symmetric(
-                                                                  vertical: 10,
-                                                                ),
-                                                                onPressed: () {
-                                                                  BlocProvider.of<
-                                                                              ProductBloc>(
-                                                                          context)
-                                                                      .add(
-                                                                    RateProductEvent(
-                                                                      rateProduct:
-                                                                          RateProduct(
-                                                                        productId:
-                                                                            product.id,
-                                                                        rate:
-                                                                            rating,
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                                color: AppColors
-                                                                    .primary,
-                                                                shape:
-                                                                    const RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              30)),
-                                                                  side:
-                                                                      BorderSide(
-                                                                    width: 1,
-                                                                    color:
-                                                                        AppColors
-                                                                            .gray,
-                                                                  ),
-                                                                ),
-                                                                child: Text(
-                                                                  AppTranslationKeys
-                                                                      .confirm
-                                                                      .tr,
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontSize:
-                                                                        20,
-                                                                    color: AppColors
-                                                                        .white,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 15,
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child:
-                                                                  MaterialButton(
-                                                                padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                    vertical:
-                                                                        10),
-                                                                onPressed: () {
-                                                                  Get.back();
-                                                                },
-                                                                color: AppColors
-                                                                    .white,
-                                                                shape:
-                                                                    const RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              30)),
-                                                                  side: BorderSide(
-                                                                      width: 1,
-                                                                      color: AppColors
-                                                                          .gray),
-                                                                ),
-                                                                child: Text(
-                                                                  AppTranslationKeys
-                                                                      .cancel
-                                                                      .tr
-                                                                      .tr,
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          20,
-                                                                      color: AppColors
-                                                                          .gray),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                          btnOkOnPress: () {},
-                                        );
-                                      }
-                                    },
+                                    onTap: onCustomRatingTap,
                                     onRatingUpdate: (double rating) {},
                                   )
                                 ],
@@ -400,15 +236,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       if (state is FailureCartState ||
                                           state is EmptyCacheFailureCartState) {
                                         WidgetsUtils.showSnackBar(
-                                          title: "Failure",
-                                          message: state.message,
+                                          title: AppTranslationKeys.failure.tr,
+                                          message: state.message.tr,
                                           snackBarType: SnackBarType.error,
                                         );
                                       } else if (state
                                           is SuccessAddItemCartState) {
                                         WidgetsUtils.showSnackBar(
-                                          title: "Success add item to cart",
-                                          message: state.message,
+                                          title: AppTranslationKeys.success,
+                                          message: state.message.tr,
                                           snackBarType: SnackBarType.info,
                                         );
                                         Get.toNamed(AppPagesRoutes.mainScreen,
@@ -444,9 +280,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           side: BorderSide(
                                               width: 1, color: AppColors.gray),
                                         ),
-                                        child: const Text(
-                                          "add to cart",
-                                          style: TextStyle(
+                                        child: Text(
+                                          AppTranslationKeys.addToCart.tr,
+                                          style: const TextStyle(
                                               fontSize: 20,
                                               color: AppColors.gray),
                                         ),
@@ -456,26 +292,74 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ],
                             ),
-                          if (globalUser != null)
+                          if (globalUser != null &&
+                              globalUser!.role != Role.customer)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
-                                  child: MaterialButton(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15, horizontal: 30),
-                                    onPressed: () {},
-                                    color: AppColors.white,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                      side: BorderSide(
-                                          width: 1, color: AppColors.gray),
-                                    ),
-                                    child: Text(
-                                      AppTranslationKeys.addToCart.tr,
-                                      style: const TextStyle(
-                                          fontSize: 20, color: AppColors.gray),
+                                  child: BlocProvider(
+                                    create: (context) => di.sl<CartBloc>(),
+                                    child: BlocConsumer<CartBloc, CartState>(
+                                      listener: (context, state) {
+                                        if (state is FailureCartState ||
+                                            state
+                                                is EmptyCacheFailureCartState) {
+                                          WidgetsUtils.showSnackBar(
+                                            title:
+                                                AppTranslationKeys.failure.tr,
+                                            message: state.message.tr,
+                                            snackBarType: SnackBarType.error,
+                                          );
+                                        } else if (state
+                                            is SuccessAddItemCartState) {
+                                          WidgetsUtils.showSnackBar(
+                                            title: AppTranslationKeys.success,
+                                            message: state.message.tr,
+                                            snackBarType: SnackBarType.info,
+                                          );
+                                          Get.toNamed(AppPagesRoutes.mainScreen,
+                                              arguments: 1);
+                                        }
+                                      },
+                                      builder: (context, state) {
+                                        return MaterialButton(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 15,
+                                            horizontal: 35,
+                                          ),
+                                          onPressed: () {
+                                            BlocProvider.of<CartBloc>(context)
+                                                .add(
+                                              AddItemCartEvent(
+                                                itemCart: ItemCart(
+                                                  id: product.id,
+                                                  title: product.name,
+                                                  titleEn: product.nameEn,
+                                                  price: product.price,
+                                                  imageUrl: product.imageUrl,
+                                                  account: 1,
+                                                  isProduct: true,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          color: AppColors.white,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20)),
+                                            side: BorderSide(
+                                                width: 1,
+                                                color: AppColors.gray),
+                                          ),
+                                          child: Text(
+                                            AppTranslationKeys.addToCart.tr,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: AppColors.gray),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
@@ -483,65 +367,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 Expanded(
                                   child: MaterialButton(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 15),
+                                      vertical: 15,
+                                    ),
                                     onPressed: () {
                                       if (globalUser!.role == Role.company) {
-                                        WidgetsUtils.showCustomDialog(context,
-                                            title: AppTranslationKeys
-                                                .orderManufacturing.tr,
-                                            okText: AppTranslationKeys.order.tr,
-                                            hasBtnCancel: false,
-                                            children: [
-                                              CustomTextField(
-                                                labelText: AppTranslationKeys
-                                                    .orderDetails.tr,
-                                              ),
-                                              const SizedBox(
-                                                height: 25,
-                                              ),
-                                              CustomTextField(
-                                                labelText: AppTranslationKeys
-                                                    .amount.tr,
-                                                inputType: TextInputType.number,
-                                              ),
-                                              const SizedBox(
-                                                height: 25,
-                                              ),
-                                              CustomTextField(
-                                                labelText:
-                                                    AppTranslationKeys.notes.tr,
-                                                isTextArea: true,
-                                              ),
-                                            ]);
+                                        addOrderManufacturing();
                                       } else {
-                                        WidgetsUtils.showCustomDialog(context,
-                                            title: AppTranslationKeys
-                                                .orderByName.tr,
-                                            okText: AppTranslationKeys.order.tr,
-                                            hasBtnCancel: false,
-                                            children: [
-                                              CustomTextField(
-                                                labelText: AppTranslationKeys
-                                                    .newName.tr,
-                                                isTextArea: true,
-                                              ),
-                                              const SizedBox(
-                                                height: 25,
-                                              ),
-                                              CustomTextField(
-                                                labelText: AppTranslationKeys
-                                                    .amount.tr,
-                                                inputType: TextInputType.number,
-                                              ),
-                                              const SizedBox(
-                                                height: 25,
-                                              ),
-                                              CustomTextField(
-                                                labelText:
-                                                    AppTranslationKeys.notes.tr,
-                                                isTextArea: true,
-                                              ),
-                                            ]);
+                                        addOrderNamed();
                                       }
                                     },
                                     color: AppColors.white,
@@ -570,6 +402,507 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  onCustomRatingTap() {
+    if (globalUser == null) {
+      signInDialog(context, title: AppTranslationKeys.rating.tr);
+    } else {
+      WidgetsUtils.showCustomDialog(
+        context,
+        title: AppTranslationKeys.ratingProduct.tr,
+        children: [
+          BlocProvider(
+            create: (context) => di.sl<ProductBloc>(),
+            child: BlocConsumer<ProductBloc, ProductState>(
+              listener: (BuildContext context, state) {
+                if (state is FailureProductState) {
+                  WidgetsUtils.showSnackBar(
+                    title: AppTranslationKeys.failure.tr,
+                    message: state.message.tr,
+                    snackBarType: SnackBarType.error,
+                  );
+                } else if (state is SuccessRatingState) {
+                  Get.back();
+                  WidgetsUtils.showSnackBar(
+                    title: AppTranslationKeys.success.tr,
+                    message: state.message.tr,
+                    snackBarType: SnackBarType.info,
+                  );
+                }
+              },
+              builder: (BuildContext context, ProductState state) {
+                if (state is OfflineFailureProductState) {
+                  return HandleStatesWidget(
+                    isDialog: true,
+                    errorType: StateType.offline,
+                    onPressedTryAgain: () {
+                      BlocProvider.of<ProductBloc>(context).add(
+                        RateProductEvent(
+                          rateProduct: RateProduct(
+                            productId: product.id,
+                            rate: rating,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+                if (state is UnexpectedFailureProductState) {
+                  return HandleStatesWidget(
+                    isDialog: true,
+                    errorType: StateType.unexpectedProblem,
+                    onPressedTryAgain: () {
+                      BlocProvider.of<ProductBloc>(context).add(
+                        RateProductEvent(
+                          rateProduct: RateProduct(
+                            productId: product.id,
+                            rate: rating,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+                if (state is InternalServerFailureProductState) {
+                  return HandleStatesWidget(
+                    isDialog: true,
+                    errorType: StateType.internalServerProblem,
+                    onPressedTryAgain: () {
+                      BlocProvider.of<ProductBloc>(context).add(
+                        RateProductEvent(
+                          rateProduct: RateProduct(
+                            productId: product.id,
+                            rate: rating,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+                if (state is LoadingProductState) {
+                  return const LoaderIndicator();
+                }
+                return Column(
+                  children: [
+                    Center(
+                      child: CustomRatingBar(
+                        rating: double.parse(
+                          product.rating.toString(),
+                        ),
+                        itemSize: 40,
+                        ignoreGestures: false,
+                        onRatingUpdate: (double rating) {
+                          this.rating = rating.floor();
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(30).copyWith(bottom: 20),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: MaterialButton(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                              ),
+                              onPressed: () {
+                                BlocProvider.of<ProductBloc>(context).add(
+                                  RateProductEvent(
+                                    rateProduct: RateProduct(
+                                      productId: product.id,
+                                      rate: rating,
+                                    ),
+                                  ),
+                                );
+                              },
+                              color: AppColors.primary,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                side: BorderSide(
+                                  width: 1,
+                                  color: AppColors.gray,
+                                ),
+                              ),
+                              child: Text(
+                                AppTranslationKeys.confirm.tr,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: MaterialButton(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              onPressed: () {
+                                Get.back();
+                              },
+                              color: AppColors.white,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                side:
+                                    BorderSide(width: 1, color: AppColors.gray),
+                              ),
+                              child: Text(
+                                AppTranslationKeys.cancel.tr.tr,
+                                style: const TextStyle(
+                                    fontSize: 20, color: AppColors.gray),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+        hasBtns: false,
+      );
+    }
+  }
+
+  addOrderNamed() {
+    WidgetsUtils.showCustomDialog(
+      context,
+      title: AppTranslationKeys.orderByName.tr,
+      children: [
+        BlocProvider(
+          create: (context) => di.sl<OrderNameBloc>(),
+          child: BlocConsumer<OrderNameBloc, OrderNameState>(
+            listener: (context, state) {
+              if (state is FailureOrderNameState) {
+                WidgetsUtils.showSnackBar(
+                  title: AppTranslationKeys.failure.tr,
+                  message: state.message.tr,
+                  snackBarType: SnackBarType.error,
+                );
+              } else if (state is SuccessAddOrderNameState) {
+                Get.back();
+                nameFieldController.clear();
+                notesFieldController.clear();
+                amountFieldController.clear();
+                WidgetsUtils.showSnackBar(
+                  title: AppTranslationKeys.success.tr,
+                  message: state.message.tr,
+                  snackBarType: SnackBarType.info,
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is OfflineFailureOrderNameState) {
+                return HandleStatesWidget(
+                  errorType: StateType.offline,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<OrderNameBloc>(context).add(
+                      AddOrderNameEvent(
+                        requestOrderName: RequestOrderName(
+                          newName: nameFieldController.text,
+                          amount: int.parse(amountFieldController.text),
+                          note: notesFieldController.text,
+                          productId: product.id,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              if (state is UnexpectedFailureOrderNameState) {
+                return HandleStatesWidget(
+                  errorType: StateType.unexpectedProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<OrderNameBloc>(context).add(
+                      AddOrderNameEvent(
+                        requestOrderName: RequestOrderName(
+                          newName: nameFieldController.text,
+                          amount: int.parse(amountFieldController.text),
+                          note: notesFieldController.text,
+                          productId: product.id,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              if (state is InternalServerFailureOrderNameState) {
+                return HandleStatesWidget(
+                  errorType: StateType.internalServerProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<OrderNameBloc>(context).add(
+                      AddOrderNameEvent(
+                        requestOrderName: RequestOrderName(
+                          newName: nameFieldController.text,
+                          amount: int.parse(amountFieldController.text),
+                          note: notesFieldController.text,
+                          productId: product.id,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              if (state is LoadingOrderNameState) {
+                return const LoaderIndicator();
+              }
+              return Form(
+                key: formKeyAddOrderNamed,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      labelText: AppTranslationKeys.newName.tr,
+                      controller: nameFieldController,
+                      validator: (val) => AppValidator.validateRequired(val),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    CustomTextField(
+                      labelText: AppTranslationKeys.amount.tr,
+                      inputType: TextInputType.number,
+                      controller: amountFieldController,
+                      validator: (val) => AppValidator.validateRequired(val),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    CustomTextField(
+                      labelText: AppTranslationKeys.notes.tr,
+                      isTextArea: true,
+                      controller: notesFieldController,
+                      textInputAction: TextInputAction.done,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: MaterialButton(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              onPressed: () {
+                                if (formKeyAddOrderNamed.currentState!
+                                    .validate()) {
+                                  BlocProvider.of<OrderNameBloc>(context).add(
+                                    AddOrderNameEvent(
+                                      requestOrderName: RequestOrderName(
+                                        newName: nameFieldController.text,
+                                        amount: int.parse(
+                                            amountFieldController.text),
+                                        note: notesFieldController.text,
+                                        productId: product.id,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              color: AppColors.primary,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                side:
+                                    BorderSide(width: 1, color: AppColors.gray),
+                              ),
+                              child: Text(
+                                AppTranslationKeys.order.tr,
+                                style: const TextStyle(
+                                    fontSize: 20, color: AppColors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+      okText: AppTranslationKeys.order.tr,
+      hasBtns: false,
+    );
+  }
+
+  addOrderManufacturing() {
+    WidgetsUtils.showCustomDialog(
+      context,
+      title: AppTranslationKeys.orderManufacturing.tr,
+      children: [
+        BlocProvider(
+          create: (context) => di.sl<OrderManufacturingBloc>(),
+          child: BlocConsumer<OrderManufacturingBloc, OrderManufacturingState>(
+            listener: (context, state) {
+              if (state is FailureOrderManufacturingState) {
+                WidgetsUtils.showSnackBar(
+                  title: AppTranslationKeys.failure.tr,
+                  message: state.message.tr,
+                  snackBarType: SnackBarType.error,
+                );
+              } else if (state is SuccessAddOrderManufacturingState) {
+                Get.back();
+                detailsFieldController.clear();
+                notesFieldController.clear();
+                amountFieldController.clear();
+                WidgetsUtils.showSnackBar(
+                  title: AppTranslationKeys.success.tr,
+                  message: state.message.tr,
+                  snackBarType: SnackBarType.info,
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is OfflineFailureOrderManufacturingState) {
+                return HandleStatesWidget(
+                  errorType: StateType.offline,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<OrderManufacturingBloc>(context).add(
+                      AddOrderManufacturingEvent(
+                        requestOrderManufacturing: RequestOrderManufacturing(
+                          details: detailsFieldController.text,
+                          amount: int.parse(amountFieldController.text),
+                          note: notesFieldController.text,
+                          productId: product.id,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              if (state is UnexpectedFailureOrderManufacturingState) {
+                return HandleStatesWidget(
+                  errorType: StateType.unexpectedProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<OrderManufacturingBloc>(context).add(
+                      AddOrderManufacturingEvent(
+                        requestOrderManufacturing: RequestOrderManufacturing(
+                          details: detailsFieldController.text,
+                          amount: int.parse(amountFieldController.text),
+                          note: notesFieldController.text,
+                          productId: product.id,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              if (state is InternalServerFailureOrderManufacturingState) {
+                return HandleStatesWidget(
+                  errorType: StateType.internalServerProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<OrderManufacturingBloc>(context).add(
+                      AddOrderManufacturingEvent(
+                        requestOrderManufacturing: RequestOrderManufacturing(
+                          details: detailsFieldController.text,
+                          amount: int.parse(amountFieldController.text),
+                          note: notesFieldController.text,
+                          productId: product.id,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              if (state is LoadingOrderManufacturingState) {
+                return const LoaderIndicator();
+              }
+              return Form(
+                key: formKeyAddOrderManufacturing,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      labelText: AppTranslationKeys.orderDetails.tr,
+                      isTextArea: true,
+                      controller: detailsFieldController,
+                      validator: (val) => AppValidator.validateRequired(val),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    CustomTextField(
+                      labelText: AppTranslationKeys.amount.tr,
+                      inputType: TextInputType.number,
+                      controller: amountFieldController,
+                      validator: (val) => AppValidator.validateRequired(val),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    CustomTextField(
+                      labelText: AppTranslationKeys.notes.tr,
+                      isTextArea: true,
+                      controller: notesFieldController,
+                      textInputAction: TextInputAction.done,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: MaterialButton(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              onPressed: () {
+                                if (formKeyAddOrderManufacturing.currentState!
+                                    .validate()) {
+                                  BlocProvider.of<OrderManufacturingBloc>(
+                                          context)
+                                      .add(
+                                    AddOrderManufacturingEvent(
+                                      requestOrderManufacturing:
+                                          RequestOrderManufacturing(
+                                        details: detailsFieldController.text,
+                                        amount: int.parse(
+                                            amountFieldController.text),
+                                        note: notesFieldController.text,
+                                        productId: product.id,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              color: AppColors.primary,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                side:
+                                    BorderSide(width: 1, color: AppColors.gray),
+                              ),
+                              child: Text(
+                                AppTranslationKeys.order.tr,
+                                style: const TextStyle(
+                                    fontSize: 20, color: AppColors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+      okText: AppTranslationKeys.order.tr,
+      hasBtns: false,
     );
   }
 }

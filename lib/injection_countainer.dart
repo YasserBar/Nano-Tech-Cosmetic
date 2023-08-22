@@ -46,6 +46,18 @@ import 'package:nano_tech_cosmetic/features/order/domain/usecases/display_order_
 import 'package:nano_tech_cosmetic/features/order/domain/usecases/display_orders_usecase.dart';
 import 'package:nano_tech_cosmetic/features/order/domain/usecases/store_order_usecase.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/bloc/order_bloc.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/data/data_sources/order_remote_data_source.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/data/repository/order_repo_impl.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/domain/repository/order_manufacturing_repo.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/domain/usecases/add_order_manufacturing_usecase.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/domain/usecases/display_orders_manufacturing_usecase.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/presentation/bloc/order_manufacturing_bloc.dart';
+import 'package:nano_tech_cosmetic/features/order_name/data/data_sources/order_remote_data_source.dart';
+import 'package:nano_tech_cosmetic/features/order_name/data/repository/order_repo_impl.dart';
+import 'package:nano_tech_cosmetic/features/order_name/domain/repository/order_repo.dart';
+import 'package:nano_tech_cosmetic/features/order_name/domain/usecases/add_order_name_usecase.dart';
+import 'package:nano_tech_cosmetic/features/order_name/domain/usecases/display_orders_name_usecase.dart';
+import 'package:nano_tech_cosmetic/features/order_name/presentation/bloc/order_name_bloc.dart';
 import 'package:nano_tech_cosmetic/features/prodect/data/data_sources/product_remote_data_source.dart';
 import 'package:nano_tech_cosmetic/features/prodect/data/repository/product_repo_impl.dart';
 import 'package:nano_tech_cosmetic/features/prodect/domain/repository/product_repo.dart';
@@ -189,6 +201,51 @@ Future<void> init() async {
 // Datasources
   sl.registerLazySingleton<OrderRemoteDataSource>(
       () => OrderRemoteDataSourceImplWithHttp(client: sl()));
+
+// //! Feature - Order Manufacturing
+// Bloc
+  sl.registerFactory(() => OrderManufacturingBloc(
+        addOrderManufacturingUsecase: sl(),
+        displayOrdersManufacturingUsecase: sl(),
+      ));
+
+// // Usecases
+  sl.registerLazySingleton(() => AddOrderManufacturingUsecase(sl()));
+  sl.registerLazySingleton(() => DisplayOrdersManufacturingUsecase(sl()));
+
+// Repository
+  sl.registerLazySingleton<OrderManufacturingRepo>(
+      () => OrderManufacturingRepoImpl(
+            authRepo: sl(),
+            networkInfo: sl(),
+            remoteDataSource: sl(),
+          ));
+
+// Datasources
+  sl.registerLazySingleton<OrderManufacturingRemoteDataSource>(
+      () => OrderManufacturingRemoteDataSourceImplWithHttp(client: sl()));
+
+// //! Feature - Order Name
+// Bloc
+  sl.registerFactory(() => OrderNameBloc(
+        addOrderNameUsecase: sl(),
+        displayOrdersNameUsecase: sl(),
+      ));
+
+// // Usecases
+  sl.registerLazySingleton(() => AddOrderNameUsecase(sl()));
+  sl.registerLazySingleton(() => DisplayOrdersNameUsecase(sl()));
+
+// Repository
+  sl.registerLazySingleton<OrderNameRepo>(() => OrderNameRepoImpl(
+        authRepo: sl(),
+        networkInfo: sl(),
+        remoteDataSource: sl(),
+      ));
+
+// Datasources
+  sl.registerLazySingleton<OrderNameRemoteDataSource>(
+      () => OrderNameRemoteDataSourceImplWithHttp(client: sl()));
 
 //! Feature - prodect
 // Bloc

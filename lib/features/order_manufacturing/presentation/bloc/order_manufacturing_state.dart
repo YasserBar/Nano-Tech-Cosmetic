@@ -38,19 +38,19 @@ class InternalServerFailureOrderManufacturingState
     extends OrderManufacturingState {
   const InternalServerFailureOrderManufacturingState(
       super.ordersManufacturing, super.hasMore, super.loaded,
-      {super.message = AppMessages.InternalServerError});
+      {super.message = AppMessages.internalServerError});
 }
 
 class UnexpectedFailureOrderManufacturingState extends OrderManufacturingState {
   const UnexpectedFailureOrderManufacturingState(
       super.ordersManufacturing, super.hasMore, super.loaded,
-      {super.message = AppMessages.UnexpectedException});
+      {super.message = AppMessages.unexpectedException});
 }
 
 class OfflineFailureOrderManufacturingState extends OrderManufacturingState {
   const OfflineFailureOrderManufacturingState(
       super.ordersManufacturing, super.hasMore, super.loaded,
-      {super.message = AppMessages.Offline});
+      {super.message = AppMessages.offline});
 }
 
 class LoadedOrdersManufacturingState extends OrderManufacturingState {

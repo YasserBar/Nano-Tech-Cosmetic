@@ -6,6 +6,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/widgets/handle_states_widget.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/core/widgets/secondary_appbar.dart';
 import 'package:nano_tech_cosmetic/features/category/presentation/bloc/category_bloc.dart';
@@ -34,13 +35,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ),
         child: BlocConsumer<CategoryBloc, CategoryState>(
           listener: (context, state) {
-            if (state is FailureCategoryState ||
-                state is OfflineFailureCategoryState ||
-                state is InternalServerFailureCategoryState ||
-                state is UnexpectedFailureCategoryState) {
+            if (state is FailureCategoryState) {
               WidgetsUtils.showSnackBar(
                 title: AppTranslationKeys.failure.tr,
-                message: state.message,
+                message: state.message.tr,
                 snackBarType: SnackBarType.error,
               );
             }
@@ -48,7 +46,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           builder: (context, state) {
             if (state is LoadedCategoriesState) {
               return RefreshIndicator(
-                onRefresh: () async {},
+                onRefresh: () async {
+                  BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
+                },
                 child: GridView.builder(
                   padding: const EdgeInsets.symmetric(
                     vertical: AppDimensions.appbarBodyPadding,
@@ -65,6 +65,30 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     category: state.categories![index],
                   ),
                 ),
+              );
+            }
+            if (state is OfflineFailureCategoryState) {
+              return HandleStatesWidget(
+                errorType: StateType.offline,
+                onPressedTryAgain: () {
+                  BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
+                },
+              );
+            }
+            if (state is UnexpectedFailureCategoryState) {
+              return HandleStatesWidget(
+                errorType: StateType.unexpectedProblem,
+                onPressedTryAgain: () {
+                  BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
+                },
+              );
+            }
+            if (state is InternalServerFailureCategoryState) {
+              return HandleStatesWidget(
+                errorType: StateType.internalServerProblem,
+                onPressedTryAgain: () {
+                  BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
+                },
               );
             }
             return const LoaderIndicator();

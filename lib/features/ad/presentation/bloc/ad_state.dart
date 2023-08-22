@@ -31,17 +31,17 @@ class FailureAdState extends AdState {
 
 class InternalServerFailureAdState extends AdState {
   const InternalServerFailureAdState(super.ads, super.hasMore, super.loaded,
-      {super.message = AppMessages.InternalServerError});
+      {super.message = AppMessages.internalServerError});
 }
 
 class UnexpectedFailureAdState extends AdState {
   const UnexpectedFailureAdState(super.ads, super.hasMore, super.loaded,
-      {super.message = AppMessages.UnexpectedException});
+      {super.message = AppMessages.unexpectedException});
 }
 
 class OfflineFailureAdState extends AdState {
   const OfflineFailureAdState(super.ads, super.hasMore, super.loaded,
-      {super.message = AppMessages.Offline});
+      {super.message = AppMessages.offline});
 }
 
 class LoadedAdsState extends AdState {

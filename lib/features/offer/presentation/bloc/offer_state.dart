@@ -32,17 +32,17 @@ class FailureOfferState extends OfferState {
 class InternalServerFailureOfferState extends OfferState {
   const InternalServerFailureOfferState(
       super.offer, super.hasMore, super.loaded,
-      {super.message = AppMessages.InternalServerError});
+      {super.message = AppMessages.internalServerError});
 }
 
 class UnexpectedFailureOfferState extends OfferState {
   const UnexpectedFailureOfferState(super.offer, super.hasMore, super.loaded,
-      {super.message = AppMessages.UnexpectedException});
+      {super.message = AppMessages.unexpectedException});
 }
 
 class OfflineFailureOfferState extends OfferState {
   const OfflineFailureOfferState(super.offer, super.hasMore, super.loaded,
-      {super.message = AppMessages.Offline});
+      {super.message = AppMessages.offline});
 }
 
 class LoadedOffersState extends OfferState {

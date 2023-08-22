@@ -25,7 +25,7 @@ class RequestOrderManufacturingModel extends RequestOrderManufacturing {
   Map<String, dynamic> toJson() {
     return {
       'details': details,
-      'amount': amount,
+      'ammount': amount,
       'product_id': productId,
       'note': note,
     };

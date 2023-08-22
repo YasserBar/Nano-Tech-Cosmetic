@@ -23,16 +23,16 @@ class FailureAuthState extends AuthState {
 
 class InternalServerFailureAuthState extends AuthState {
   const InternalServerFailureAuthState(
-      {super.message = AppMessages.InternalServerError});
+      {super.message = AppMessages.internalServerError});
 }
 
 class UnexpectedFailureAuthState extends AuthState {
   const UnexpectedFailureAuthState(
-      {super.message = AppMessages.UnexpectedException});
+      {super.message = AppMessages.unexpectedException});
 }
 
 class OfflineFailureAuthState extends AuthState {
-  const OfflineFailureAuthState({super.message = AppMessages.Offline});
+  const OfflineFailureAuthState({super.message = AppMessages.offline});
 }
 
 class SuccessLoginState extends AuthState {

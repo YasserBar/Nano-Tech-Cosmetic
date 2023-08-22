@@ -9,7 +9,6 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_event.dart';
@@ -30,7 +29,10 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
     return Scaffold(
       backgroundColor:
           isReadMoreMode ? AppColors.materialPrimary.withOpacity(0.9) : null,
@@ -127,7 +129,11 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                             children: [
                               Center(
                                 child: Text(
+<<<<<<< HEAD
                                    Get.locale!.languageCode == 'ar'
+=======
+                                  Get.locale!.languageCode == 'ar'
+>>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
                                       ? offer.title
                                       : offer.titleEn,
                                   style: Theme.of(context)
@@ -175,7 +181,11 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                 height: 15,
                               ),
                               Text(
+<<<<<<< HEAD
                                Get.locale!.languageCode == 'ar'
+=======
+                                Get.locale!.languageCode == 'ar'
+>>>>>>> 49abb8b1d7e76dd01207d3326157737541327b51
                                     ? offer.description
                                     : offer.descriptionEn,
                                 maxLines: isReadMoreMode && isEnd ? null : 4,
@@ -202,15 +212,15 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                     if (state is FailureCartState ||
                                         state is EmptyCacheFailureCartState) {
                                       WidgetsUtils.showSnackBar(
-                                        title: "Failure",
-                                        message: state.message,
+                                        title: AppTranslationKeys.failure,
+                                        message: state.message.tr,
                                         snackBarType: SnackBarType.error,
                                       );
                                     } else if (state
                                         is SuccessAddItemCartState) {
                                       WidgetsUtils.showSnackBar(
-                                        title: "Success add item to cart",
-                                        message: state.message,
+                                        title: AppTranslationKeys.success,
+                                        message: state.message.tr,
                                         snackBarType: SnackBarType.info,
                                       );
                                       Get.toNamed(AppPagesRoutes.mainScreen,

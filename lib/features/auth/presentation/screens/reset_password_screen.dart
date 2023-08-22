@@ -7,6 +7,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/widgets/handle_states_widget.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/reset_password_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dart';
@@ -20,6 +21,7 @@ class ResetPasswordScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final GlobalKey<FormState> formKeyResetPassword = GlobalKey<FormState>();
 
   ResetPasswordScreen({super.key});
 
@@ -34,86 +36,121 @@ class ResetPasswordScreen extends StatelessWidget {
               if (state is FailureAuthState) {
                 WidgetsUtils.showSnackBar(
                   title: AppTranslationKeys.failure.tr,
-                  message: state.message,
+                  message: state.message.tr,
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessResetPasswordState) {
-                // print("ssss");
                 Get.toNamed(AppPagesRoutes.mainScreen);
                 WidgetsUtils.showSnackBar(
                   title: AppTranslationKeys.success.tr,
-                  message: state.message,
+                  message: state.message.tr,
                   snackBarType: SnackBarType.info,
                 );
               }
             },
             builder: (context, state) {
+              if (state is OfflineFailureAuthState) {
+                return HandleStatesWidget(
+                  isDialog: true,
+                  errorType: StateType.offline,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<AuthBloc>(context).add(
+                      ResetPasswordEvent(
+                          ResetPassword(password: passwordController.text)),
+                    );
+                  },
+                );
+              }
+              if (state is UnexpectedFailureAuthState) {
+                return HandleStatesWidget(
+                  isDialog: true,
+                  errorType: StateType.unexpectedProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<AuthBloc>(context).add(
+                      ResetPasswordEvent(
+                          ResetPassword(password: passwordController.text)),
+                    );
+                  },
+                );
+              }
+              if (state is InternalServerFailureAuthState) {
+                return HandleStatesWidget(
+                  isDialog: true,
+                  errorType: StateType.internalServerProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<AuthBloc>(context).add(
+                      ResetPasswordEvent(
+                          ResetPassword(password: passwordController.text)),
+                    );
+                  },
+                );
+              }
               if (state is LoadingAuthState) {
                 return const LoaderIndicator();
               }
-              return Column(
-                children: [
-                  CustomTextField(
-                    labelText: AppTranslationKeys.password.tr,
-                    isObscureText: true,
-                    controller: passwordController,
-                    validator: (val) => AppValidator.validatePassword(val),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  CustomTextField(
-                    labelText: AppTranslationKeys.confirmPassword.tr,
-                    controller: confirmPasswordController,
-                    isObscureText: true,
-                    validator: (val) => AppValidator.validateConflictPassword(
-                        val, passwordController.text),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Get.offAllNamed(AppPagesRoutes.mainScreen);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Text(
-                            AppTranslationKeys.skip.tr,
-                            style:
-                                Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      color: AppColors.secondary,
-                                      fontSize: 14,
-                                    ),
+              return Form(
+                key: formKeyResetPassword,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      labelText: AppTranslationKeys.password.tr,
+                      isObscureText: true,
+                      controller: passwordController,
+                      validator: (val) => AppValidator.validatePassword(val),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    CustomTextField(
+                      labelText: AppTranslationKeys.confirmPassword.tr,
+                      controller: confirmPasswordController,
+                      textInputAction: TextInputAction.done,
+                      isObscureText: true,
+                      validator: (val) => AppValidator.validateConflictPassword(
+                          val, passwordController.text),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.offAllNamed(AppPagesRoutes.mainScreen);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(
+                              AppTranslationKeys.skip.tr,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                    color: AppColors.secondary,
+                                    fontSize: 14,
+                                  ),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  CustomButtonAuth(
-                    text: AppTranslationKeys.reset.tr,
-                    onPressed: () {
-                      if (passwordController.text !=
-                          confirmPasswordController.text) {
-                        WidgetsUtils.showSnackBar(
-                          title: AppTranslationKeys.failure.tr,
-                          message: AppTranslationKeys.passwordNotMatch.tr,
-                          snackBarType: SnackBarType.error,
-                        );
-                      }
-                      BlocProvider.of<AuthBloc>(context).add(
-                        ResetPasswordEvent(
-                            ResetPassword(password: passwordController.text)),
-                      );
-                    },
-                  ),
-                ],
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    CustomButtonAuth(
+                      text: AppTranslationKeys.reset.tr,
+                      onPressed: () {
+                        if (formKeyResetPassword.currentState!.validate()) {
+                          BlocProvider.of<AuthBloc>(context).add(
+                            ResetPasswordEvent(ResetPassword(
+                                password: passwordController.text)),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
               );
             },
           ),

@@ -11,6 +11,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/core/screens/home_screen.dart';
+import 'package:nano_tech_cosmetic/core/widgets/handle_states_widget.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_data_source.dart';
@@ -18,7 +19,7 @@ import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dar
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_event.dart';
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offers_screen.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/screens/my_cart_screen.dart';
-import 'package:nano_tech_cosmetic/features/order/presentation/screens/my_order_screen.dart';
+import 'package:nano_tech_cosmetic/core/screens/my_order_screen.dart';
 import 'package:nano_tech_cosmetic/main.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
@@ -216,7 +217,7 @@ class _MainScreenState extends State<MainScreen> {
                               width: 10,
                             ),
                             SizedBox(
-                              width: Get.width * 0.5,
+                              width: Get.width * 0.45,
                               child: Text(
                                 "${globalUser!.firstName} ${globalUser!.lastName}",
                                 overflow: TextOverflow.clip,
@@ -442,14 +443,66 @@ class _MainScreenState extends State<MainScreen> {
                       const SizedBox(
                         height: 30,
                       ),
-                      ListTile(
-                        onTap: () {
+                      DropdownButtonFormField<String>(
+                        hint: Padding(
+                          padding: Get.locale!.languageCode == 'en'
+                              ? const EdgeInsets.only(left: 25)
+                              : const EdgeInsets.only(right: 25),
+                          child: Text(
+                            Get.locale!.languageCode == 'ar'
+                                ? AppTranslationKeys.arabic.tr
+                                : AppTranslationKeys.english.tr,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ),
+                        decoration: InputDecoration(
+                          prefixIcon: SvgPicture.asset(
+                            AppAssets.translate,
+                            height: 20,
+                            width: 20,
+                          ),
+                          prefixIconConstraints: const BoxConstraints(
+                              maxHeight: 40,
+                              maxWidth: 40,
+                              minHeight: 30,
+                              minWidth: 30),
+                          border: InputBorder.none,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        items: localeController.languagesCodes
+                            .map(
+                              (e) => DropdownMenuItem<String>(
+                                value: e,
+                                child: SizedBox(
+                                  width: Get.width * 0.4,
+                                  child: Padding(
+                                    padding: Get.locale!.languageCode == 'en'
+                                        ? const EdgeInsets.only(left: 25)
+                                        : const EdgeInsets.only(right: 25),
+                                    child: Text(
+                                      e == 'ar'
+                                          ? AppTranslationKeys.arabic.tr
+                                          : AppTranslationKeys.english.tr,
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        value: localeController.language!.countryCode,
+                        onChanged: (value) {
                           setState(() {
-                            localeController.changeLang();
+                            localeController.changeLang(value!);
                           });
                         },
-                        leading: SvgPicture.asset(AppAssets.translate),
-                        title: Text(AppTranslationKeys.changeLang.tr),
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
                       ),
                       ListTile(
                         onTap: () {
@@ -488,118 +541,7 @@ class _MainScreenState extends State<MainScreen> {
                       ListTile(
                         leading: SvgPicture.asset(AppAssets.logout),
                         title: Text(AppTranslationKeys.logout.tr),
-                        onTap: () {
-                          WidgetsUtils.showCustomDialog(
-                            context,
-                            title: AppTranslationKeys.logoutFromApp.tr,
-                            hasBtns: false,
-                            children: [
-                              BlocProvider(
-                                create: (context) => di.sl<AuthBloc>(),
-                                child: BlocConsumer<AuthBloc, AuthState>(
-                                  listener: (context, state) {
-                                    if (state is FailureAuthState ||
-                                        state is OfflineFailureAuthState ||
-                                        state
-                                            is InternalServerFailureAuthState ||
-                                        state is UnexpectedFailureAuthState) {
-                                      WidgetsUtils.showSnackBar(
-                                        title: AppTranslationKeys.failure.tr,
-                                        message: state.message,
-                                        snackBarType: SnackBarType.error,
-                                      );
-                                    } else if (state is SuccessLogoutState) {
-                                      Get.offAllNamed(
-                                          AppPagesRoutes.signInScreen);
-                                      WidgetsUtils.showSnackBar(
-                                        title: AppTranslationKeys.success.tr,
-                                        message: state.message,
-                                        snackBarType: SnackBarType.info,
-                                      );
-                                    }
-                                  },
-                                  builder: (context, state) {
-                                    if (state is LoadingAuthState) {
-                                      return const LoaderIndicator(
-                                        size: 50,
-                                        lineWidth: 5,
-                                      );
-                                    }
-                                    return Padding(
-                                      padding: const EdgeInsets.all(30)
-                                          .copyWith(bottom: 20),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: MaterialButton(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 10,
-                                              ),
-                                              onPressed: () {
-                                                BlocProvider.of<AuthBloc>(
-                                                        context)
-                                                    .add(
-                                                  const LogoutEvent(),
-                                                );
-                                              },
-                                              color: AppColors.primary,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(30)),
-                                                side: BorderSide(
-                                                    width: 1,
-                                                    color: AppColors.gray),
-                                              ),
-                                              child: Text(
-                                                AppTranslationKeys.confirm.tr,
-                                                style: const TextStyle(
-                                                  fontSize: 20,
-                                                  color: AppColors.white,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 15,
-                                          ),
-                                          Expanded(
-                                            flex: 3,
-                                            child: MaterialButton(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10),
-                                              onPressed: () {
-                                                Get.back();
-                                              },
-                                              color: AppColors.white,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(30)),
-                                                side: BorderSide(
-                                                    width: 1,
-                                                    color: AppColors.gray),
-                                              ),
-                                              child: Text(
-                                                AppTranslationKeys.cancel.tr,
-                                                style: const TextStyle(
-                                                    fontSize: 20,
-                                                    color: AppColors.gray),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                        },
+                        onTap: logout,
                       ),
                       const Divider(
                         height: 0,
@@ -660,6 +602,132 @@ class _MainScreenState extends State<MainScreen> {
               label: AppTranslationKeys.offers.tr),
         ],
       ),
+    );
+  }
+
+  logout() {
+    WidgetsUtils.showCustomDialog(
+      context,
+      title: AppTranslationKeys.logoutFromApp.tr,
+      hasBtns: false,
+      children: [
+        BlocProvider(
+          create: (context) => di.sl<AuthBloc>(),
+          child: BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is FailureAuthState) {
+                WidgetsUtils.showSnackBar(
+                  title: AppTranslationKeys.failure.tr,
+                  message: state.message.tr,
+                  snackBarType: SnackBarType.error,
+                );
+              } else if (state is SuccessLogoutState) {
+                Get.offAllNamed(AppPagesRoutes.signInScreen);
+                WidgetsUtils.showSnackBar(
+                  title: AppTranslationKeys.success.tr,
+                  message: state.message.tr,
+                  snackBarType: SnackBarType.info,
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is OfflineFailureAuthState) {
+                return HandleStatesWidget(
+                  isDialog: true,
+                  errorType: StateType.offline,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<AuthBloc>(context).add(
+                      const LogoutEvent(),
+                    );
+                  },
+                );
+              }
+              if (state is UnexpectedFailureAuthState) {
+                return HandleStatesWidget(
+                  isDialog: true,
+                  errorType: StateType.unexpectedProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<AuthBloc>(context).add(
+                      const LogoutEvent(),
+                    );
+                  },
+                );
+              }
+              if (state is InternalServerFailureAuthState) {
+                return HandleStatesWidget(
+                  isDialog: true,
+                  errorType: StateType.internalServerProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<AuthBloc>(context).add(
+                      const LogoutEvent(),
+                    );
+                  },
+                );
+              }
+              if (state is LoadingAuthState) {
+                return const LoaderIndicator(
+                  size: 50,
+                  lineWidth: 5,
+                );
+              }
+              return Padding(
+                padding: const EdgeInsets.all(30).copyWith(bottom: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: MaterialButton(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                        ),
+                        onPressed: () {
+                          BlocProvider.of<AuthBloc>(context).add(
+                            const LogoutEvent(),
+                          );
+                        },
+                        color: AppColors.primary,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          side: BorderSide(width: 1, color: AppColors.gray),
+                        ),
+                        child: Text(
+                          AppTranslationKeys.confirm.tr,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: AppColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: MaterialButton(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        onPressed: () {
+                          Get.back();
+                        },
+                        color: AppColors.white,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          side: BorderSide(width: 1, color: AppColors.gray),
+                        ),
+                        child: Text(
+                          AppTranslationKeys.cancel.tr,
+                          style: const TextStyle(
+                              fontSize: 20, color: AppColors.gray),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

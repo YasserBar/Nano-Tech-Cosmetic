@@ -7,6 +7,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/widgets/handle_states_widget.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/resend_otp_entity.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/verify_otp_entity.dart';
@@ -50,7 +51,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
               if (state is FailureAuthState) {
                 WidgetsUtils.showSnackBar(
                   title: AppTranslationKeys.failure.tr,
-                  message: state.message,
+                  message: state.message.tr,
                   snackBarType: SnackBarType.error,
                 );
               } else if (state is SuccessVerifyOTPState) {
@@ -61,12 +62,51 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 }
                 WidgetsUtils.showSnackBar(
                   title: AppTranslationKeys.success.tr,
-                  message: state.message,
+                  message: state.message.tr,
                   snackBarType: SnackBarType.info,
                 );
               }
             },
             builder: (context, state) {
+              if (state is OfflineFailureAuthState) {
+                return HandleStatesWidget(
+                  isDialog: true,
+                  errorType: StateType.offline,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<AuthBloc>(context).add(
+                      ResendOTPEvent(
+                        ResendOTP(email: email),
+                      ),
+                    );
+                  },
+                );
+              }
+              if (state is UnexpectedFailureAuthState) {
+                return HandleStatesWidget(
+                  isDialog: true,
+                  errorType: StateType.unexpectedProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<AuthBloc>(context).add(
+                      ResendOTPEvent(
+                        ResendOTP(email: email),
+                      ),
+                    );
+                  },
+                );
+              }
+              if (state is InternalServerFailureAuthState) {
+                return HandleStatesWidget(
+                  isDialog: true,
+                  errorType: StateType.internalServerProblem,
+                  onPressedTryAgain: () {
+                    BlocProvider.of<AuthBloc>(context).add(
+                      ResendOTPEvent(
+                        ResendOTP(email: email),
+                      ),
+                    );
+                  },
+                );
+              }
               if (state is LoadingAuthState) {
                 return const LoaderIndicator();
               }

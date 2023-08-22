@@ -18,7 +18,7 @@ class ChooseGardScreen extends StatefulWidget {
 }
 
 class _ChooseGardScreenState extends State<ChooseGardScreen> {
-  bool isCustomer = true, isSalon = false, isCompany = false;
+  Role selectedRole = Role.customer;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +50,7 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                         height: Get.height * 0.2,
                         child: SvgPicture.asset(
                           AppAssets.logo,
+                          fit: BoxFit.fill,
                         ),
                       ),
                       Row(
@@ -59,12 +60,10 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                             selectedIcon: AppAssets.customerFill,
                             unSelectedIcon: AppAssets.customerOutlined,
                             label: AppTranslationKeys.customer.tr,
-                            isSelected: isCustomer,
+                            isSelected: selectedRole==Role.customer,
                             onSelected: (p0) {
                               setState(() {
-                                isCustomer = p0;
-                                isSalon = !p0;
-                                isCompany = !p0;
+                                selectedRole=Role.customer;
                               });
                             },
                           ),
@@ -72,12 +71,10 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                             selectedIcon: AppAssets.salonFill,
                             unSelectedIcon: AppAssets.salonOutlined,
                             label: AppTranslationKeys.salon.tr,
-                            isSelected: isSalon,
+                            isSelected: selectedRole==Role.salon,
                             onSelected: (p0) {
                               setState(() {
-                                isCustomer = !p0;
-                                isSalon = p0;
-                                isCompany = !p0;
+                                selectedRole=Role.salon;
                               });
                             },
                           ),
@@ -85,12 +82,10 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                             selectedIcon: AppAssets.companyFill,
                             unSelectedIcon: AppAssets.companyOutlined,
                             label: AppTranslationKeys.company.tr,
-                            isSelected: isCompany,
+                            isSelected: selectedRole==Role.company,
                             onSelected: (p0) {
                               setState(() {
-                                isCustomer = !p0;
-                                isSalon = !p0;
-                                isCompany = p0;
+                                selectedRole=Role.company;
                               });
                             },
                           ),
@@ -99,17 +94,14 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                       const Spacer(
                         flex: 1,
                       ),
-                      Column(children: [
-                        GardDescriptionText(
-                          text: AppTranslationKeys.buyYourCosmetics.tr,
+                      Column(
+                        children: List.generate(
+                          selectedRole.getFeatures().length,
+                          (index) => GardDescriptionText(
+                            text: selectedRole.getFeatures()[index],
+                          ),
                         ),
-                        GardDescriptionText(
-                          text: AppTranslationKeys.enjoyUniqueShopping.tr,
-                        ),
-                        GardDescriptionText(
-                          text: AppTranslationKeys.getDirectService.tr,
-                        ),
-                      ]),
+                      ),
                       const Spacer(
                         flex: 3,
                       ),
@@ -119,11 +111,7 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                           text: AppTranslationKeys.next.tr,
                           onPressed: () {
                             Get.toNamed(AppPagesRoutes.signUpScreen,
-                                arguments: isCustomer
-                                    ? Role.customer
-                                    : isSalon
-                                        ? Role.salon
-                                        : Role.company);
+                                arguments: selectedRole);
                           },
                         ),
                       ),

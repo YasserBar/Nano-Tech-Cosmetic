@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
+import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 
 class CustomTextField extends StatefulWidget {
   final String labelText;
   final bool isObscureText;
   final bool isTextArea;
+  final bool autofocus;
   final TextInputType inputType;
-  final TextEditingController? controller;
+  final TextEditingController controller;
+  final TextInputAction textInputAction;
   final FormFieldValidator? validator;
   final void Function()? onTap;
 
@@ -16,9 +19,11 @@ class CustomTextField extends StatefulWidget {
     this.isObscureText = false,
     this.isTextArea = false,
     this.inputType = TextInputType.text,
-    this.controller,
+    required this.controller,
     this.onTap,
     this.validator,
+    this.textInputAction = TextInputAction.next,
+    this.autofocus = false,
   }) : super(key: key);
 
   @override
@@ -49,6 +54,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: widget.controller,
           onTap: widget.onTap,
+          textInputAction: widget.textInputAction,
+          autofocus: widget.autofocus,
+          onChanged: (value) {
+            setState(() {});
+          },
+          textDirection: widget.controller.text.isNotEmpty && !AppValidator.isOnlySpaces(widget.controller.text)
+              ? AppValidator.startsWithEnglishChar(widget.controller.text)
+                  ? TextDirection.ltr
+                  : TextDirection.rtl
+              : null,
           decoration: InputDecoration(
             filled: false,
             suffixIcon: widget.isObscureText

@@ -44,7 +44,7 @@ class OrderNameModel extends OrderName {
       note: json['note'] as String?,
       amount: json['ammount'] as int,
       status: switchToOrderStatus(json['status'] as int),
-      cost: json['cost'] as double?,
+      cost: json['cost'] ?? 0 as double?,
       costPrintig: json['costPrintig'] as double?,
       response: json['response'] as String?,
       startProcessing: json['start_processing'] as String?,

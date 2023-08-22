@@ -7,11 +7,12 @@ abstract class CategoryState extends Equatable {
   final bool hasMore;
   final bool loaded;
   final String message;
+
   const CategoryState(this.categories, this.hasMore, this.loaded,
       {required this.message});
 
   @override
-  List<Object> get props => [categories!, hasMore, loaded, message];
+  List<Object> get props => [categories ?? [], hasMore, loaded, message];
 }
 
 class CategoryInitial extends CategoryState {
@@ -32,19 +33,19 @@ class FailureCategoryState extends CategoryState {
 class InternalServerFailureCategoryState extends CategoryState {
   const InternalServerFailureCategoryState(
       super.categories, super.hasMore, super.loaded,
-      {super.message = AppMessages.InternalServerError});
+      {super.message = AppMessages.internalServerError});
 }
 
 class UnexpectedFailureCategoryState extends CategoryState {
   const UnexpectedFailureCategoryState(
       super.categories, super.hasMore, super.loaded,
-      {super.message = AppMessages.UnexpectedException});
+      {super.message = AppMessages.unexpectedException});
 }
 
 class OfflineFailureCategoryState extends CategoryState {
   const OfflineFailureCategoryState(
       super.categories, super.hasMore, super.loaded,
-      {super.message = AppMessages.Offline});
+      {super.message = AppMessages.offline});
 }
 
 class LoadedCategoriesState extends CategoryState {

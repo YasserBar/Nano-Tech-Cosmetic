@@ -46,7 +46,7 @@ class MyCartScreen extends StatelessWidget {
               state is EmptyCacheFailureCartState) {
             WidgetsUtils.showSnackBar(
               title: "Failure",
-              message: state.message,
+              message: state.message.tr,
               snackBarType: SnackBarType.error,
             );
           }
@@ -68,7 +68,7 @@ class MyCartScreen extends StatelessWidget {
                         state is UnexpectedFailureOrderState) {
                       WidgetsUtils.showSnackBar(
                         title: AppTranslationKeys.failure.tr,
-                        message: state1.message,
+                        message: state1.message.tr,
                         snackBarType: SnackBarType.error,
                       );
                     } else if (state1 is SuccessStoreOrderState) {
@@ -77,7 +77,7 @@ class MyCartScreen extends StatelessWidget {
                       Get.offAndToNamed(AppPagesRoutes.mainScreen,arguments: 2);
                       WidgetsUtils.showSnackBar(
                         title: AppTranslationKeys.success.tr,
-                        message: state1.message,
+                        message: state1.message.tr,
                         snackBarType: SnackBarType.info,
                       );
                     }
@@ -87,58 +87,59 @@ class MyCartScreen extends StatelessWidget {
                       onPressed: () {
                         globalUser != null
                             ? WidgetsUtils.showCustomDialog(
-                                context,
-                                title: "Total",
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                      style: const TextStyle(
-                                          color: AppColors.secondary,
-                                          fontSize: 30),
-                                    ),
-                                  )
-                                ],
-                                btnOkOnPress: () {
-                                  Get.back();
-                                  BlocProvider.of<OrderBloc>(context)
-                                      .add(StoreOrderEvent(
-                                          requestOrder: RequestOrder(
-                                    colorIds: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => element.isProduct)
-                                            .toList())
-                                        .map((e) => -1)
-                                        .toList(),
-                                    productIds: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => element.isProduct)
-                                            .toList())
-                                        .map((e) => e.id)
-                                        .toList(),
-                                    quantitiesProducts: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => element.isProduct)
-                                            .toList())
-                                        .map((e) => e.account)
-                                        .toList(),
-                                    offerIds: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => !element.isProduct)
-                                            .toList())
-                                        .map((e) => e.id)
-                                        .toList(),
-                                    quantitiesOffers: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => !element.isProduct)
-                                            .toList())
-                                        .map((e) => e.account)
-                                        .toList(),
-                                  )));
-                                },
-                              )
+                          context,
+                          title: AppTranslationKeys.total.tr,
+                          children: [
+                            Center(
+                              child: Text(
+                                "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                                style: const TextStyle(
+                                    color: AppColors.secondary,
+                                    fontSize: 30),
+                              ),
+                            )
+                          ],
+                          okText: AppTranslationKeys.confirm.tr,
+                          btnOkOnPress: () {
+                            Get.back();
+                            BlocProvider.of<OrderBloc>(context)
+                                .add(StoreOrderEvent(
+                                requestOrder: RequestOrder(
+                                  colorIds: (state.cart!.itemsCart
+                                      .where(
+                                          (element) => element.isProduct)
+                                      .toList())
+                                      .map((e) => -1)
+                                      .toList(),
+                                  productIds: (state.cart!.itemsCart
+                                      .where(
+                                          (element) => element.isProduct)
+                                      .toList())
+                                      .map((e) => e.id)
+                                      .toList(),
+                                  quantitiesProducts: (state.cart!.itemsCart
+                                      .where(
+                                          (element) => element.isProduct)
+                                      .toList())
+                                      .map((e) => e.account)
+                                      .toList(),
+                                  offerIds: (state.cart!.itemsCart
+                                      .where(
+                                          (element) => !element.isProduct)
+                                      .toList())
+                                      .map((e) => e.id)
+                                      .toList(),
+                                  quantitiesOffers: (state.cart!.itemsCart
+                                      .where(
+                                          (element) => !element.isProduct)
+                                      .toList())
+                                      .map((e) => e.account)
+                                      .toList(),
+                                )));
+                          },
+                        )
                             : signInDialog(context,
-                                title: AppTranslationKeys.myOrders.tr);
+                            title: AppTranslationKeys.myOrders.tr);
                       },
                       label: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -164,71 +165,71 @@ class MyCartScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Total",
-                          style: TextStyle(color: AppColors.gray, fontSize: 22),
+                        Text(
+                          AppTranslationKeys.total.tr,
+                          style: const TextStyle(color: AppColors.gray, fontSize: 22),
                         ),
                         BlocBuilder<ItemCartBloc, ItemCartState>(
                             builder: (context, stateItem) {
-                          if (stateItem is SuccessDecreaseItemCartState) {
-                            if (stateItem.index != null) {
-                              state.cart!.totalPrice -=
-                                  state.cart!.itemsCart[stateItem.index!].price;
-                            }
-                            return Text(
-                              "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
+                              if (stateItem is SuccessDecreaseItemCartState) {
+                                if (stateItem.index != null) {
+                                  state.cart!.totalPrice -=
+                                      state.cart!.itemsCart[stateItem.index!].price;
+                                }
+                                return Text(
+                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
                                     fontSize: 26,
                                     color: AppColors.primary,
                                   ),
-                            );
-                          }
-                          if (stateItem is SuccessIncreaseItemCartState) {
-                            if (stateItem.index != null) {
-                              state.cart!.totalPrice +=
-                                  state.cart!.itemsCart[stateItem.index!].price;
-                            }
-                            return Text(
-                              "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
+                                );
+                              }
+                              if (stateItem is SuccessIncreaseItemCartState) {
+                                if (stateItem.index != null) {
+                                  state.cart!.totalPrice +=
+                                      state.cart!.itemsCart[stateItem.index!].price;
+                                }
+                                return Text(
+                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
                                     fontSize: 26,
                                     color: AppColors.primary,
                                   ),
-                            );
-                          }
-                          if (stateItem is SuccessDeleteItemCartState) {
-                            if (stateItem.index != null) {
-                              state.cart!.totalPrice -= (state
+                                );
+                              }
+                              if (stateItem is SuccessDeleteItemCartState) {
+                                if (stateItem.index != null) {
+                                  state.cart!.totalPrice -= (state
                                       .cart!.itemsCart[stateItem.index!].price *
-                                  state.cart!.itemsCart[stateItem.index!]
-                                      .account);
-                            }
-                            return Text(
-                              "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
+                                      state.cart!.itemsCart[stateItem.index!]
+                                          .account);
+                                }
+                                return Text(
+                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
                                     fontSize: 26,
                                     color: AppColors.primary,
                                   ),
-                            );
-                          }
-                          return Text(
-                            "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                            style:
+                                );
+                              }
+                              return Text(
+                                "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                                style:
                                 Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      fontSize: 26,
-                                      color: AppColors.primary,
-                                    ),
-                          );
-                        })
+                                  fontSize: 26,
+                                  color: AppColors.primary,
+                                ),
+                              );
+                            })
                       ],
                     ),
                   ),
@@ -237,31 +238,34 @@ class MyCartScreen extends StatelessWidget {
                   SlidableAutoCloseBehavior(
                     child: BlocBuilder<ItemCartBloc, ItemCartState>(
                         builder: (context, stateItem) {
-                      if (stateItem is SuccessDeleteItemCartState) {
-                        state.cart!.itemsCart.removeAt(stateItem.index!);
-                        if (state.cart!.itemsCart.isEmpty) {
-                          state.cart = null;
-                          return SizedBox(
-                            child: Center(
-                                child: SvgPicture.asset(AppAssets.emptyCart)),
-                          );
-                        }
-                      }
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: AppDimensions.appbarBodyPadding,
-                          horizontal: AppDimensions.sidesBodyPadding,
-                        ),
-                        child: Column(
-                          children: List.generate(
-                              state.cart!.itemsCart.length,
-                              (index) => ItemCard(
+                          if (stateItem is SuccessDeleteItemCartState) {
+                            state.cart!.itemsCart.removeAt(stateItem.index!);
+                            if (state.cart!.itemsCart.isEmpty) {
+                              state.cart = null;
+                              return SizedBox(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 100),
+                                  child: Center(
+                                      child: SvgPicture.asset(AppAssets.emptyCart)),
+                                ),
+                              );
+                            }
+                          }
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: AppDimensions.appbarBodyPadding,
+                              horizontal: AppDimensions.sidesBodyPadding,
+                            ),
+                            child: Column(
+                              children: List.generate(
+                                  state.cart!.itemsCart.length,
+                                      (index) => ItemCard(
                                     itemCart: state.cart!.itemsCart[index],
                                     index: index,
                                   )),
-                        ),
-                      );
-                    }),
+                            ),
+                          );
+                        }),
                   ),
                 ],
               ),
@@ -282,48 +286,3 @@ class MyCartScreen extends StatelessWidget {
   }
 }
 
-/*
-
-                      Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: MaterialButton(
-                            onPressed: () {
-                              globalUser != null
-                                  ? WidgetsUtils.showCustomDialog(context,
-                                      title: "Total",
-                                      children: [
-                                          Center(
-                                            child: Text(
-                                              "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                              style: const TextStyle(
-                                                  color: AppColors.secondary,
-                                                  fontSize: 30),
-                                            ),
-                                          )
-                                        ])
-                                  : signInDialog(context,
-                                      title: AppTranslationKeys.myOrders.tr);
-                            },
-                            color: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side: const BorderSide(
-                                    color: AppColors.gray, width: 1)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 15,
-                              ),
-                              child: Text(
-                                AppTranslationKeys.order.tr,
-                                style: const TextStyle(
-                                  color: AppColors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-
- */
