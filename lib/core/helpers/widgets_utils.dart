@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 
 class WidgetsUtils {
   static void showSnackBar(
@@ -33,12 +34,11 @@ class WidgetsUtils {
   static void showCustomDialog(BuildContext context,
       {required String title,
       List<Widget> children = const [],
-      String okText = 'Ok',
-      String cancelText = 'Cancel',
+      String okText = '',
       Function()? btnOkOnPress,
       Function()? btnCancelOnPress,
-      bool hasBtnCancel=true,
-      bool hasBtns=true,
+      bool hasBtnCancel = true,
+      bool hasBtns = true,
       bool barrierDismissible = true}) {
     showDialog(
       barrierColor: AppColors.white50,
@@ -51,7 +51,7 @@ class WidgetsUtils {
           side: const BorderSide(color: AppColors.gray, width: 3),
         ),
         child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           shrinkWrap: true,
           children: [
             Padding(
@@ -69,63 +69,63 @@ class WidgetsUtils {
             const SizedBox(
               height: 30,
             ),
-            if(hasBtns)
-            Padding(
-              padding: const EdgeInsets.all(30).copyWith(bottom: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: MaterialButton(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      onPressed: () {
-                        if (btnOkOnPress != null) {
-                          btnOkOnPress.call();
-                        }
-                        // Navigator.pop(context);
-                      },
-                      color: AppColors.primary,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        side: BorderSide(width: 1, color: AppColors.gray),
-                      ),
-                      child: Text(
-                        okText,
-                        style: const TextStyle(
-                            fontSize: 20, color: AppColors.white),
-                      ),
-                    ),
-                  ),
-                  if(hasBtnCancel)
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  if(hasBtnCancel)
-                  Expanded(
-                    flex: 3,
-                    child: MaterialButton(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        if (btnCancelOnPress != null) {
-                          btnCancelOnPress.call();
-                        }
-                      },
-                      color: AppColors.white,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        side: BorderSide(width: 1, color: AppColors.gray),
-                      ),
-                      child: Text(
-                        cancelText,
-                        style: const TextStyle(
-                            fontSize: 20, color: AppColors.gray),
+            if (hasBtns)
+              Padding(
+                padding: const EdgeInsets.all(30).copyWith(bottom: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: MaterialButton(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        onPressed: () {
+                          if (btnOkOnPress != null) {
+                            btnOkOnPress.call();
+                          }
+                          // Navigator.pop(context);
+                        },
+                        color: AppColors.primary,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          side: BorderSide(width: 1, color: AppColors.gray),
+                        ),
+                        child: Text(
+                          okText,
+                          style: const TextStyle(
+                              fontSize: 20, color: AppColors.white),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    if (hasBtnCancel)
+                      const SizedBox(
+                        width: 15,
+                      ),
+                    if (hasBtnCancel)
+                      Expanded(
+                        flex: 3,
+                        child: MaterialButton(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            if (btnCancelOnPress != null) {
+                              btnCancelOnPress.call();
+                            }
+                          },
+                          color: AppColors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            side: BorderSide(width: 1, color: AppColors.gray),
+                          ),
+                          child: Text(
+                            AppTranslationKeys.cancel.tr,
+                            style: const TextStyle(
+                                fontSize: 20, color: AppColors.gray),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),

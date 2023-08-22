@@ -48,6 +48,9 @@ abstract class AppAssets {
   static const String menuAr = '$rootSVG/menu_ar.svg';
   static const String menuEn = '$rootSVG/menu_en.svg';
   static const String emptyCart = '$rootSVG/empty_cart.svg';
-  static const String nothingHere = '$rootSVG/nothing_here.svg';
+  static const String noAnyProduct = '$rootSVG/no_any_product.svg';
+  static const String unexpectedProblem = '$rootSVG/unexpected_problem.svg';
+  static const String offline = '$rootSVG/offline.svg';
+  static const String internalServerProblem = '$rootSVG/internal_server_problem.svg';
   static const String caution = '$rootSVG/caution.svg';
 }

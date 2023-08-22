@@ -12,8 +12,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final RateProductUsecase rateProductUsecase;
 
   int page = 1;
-  int? categoryId;
-  String? name;
   ScrollController scrollController = ScrollController();
   bool isLoadingMore = false;
 
@@ -21,12 +19,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       {required this.showAllProductUsecase, required this.rateProductUsecase})
       : super(const ProductInitial(null, true, true, message: 'inti state')) {
     scrollController.addListener(() {
-      if (!isLoadingMore) add(const LoadMoreProductsEvent());
+      if (!isLoadingMore) add(LoadMoreProductsEvent());
     });
     on<ShowAllProductsEvent>((event, emit) async {
       emit(const LoadingProductState(null, true, true,message: 'loading'));
       final failureOrproducts =
-          await showAllProductUsecase(page, categoryId: categoryId, name: name);
+          await showAllProductUsecase(page, categoryId: event.categoryId, name: event.name);
 
       failureOrproducts.fold((failure) {
         emit(switchFailure(failure));
@@ -44,7 +42,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             message: globalMessage!));
         page++;
         final failureOrproducts = await showAllProductUsecase(page,
-            categoryId: categoryId, name: name);
+            categoryId: event.categoryId, name: event.name);
         failureOrproducts.fold((failure) {
           page--;
           emit(switchFailure(failure));

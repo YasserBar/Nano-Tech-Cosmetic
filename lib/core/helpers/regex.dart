@@ -1,3 +1,6 @@
+import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
+
 class AppValidator {
   static const emailRegex =
       r'^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$';
@@ -7,65 +10,101 @@ class AppValidator {
 
   static String? validateEmail(String? inputEmail) {
     if (inputEmail == null || inputEmail.isEmpty) {
-      return 'البريد الإلكتروني مطلوب';
+      return AppTranslationKeys.emailIsRequired.tr;
     } else if (!RegExp(emailRegex).hasMatch(inputEmail)) {
-      return 'البريد الإلكتروني غير صالح';
+      return AppTranslationKeys.emailIsNotInvalid.tr;
     }
     return null;
   }
 
   static String? validateName(String? inputName) {
     if (inputName == null || inputName.isEmpty) {
-      return 'الاسم مطلوب';
+      return AppTranslationKeys.nameIsRequired.tr;
     } else if (!RegExp(nameRegex).hasMatch(inputName)) {
-      return 'الاسم غير صالح';
+      return AppTranslationKeys.nameIsNotInvalid.tr;
     }
     return null;
   }
 
   static String? validateRequired(String? inputEmail) {
     if (inputEmail == null || inputEmail.isEmpty) {
-      return 'مطلوب';
-    }
-    return null;
-  }
-
-  static String? validateLastName(String? inputName) {
-    if (inputName == null || inputName.isEmpty) {
-      return 'الشهرة مطلوب';
-    } else if (!RegExp(nameRegex).hasMatch(inputName)) {
-      return 'الشهرة غير صالح';
+      return AppTranslationKeys.thisFieldIsRequired.tr;
     }
     return null;
   }
 
   static String? validatePhone(String? inputNumber) {
     if (inputNumber == null || inputNumber.isEmpty) {
-      return 'رقم الهاتف مطلوب';
+      return AppTranslationKeys.phoneNumberIsRequired.tr;
     } else if (inputNumber.length != 9) {
-      return 'رقم الهاتف ينبغي أن يتألف من 9 خانات';
+      return AppTranslationKeys.thePhoneNumberShouldConsistOf9Digits.tr;
     } else if (!RegExp(phoneRegex).hasMatch(inputNumber)) {
-      return 'رقم هاتف غير صالح';
+      return AppTranslationKeys.phoneIsNotInvalid.tr;
     }
     return null;
   }
 
   static String? validatePassword(String? inputPassword) {
     if (inputPassword == null || inputPassword.isEmpty) {
-      return 'كلمة المرور مطلوبة';
+      return AppTranslationKeys.passwordIsRequired.tr;
     } else if (!RegExp(passwordRegex8CharactersInLength)
         .hasMatch(inputPassword)) {
-      return 'ينبغي أن تتألف من 8 خانات على الأقل';
+      return AppTranslationKeys.itShouldBeAtLeast8CharactersLong.tr;
     }
     return null;
   }
 
   static String? validateConflictPassword(String? inputPassword, String? pass) {
     if (inputPassword == null || inputPassword.isEmpty) {
-      return 'تأكيد كلمة المرور مطلوبة';
+      return AppTranslationKeys.passwordConfirmationIsRequired.tr;
     } else if (inputPassword != pass) {
-      return 'لا يوجد تطابق';
+      return AppTranslationKeys.thereIsNoMatch.tr;
     }
     return null;
   }
+  static bool startsWithEnglishChar(String input) {
+    RegExp englishCharRegex = RegExp(r'^[a-zA-Z0-9٠-٩]');
+    return englishCharRegex.hasMatch(input);
+  }
+  static bool isOnlySpaces(String input) {
+    return input.trim().isEmpty;
+  }
+  static bool isValidIraqPhoneNumber(String input) {
+    RegExp phoneNumberRegex = RegExp(r'^(00|\+ ?964|0 ?964)(-? ?\d{9,13})$');
+    return phoneNumberRegex.hasMatch(input);
+  }
 }
+/*
+List<String> phoneNumbers = [
+      "00964215195745",
+      "00 964215195745",
+      "00964 215195745",
+      "00 964 215195745",
+      "00-964215195745",
+      "00964-215195745",
+      "00-964-215195745",
+      "0964215195745",
+      "0 964215195745",
+      "0964 215195745",
+      "0 964 215195745",
+      "0-964215195745",
+      "0964-215195745",
+      "0-964-215195745",
+      "+964215195745",
+      "+964215195745",
+      "+964 215195745",
+      "+964215195745",
+      "+964-215195745",
+      "+ 964215195745",
+      "+ 964215195745",
+      "+ 964 215195745",
+      "+ 964215195745",
+      "+ 964-215195745",
+      "0215195745",
+      "215195745",
+    ];
+
+    for (String phoneNumber in phoneNumbers) {
+      print("$phoneNumber is valid: ${AppValidator.isValidIraqPhoneNumber(phoneNumber)}");
+    }
+ */

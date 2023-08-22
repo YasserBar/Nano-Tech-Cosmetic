@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
@@ -7,6 +8,34 @@ enum SnackBarType {
   info,
   error,
   warning,
+}
+
+enum StateType {
+  offline,
+  unexpectedProblem,
+  internalServerProblem,
+  noAnyProduct,
+  emptyCart,
+  noAnyOrder,
+}
+
+extension ErrorTypeExtensions on StateType {
+  String getIcon() {
+    switch (this) {
+      case StateType.offline:
+        return AppAssets.offline;
+      case StateType.unexpectedProblem:
+        return AppAssets.unexpectedProblem;
+      case StateType.internalServerProblem:
+        return AppAssets.internalServerProblem;
+      case StateType.noAnyProduct:
+        return AppAssets.noAnyProduct;
+      case StateType.emptyCart:
+        return AppAssets.emptyCart;
+      case StateType.noAnyOrder:
+        return AppAssets.emptyCart;
+    }
+  }
 }
 
 enum OrderStatus {
@@ -90,3 +119,41 @@ enum Role {
   salon,
   company,
 }
+
+extension RoleExtension on Role {
+  List<String> getFeatures() {
+    switch(this) {
+      case Role.customer:
+        return [
+          AppTranslationKeys.buyYourCosmetics.tr,
+          AppTranslationKeys.enjoyUniqueShopping.tr,
+          AppTranslationKeys.getDirectService.tr,
+        ];
+      case Role.salon:
+        return [
+          AppTranslationKeys.buyYourCosmetics.tr,
+          AppTranslationKeys.enjoyUniqueShopping.tr,
+          AppTranslationKeys.getDirectService.tr,
+        ];
+      case Role.company:
+        return [
+          AppTranslationKeys.buyYourCosmetics.tr,
+          AppTranslationKeys.enjoyUniqueShopping.tr,
+          AppTranslationKeys.getDirectService.tr,
+        ];
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

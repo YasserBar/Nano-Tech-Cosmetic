@@ -1,31 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
+import 'package:nano_tech_cosmetic/features/order/domain/entities/order_entity.dart';
 
 class OrderCard extends StatelessWidget {
-  final String price;
-  final String response;
-  final String date;
-  final OrderStatus status;
-  final void Function()? onTap;
+  final Order order;
 
-  const OrderCard({
-    Key? key,
-    required this.price,
-    required this.response,
-    required this.date,
-    required this.status,
-    this.onTap,
-  }) : super(key: key);
+  const OrderCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        Get.toNamed(AppPagesRoutes.orderDetailsScreen, arguments: order);
+      },
       child: Container(
         padding: const EdgeInsets.all(5),
         margin: const EdgeInsets.symmetric(vertical: 5),
@@ -54,14 +46,14 @@ class OrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "$price ${AppTranslationKeys.di.tr}",
+                    "${order.price} ${AppTranslationKeys.di.tr}",
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: 22,
                           color: AppColors.primary,
                         ),
                   ),
                   Text(
-                    date.substring(0,10),
+                    order.createdAt.substring(0, 10),
                     style: const TextStyle(
                       color: AppColors.secondary,
                       fontSize: 16,
@@ -76,7 +68,7 @@ class OrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    response,
+                    order.response ?? '*******************',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -84,13 +76,7 @@ class OrderCard extends StatelessWidget {
                       fontSize: 18,
                     ),
                   ),
-                  SvgPicture.asset(status == OrderStatus.waiting
-                      ? AppAssets.waitingOrder
-                      : status == OrderStatus.processing
-                          ? AppAssets.processOrder
-                          : status == OrderStatus.rejected
-                              ? AppAssets.rejectOrder
-                              : AppAssets.doneOrder)
+                  SvgPicture.asset(order.status.getIcon())
                 ],
               ),
             ],

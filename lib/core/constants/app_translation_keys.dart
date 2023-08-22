@@ -1,7 +1,4 @@
-
-
 class AppTranslationKeys {
-
   static const String singIn = 'singIn';
   static const String email = 'email';
   static const String password = 'password';
@@ -52,6 +49,7 @@ class AppTranslationKeys {
   static const String menu = 'menu';
   static const String welcome = 'welcome';
   static const String findProduct = 'findProduct';
+  static const String findCategory = 'findCategory';
   static const String doNotHaveAnAccount = 'doNotHaveAnAccount';
   static const String ads = 'ads';
   static const String seeAll = 'seeAll';
@@ -72,11 +70,12 @@ class AppTranslationKeys {
   static const String confirm = 'confirm';
   static const String cancel = 'cancel';
   static const String addToCart = 'addToCart';
-    static const String specialOrder = 'specialOrder';
+  static const String specialOrder = 'specialOrder';
 
   static const String myOrders = 'myOrders';
   static const String orderDetails = 'orderDetails';
   static const String response = 'response';
+  static const String notResponse = 'not response';
   static const String orderManufacturing = 'orderManufacturing';
   static const String orderByName = 'orderByName';
   static const String notes = 'notes';
@@ -89,7 +88,14 @@ class AppTranslationKeys {
   static const String offers = 'offers';
 
   static const String profile = 'profile';
+  static const String arabic = 'arabic';
+  static const String english = 'english';
+  static const String tryAgain = 'tryAgain';
   static const String offline = 'offline';
+  static const String emptyCache = 'emptyCache';
+  static const String dataIsLoadedSuccessfully = 'dataIsLoadedSuccessfully';
+  static const String deleteItemSuccessfully = 'deleteItemSuccessfully';
+  static const String addItemSuccessfully = 'addItemSuccessfully';
   static const String wrongData = 'wrongData';
   static const String unexpectedException = 'unexpectedException';
   static const String internalServerError = 'internalServerError';
@@ -100,4 +106,19 @@ class AppTranslationKeys {
   static const String success = 'success';
   static const String failure = 'failure';
 
+  static const String emailIsRequired = 'emailIsRequired';
+  static const String emailIsNotInvalid = 'emailIsNotInvalid';
+  static const String nameIsRequired = 'nameIsRequired';
+  static const String nameIsNotInvalid = 'nameIsNotInvalid';
+  static const String thisFieldIsRequired = 'thisFieldIsRequired';
+  static const String phoneNumberIsRequired = 'phoneNumberIsRequired';
+  static const String thePhoneNumberShouldConsistOf9Digits =
+      'thePhoneNumberShouldConsistOf9Digits';
+  static const String phoneIsNotInvalid = 'phoneIsNotInvalid';
+  static const String passwordIsRequired = 'passwordIsRequired';
+  static const String itShouldBeAtLeast8CharactersLong =
+      'itShouldBeAtLeast8CharactersLong';
+  static const String passwordConfirmationIsRequired =
+      'passwordConfirmationIsRequired';
+  static const String thereIsNoMatch = 'thereIsNoMatch';
 }

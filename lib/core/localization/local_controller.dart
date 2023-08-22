@@ -9,6 +9,7 @@ class LocaleController extends GetxController {
   Locale? language;
   SharedPreferences sharedPreferences = di.sl<SharedPreferences>();
   ThemeData appTheme = AppThemes.themeEnglish;
+  List<String> languagesCodes = ['ar','en'];
 
   @override
   void onInit() {
@@ -32,17 +33,14 @@ class LocaleController extends GetxController {
     super.onInit();
   }
 
-  void changeLang() {
-    String oldLangCode = sharedPreferences.getString(AppKeys.LANG) ?? 'ar';
-    String newLangCode = oldLangCode == "ar" ? 'en' : 'ar';
-    Locale locale = Locale(newLangCode);
-    sharedPreferences.setString(AppKeys.LANG, newLangCode);
+  void changeLang(String langCode) {
+    // String oldLangCode = sharedPreferences.getString(AppKeys.LANG) ?? 'ar';
+    // String newLangCode = oldLangCode == "ar" ? 'en' : 'ar';
+    Locale locale = Locale(langCode);
+    sharedPreferences.setString(AppKeys.LANG, langCode);
     appTheme =
-        newLangCode == "ar" ? AppThemes.themeArabic : AppThemes.themeEnglish;
+        langCode == "ar" ? AppThemes.themeArabic : AppThemes.themeEnglish;
     Get.changeTheme(appTheme);
     Get.updateLocale(locale);
   }
 }
-
-
-

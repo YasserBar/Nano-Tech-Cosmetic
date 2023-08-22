@@ -16,7 +16,7 @@ class CategoryCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Get.toNamed(AppPagesRoutes.productsScreen, arguments: category.id);
+        Get.toNamed(AppPagesRoutes.productsScreen, arguments: category);
       },
       child: Container(
         padding: const EdgeInsets.all(5),

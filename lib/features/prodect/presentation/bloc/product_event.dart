@@ -10,6 +10,7 @@ abstract class ProductEvent extends Equatable {
 
 class RateProductEvent extends ProductEvent {
   final RateProduct rateProduct;
+
   const RateProductEvent({required this.rateProduct});
 
   @override
@@ -17,14 +18,19 @@ class RateProductEvent extends ProductEvent {
 }
 
 class ShowAllProductsEvent extends ProductEvent {
-  const ShowAllProductsEvent();
+  String? name;
+  int? categoryId;
+  ShowAllProductsEvent({this.name,this.categoryId});
 
   @override
   List<Object> get props => [];
 }
 
 class LoadMoreProductsEvent extends ProductEvent {
-  const LoadMoreProductsEvent();
+  String? name;
+  int? categoryId;
+
+  LoadMoreProductsEvent({this.name,this.categoryId});
 
   @override
   List<Object> get props => [];

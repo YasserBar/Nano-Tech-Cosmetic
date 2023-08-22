@@ -31,7 +31,6 @@ class MyCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -47,7 +46,7 @@ class MyCartScreen extends StatelessWidget {
               state is EmptyCacheFailureCartState) {
             WidgetsUtils.showSnackBar(
               title: "Failure",
-              message: state.message,
+              message: state.message.tr,
               snackBarType: SnackBarType.error,
             );
           }
@@ -69,7 +68,7 @@ class MyCartScreen extends StatelessWidget {
                         state is UnexpectedFailureOrderState) {
                       WidgetsUtils.showSnackBar(
                         title: AppTranslationKeys.failure.tr,
-                        message: state1.message,
+                        message: state1.message.tr,
                         snackBarType: SnackBarType.error,
                       );
                     } else if (state1 is SuccessStoreOrderState) {
@@ -78,7 +77,7 @@ class MyCartScreen extends StatelessWidget {
                       Get.offAndToNamed(AppPagesRoutes.mainScreen,arguments: 2);
                       WidgetsUtils.showSnackBar(
                         title: AppTranslationKeys.success.tr,
-                        message: state1.message,
+                        message: state1.message.tr,
                         snackBarType: SnackBarType.info,
                       );
                     }
@@ -101,7 +100,6 @@ class MyCartScreen extends StatelessWidget {
                             )
                           ],
                           okText: AppTranslationKeys.confirm.tr,
-                          cancelText: AppTranslationKeys.cancel.tr,
                           btnOkOnPress: () {
                             Get.back();
                             BlocProvider.of<OrderBloc>(context)

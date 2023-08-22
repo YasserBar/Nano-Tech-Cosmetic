@@ -27,7 +27,7 @@ class ProductRemoteDataSourceImplWithHttp extends ProductRemoteDataSource {
         Uri.parse(AppRoutes.baseUrl + AppRoutes.rateProduct).replace(
             queryParameters: {"product_id": rateProduct.productId, "rating": rateProduct.rate}
                 .map((key, value) => MapEntry(key, value.toString()))),
-        headers: setHeaders());
+        headers: setHeadersWithToken());
     try {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message'];

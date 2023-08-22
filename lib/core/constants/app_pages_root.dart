@@ -12,6 +12,8 @@ import 'package:nano_tech_cosmetic/features/category/presentation/screens/catego
 import 'package:nano_tech_cosmetic/features/offer/presentation/screens/offer_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/screens/my_cart_screen.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/order_details_screen.dart';
+import 'package:nano_tech_cosmetic/features/order_manufacturing/presentation/screens/order_manufacturing_details_screen.dart';
+import 'package:nano_tech_cosmetic/features/order_name/presentation/screens/order_name_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/product_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/products_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/search_screen.dart';
@@ -33,6 +35,8 @@ abstract class AppPagesRoutes {
   static const String myCartScreen = "/myCartScreen";
   static const String myOrderScreen = "/myOrderScreen";
   static const String orderDetailsScreen = "/orderDetailsScreen";
+  static const String orderNameDetailsScreen = "/orderNameDetailsScreen";
+  static const String orderManufacturingDetailsScreen = "/orderManufacturingDetailsScreen";
   static const String categoriesScreen = "/categoriesScreen";
   static const String productsScreen = "/productsScreen";
   static const String productDetailsScreen = "/productDetailsScreen";
@@ -87,6 +91,16 @@ abstract class AppPagesRoutes {
     GetPage(
       name: orderDetailsScreen,
       page: () => const OrderDetailsScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: orderNameDetailsScreen,
+      page: () => OrderNameDetailsScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: orderManufacturingDetailsScreen,
+      page: () => OrderManufacturingDetailsScreen(),
       transition: Transition.fadeIn,
     ),
     GetPage(

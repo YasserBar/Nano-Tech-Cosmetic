@@ -12,6 +12,7 @@ import 'package:nano_tech_cosmetic/main.dart';
 abstract class OrderNameRemoteDataSource {
   Future<List<OrderNameModel>> displayOrdersName(
       {required int page, int? status});
+
   Future<Unit> addOrderName(
       {required RequestOrderNameModel requestOrderNameModel});
 }
@@ -24,7 +25,7 @@ class OrderNameRemoteDataSourceImplWithHttp extends OrderNameRemoteDataSource {
   @override
   Future<List<OrderNameModel>> displayOrdersName(
       {required int page, int? status}) async {
-    final response = await client.get(
+    final response = await client.post(
         Uri.parse(AppRoutes.baseUrl + AppRoutes.displayOrderName).replace(
             queryParameters: {"page": page, "status": status}
                 .map((key, value) => MapEntry(key, value.toString()))),
