@@ -33,18 +33,18 @@ class FailureProductState extends ProductState {
 class InternalServerFailureProductState extends ProductState {
   const InternalServerFailureProductState(
       super.products, super.hasMore, super.loaded,
-      {super.message = AppMessages.InternalServerError});
+      {super.message = AppMessages.internalServerError});
 }
 
 class UnexpectedFailureProductState extends ProductState {
   const UnexpectedFailureProductState(
       super.products, super.hasMore, super.loaded,
-      {super.message = AppMessages.UnexpectedException});
+      {super.message = AppMessages.unexpectedException});
 }
 
 class OfflineFailureProductState extends ProductState {
   const OfflineFailureProductState(super.products, super.hasMore, super.loaded,
-      {super.message = AppMessages.Offline});
+      {super.message = AppMessages.offline});
 }
 
 class LoadedProductsState extends ProductState {

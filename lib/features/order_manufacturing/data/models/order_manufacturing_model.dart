@@ -44,7 +44,7 @@ class OrderManufacturingModel extends OrderManufacturing {
       note: json['note'] as String?,
       amount: json['ammount'] as int,
       status: switchToOrderStatus(json['status'] as int),
-      cost: json['cost'] as double?,
+      cost: json['cost'] ?? 70.0,
       costManufacture: json['costManufacture'] as double?,
       response: json['response'] as String?,
       startProcessing: json['start_processing'] as String?,

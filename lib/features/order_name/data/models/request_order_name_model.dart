@@ -25,7 +25,7 @@ class RequestOrderNameModel extends RequestOrderName {
   Map<String, dynamic> toJson() {
     return {
       'new_name': newName,
-      'amount': amount,
+      'ammount': amount,
       'product_id': productId,
       'note': note,
     };

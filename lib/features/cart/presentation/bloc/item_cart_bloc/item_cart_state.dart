@@ -24,20 +24,20 @@ class FailureItemCartState extends ItemCartState {
 
 class EmptyCacheFailureItemCartState extends ItemCartState {
   const EmptyCacheFailureItemCartState(
-      {required super.index, super.message = AppMessages.EmptyCache_MESSAGE});
+      {required super.index, super.message = AppMessages.emptyCache});
 }
 
 class SuccessDeleteItemCartState extends ItemCartState {
   const SuccessDeleteItemCartState(
-      {required super.index, super.message = AppMessages.DELETE_ITEM_MESSAGE});
+      {required super.index, super.message = AppMessages.deleteItemSuccessfully});
 }
 
 class SuccessIncreaseItemCartState extends ItemCartState {
   const SuccessIncreaseItemCartState(
-      {required super.index, super.message = AppMessages.ADD_ITEM_MESSAGE});
+      {required super.index, super.message = AppMessages.addItemSuccessfully});
 }
 
 class SuccessDecreaseItemCartState extends ItemCartState {
   const SuccessDecreaseItemCartState(
-      {required super.index, super.message = AppMessages.ADD_ITEM_MESSAGE});
+      {required super.index, super.message = AppMessages.addItemSuccessfully});
 }

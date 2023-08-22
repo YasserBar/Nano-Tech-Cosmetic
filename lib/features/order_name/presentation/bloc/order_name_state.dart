@@ -32,18 +32,18 @@ class FailureOrderNameState extends OrderNameState {
 class InternalServerFailureOrderNameState extends OrderNameState {
   const InternalServerFailureOrderNameState(
       super.ordersName, super.hasMore, super.loaded,
-      {super.message = AppMessages.InternalServerError});
+      {super.message = AppMessages.internalServerError});
 }
 
 class UnexpectedFailureOrderNameState extends OrderNameState {
   const UnexpectedFailureOrderNameState(
       super.ordersName, super.hasMore, super.loaded,
-      {super.message = AppMessages.UnexpectedException});
+      {super.message = AppMessages.unexpectedException});
 }
 
 class OfflineFailureOrderNameState extends OrderNameState {
   const OfflineFailureOrderNameState(super.ordersName, super.hasMore, super.loaded,
-      {super.message = AppMessages.Offline});
+      {super.message = AppMessages.offline});
 }
 
 class LoadedOrdersNameState extends OrderNameState {

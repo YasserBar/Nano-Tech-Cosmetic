@@ -8,6 +8,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_event.dart';
@@ -30,7 +31,7 @@ class ItemCard extends StatelessWidget {
             state.index == index) {
           WidgetsUtils.showSnackBar(
             title: "Failure",
-            message: state.message,
+            message: state.message.tr,
             snackBarType: SnackBarType.error,
           );
         }
@@ -39,7 +40,7 @@ class ItemCard extends StatelessWidget {
             state.index == index) {
           WidgetsUtils.showSnackBar(
             title: "Success Delete",
-            message: state.message,
+            message: state.message.tr,
             snackBarType: SnackBarType.info,
           );
         }
@@ -164,19 +165,15 @@ class ItemCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              SizedBox(
-                                width: Get.width * 0.5,
-                                child: Text(
-                                  Get.locale!.languageCode == 'ar'
-                                      ? itemCart.title
-                                      : itemCart.titleEn,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                    fontSize: 20,
-                                  ),
+                              Text(
+                         Get.locale!.languageCode == 'ar'
+                                    ? itemCart.title
+                                    : itemCart.titleEn,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                  fontSize: 20,
                                 ),
                               ),
                               Text(

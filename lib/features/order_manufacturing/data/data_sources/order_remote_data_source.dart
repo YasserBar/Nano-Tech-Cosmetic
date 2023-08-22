@@ -12,6 +12,7 @@ import 'package:nano_tech_cosmetic/main.dart';
 abstract class OrderManufacturingRemoteDataSource {
   Future<List<OrderManufacturingModel>> displayOrdersManufacturing(
       {required int page, int? status});
+
   Future<Unit> addOrderManufacturing(
       {required RequestOrderManufacturingModel requestOrderManufacturingModel});
 }

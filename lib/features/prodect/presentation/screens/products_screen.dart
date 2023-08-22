@@ -6,6 +6,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
+import 'package:nano_tech_cosmetic/core/widgets/handle_states_widget.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/core/widgets/secondary_appbar.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/bloc/product_bloc.dart';
@@ -26,30 +27,36 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: const SecondaryAppbar(title: "Electrical"),
+      appBar: SecondaryAppbar(
+        title: Get.locale!.languageCode == 'ar'
+            ? Get.arguments.name
+            : Get.arguments.nameEn,
+      ),
       body: BlocProvider(
         create: (context) => di.sl<ProductBloc>()
-          ..add(
-            const ShowAllProductsEvent(),
-          )
-          ..categoryId = Get.arguments,
+          ..add(ShowAllProductsEvent(categoryId: Get.arguments.id)),
         child: BlocConsumer<ProductBloc, ProductState>(
           listener: (context, state) {
-            if (state is FailureProductState ||
-                state is OfflineFailureProductState ||
-                state is InternalServerFailureProductState ||
-                state is UnexpectedFailureProductState) {
+            if (state is FailureProductState) {
               WidgetsUtils.showSnackBar(
                 title: AppTranslationKeys.failure.tr,
-                message: state.message,
+                message: state.message.tr,
                 snackBarType: SnackBarType.error,
               );
             }
           },
           builder: (context, state) {
             if (state is LoadedProductsState) {
+              if(state.products!.isEmpty){
+                return const HandleStatesWidget(
+                  errorType: StateType.noAnyProduct,
+                );
+              }
               return RefreshIndicator(
-                onRefresh: () async {},
+                onRefresh: () async {
+                  BlocProvider.of<ProductBloc>(context)
+                      .add(ShowAllProductsEvent(categoryId: Get.arguments.id));
+                },
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(
                     vertical: AppDimensions.appbarBodyPadding,
@@ -61,6 +68,33 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     product: state.products![index],
                   ),
                 ),
+              );
+            }
+            if (state is OfflineFailureProductState) {
+              return HandleStatesWidget(
+                errorType: StateType.offline,
+                onPressedTryAgain: () {
+                  BlocProvider.of<ProductBloc>(context)
+                      .add(ShowAllProductsEvent(categoryId: Get.arguments.id));
+                },
+              );
+            }
+            if (state is UnexpectedFailureProductState) {
+              return HandleStatesWidget(
+                errorType: StateType.unexpectedProblem,
+                onPressedTryAgain: () {
+                  BlocProvider.of<ProductBloc>(context)
+                      .add(ShowAllProductsEvent(categoryId: Get.arguments.id));
+                },
+              );
+            }
+            if (state is InternalServerFailureProductState) {
+              return HandleStatesWidget(
+                errorType: StateType.internalServerProblem,
+                onPressedTryAgain: () {
+                  BlocProvider.of<ProductBloc>(context)
+                      .add(ShowAllProductsEvent(categoryId: Get.arguments.id));
+                },
               );
             }
             return const LoaderIndicator();

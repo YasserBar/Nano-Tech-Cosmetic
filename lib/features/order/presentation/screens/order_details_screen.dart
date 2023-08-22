@@ -38,7 +38,7 @@ class OrderDetailsScreen extends StatelessWidget {
                           const TextStyle(color: AppColors.black, fontSize: 20),
                     ),
                     Text(
-                      "${Get.arguments[AppKeys.ORDER].price} ${AppTranslationKeys.di.tr}",
+                      "${Get.arguments.price} ${AppTranslationKeys.di.tr}",
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             fontSize: 26,
                             color: AppColors.primary,
@@ -53,17 +53,17 @@ class OrderDetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      (Get.arguments[AppKeys.ORDER].status as OrderStatus)
+                      (Get.arguments.status as OrderStatus)
                           .getVale()
                           .tr,
                       style: TextStyle(
-                          color: (Get.arguments[AppKeys.ORDER].status
+                          color: (Get.arguments.status
                                   as OrderStatus)
                               .getColor(),
                           fontSize: 20),
                     ),
                     Text(
-                      Get.arguments[AppKeys.ORDER].createdAt
+                      Get.arguments.createdAt
                           .toString()
                           .substring(0, 10),
                       style: const TextStyle(
@@ -71,84 +71,6 @@ class OrderDetailsScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                if (Get.arguments[AppKeys.ORDER_TYPE] == OrderType.byNewName)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            AppTranslationKeys.newName.tr,
-                            style: const TextStyle(
-                                color: AppColors.black, fontSize: 20),
-                          ),
-                          const Text(
-                            "Cream Mini",
-                            style: TextStyle(fontSize: 20),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        AppTranslationKeys.notes.tr,
-                        style: const TextStyle(
-                            color: AppColors.black, fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                        "Your order will prepare you can show status of...",
-                        style: TextStyle(color: AppColors.gray, fontSize: 16),
-                        maxLines: 3,
-                      )
-                    ],
-                  ),
-                if (Get.arguments[AppKeys.ORDER_TYPE] ==
-                    OrderType.manufacturing)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        AppTranslationKeys.orderDetails.tr,
-                        style: const TextStyle(
-                            color: AppColors.black, fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                        "Your order will prepare you can show status of...",
-                        style: TextStyle(color: AppColors.gray, fontSize: 16),
-                        maxLines: 3,
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        AppTranslationKeys.notes.tr,
-                        style: const TextStyle(
-                            color: AppColors.black, fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                        "Your order will prepare you can show status of...",
-                        style: TextStyle(color: AppColors.gray, fontSize: 16),
-                        maxLines: 3,
-                      ),
-                    ],
-                  ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -160,7 +82,8 @@ class OrderDetailsScreen extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  Get.arguments[AppKeys.ORDER].response ?? "================",
+                  Get.arguments.response ??
+                      AppTranslationKeys.notResponse.tr,
                   style: const TextStyle(color: AppColors.gray, fontSize: 16),
                   maxLines: 3,
                 )

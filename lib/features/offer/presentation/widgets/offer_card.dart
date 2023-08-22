@@ -23,8 +23,6 @@ class OfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocaleController controller = Get.put(LocaleController());
-
     return InkWell(
       onTap: () {
         Get.toNamed(AppPagesRoutes.offerDetailsScreen, arguments: offer);
@@ -59,8 +57,8 @@ class OfferCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      height: 100,
-                      width: 85,
+                      height: 80,
+                      width: 80,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.horizontal(
                           left: Get.locale!.languageCode == 'en'

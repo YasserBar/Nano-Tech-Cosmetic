@@ -31,21 +31,21 @@ class EmptyCacheFailureCartState extends CartState {
   EmptyCacheFailureCartState(
       {required super.index,
       required super.cart,
-      super.message = AppMessages.EmptyCache_MESSAGE});
+      super.message = AppMessages.emptyCache});
 }
 
 class LoadedCartState extends CartState {
   LoadedCartState(
       {required super.index,
       required super.cart,
-      super.message = AppMessages.LOADED_CART_MESSAGE});
+      super.message = AppMessages.dataIsLoadedSuccessfully});
 }
 
 class SuccessAddItemCartState extends CartState {
   SuccessAddItemCartState(
       {required super.index,
       required super.cart,
-      super.message = AppMessages.ADD_ITEM_MESSAGE});
+      super.message = AppMessages.addItemSuccessfully});
 }
 
 
@@ -53,5 +53,5 @@ class SuccessDeleteCartState extends CartState {
   SuccessDeleteCartState(
       {required super.index,
       required super.cart,
-      super.message = AppMessages.ADD_ITEM_MESSAGE});
+      super.message = AppMessages.addItemSuccessfully});
 }
