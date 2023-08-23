@@ -41,7 +41,7 @@ class _AdDetailsScreenState extends State<AdDetailsScreen> {
                   Positioned(
                     top: -Get.statusBarHeight - 5,
                     child: Image.asset(
-                      AppAssets.image1,
+                      AppAssets.logo1,
                       width: Get.width,
                       height: Get.height * 0.6,
                     ),

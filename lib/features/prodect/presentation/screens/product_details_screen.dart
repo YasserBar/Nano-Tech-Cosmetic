@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
@@ -73,14 +72,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           child: Scaffold(
             body: Stack(
               children: [
-                Positioned(
-                  top: -Get.statusBarHeight - 5,
-                  child: Image.asset(
-                    AppAssets.image1,
-                    width: Get.width,
-                    height: Get.height * 0.6,
-                  ),
-                ),
                 Positioned(
                   top: -Get.statusBarHeight - 5,
                   child: CachedNetworkImage(
@@ -281,8 +272,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         ),
                                         child: Text(
                                           AppTranslationKeys.addToCart.tr,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 16,
                                               color: AppColors.gray),
                                         ),
                                       );
@@ -353,8 +346,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           ),
                                           child: Text(
                                             AppTranslationKeys.addToCart.tr,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
-                                                fontSize: 20,
                                                 color: AppColors.gray),
                                           ),
                                         );

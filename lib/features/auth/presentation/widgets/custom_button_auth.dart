@@ -17,6 +17,7 @@ class CustomButtonAuth extends StatelessWidget {
       child: MaterialButton(
         onPressed: onPressed,
         color: AppColors.primary,
+        disabledColor: AppColors.primary.withOpacity(0.5),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
             side: const BorderSide(color: AppColors.gray, width: 1)),

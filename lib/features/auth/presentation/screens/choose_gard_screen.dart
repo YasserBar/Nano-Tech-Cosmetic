@@ -19,6 +19,7 @@ class ChooseGardScreen extends StatefulWidget {
 
 class _ChooseGardScreenState extends State<ChooseGardScreen> {
   Role selectedRole = Role.customer;
+  bool isAcceptPolicies = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,6 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                         height: Get.height * 0.2,
                         child: SvgPicture.asset(
                           AppAssets.logo,
-                          fit: BoxFit.fill,
                         ),
                       ),
                       Row(
@@ -60,10 +60,10 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                             selectedIcon: AppAssets.customerFill,
                             unSelectedIcon: AppAssets.customerOutlined,
                             label: AppTranslationKeys.customer.tr,
-                            isSelected: selectedRole==Role.customer,
+                            isSelected: selectedRole == Role.customer,
                             onSelected: (p0) {
                               setState(() {
-                                selectedRole=Role.customer;
+                                selectedRole = Role.customer;
                               });
                             },
                           ),
@@ -71,10 +71,10 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                             selectedIcon: AppAssets.salonFill,
                             unSelectedIcon: AppAssets.salonOutlined,
                             label: AppTranslationKeys.salon.tr,
-                            isSelected: selectedRole==Role.salon,
+                            isSelected: selectedRole == Role.salon,
                             onSelected: (p0) {
                               setState(() {
-                                selectedRole=Role.salon;
+                                selectedRole = Role.salon;
                               });
                             },
                           ),
@@ -82,10 +82,10 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                             selectedIcon: AppAssets.companyFill,
                             unSelectedIcon: AppAssets.companyOutlined,
                             label: AppTranslationKeys.company.tr,
-                            isSelected: selectedRole==Role.company,
+                            isSelected: selectedRole == Role.company,
                             onSelected: (p0) {
                               setState(() {
-                                selectedRole=Role.company;
+                                selectedRole = Role.company;
                               });
                             },
                           ),
@@ -103,16 +103,91 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                         ),
                       ),
                       const Spacer(
+                        flex: 1,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                isAcceptPolicies = !isAcceptPolicies;
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                  value: isAcceptPolicies,
+                                  side: const BorderSide(
+                                    color: AppColors.secondary,
+                                    width: 2,
+                                  ),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      isAcceptPolicies = !isAcceptPolicies;
+                                    });
+                                  },
+                                ),
+                                Text(
+                                  "${AppTranslationKeys.iAgreeOn.tr} ",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: AppColors.gray,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Get.toNamed(AppPagesRoutes.policiesScreen);
+                                  },
+                                  child: Text(
+                                    AppTranslationKeys.privacyPolicies.tr,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.secondary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  " ${AppTranslationKeys.and.tr} ",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: AppColors.gray,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Get.toNamed(AppPagesRoutes.policiesScreen);
+                                  },
+                                  child: Text(
+                                    AppTranslationKeys.tearmCondition.tr,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.secondary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(
                         flex: 3,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
                         child: CustomButtonAuth(
                           text: AppTranslationKeys.next.tr,
-                          onPressed: () {
-                            Get.toNamed(AppPagesRoutes.signUpScreen,
-                                arguments: selectedRole);
-                          },
+                          onPressed: isAcceptPolicies
+                              ? () {
+                                  Get.toNamed(AppPagesRoutes.signUpScreen,
+                                      arguments: selectedRole);
+                                }
+                              : null,
                         ),
                       ),
                       const Spacer(

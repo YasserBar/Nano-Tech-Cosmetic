@@ -41,9 +41,30 @@ class AppTranslationKeys {
   static const String changeLang = 'changeLang';
   static const String resetPassword = 'resetPassword';
   static const String about = 'about';
+  static const String aboutContent = 'aboutContent';
   static const String support = 'support';
+  static const String iAgreeOn = 'iAgreeOn';
+  static const String and = 'and';
+  static const String privacyPolicies = 'privacyPolicies';
+  static const String tearmCondition = 'tearmCondition';
+  static const String policies = 'policies';
+  static const String police1 = 'police1';
+  static const String police2 = 'police2';
+  static const String police3 = 'police3';
+  static const String police4 = 'police4';
+  static const String police5 = 'police5';
+  static const String policeContent1 = 'policeContent1';
+  static const String policeContent2 = 'policeContent2';
+  static const String policeContent3 = 'policeContent3';
+  static const String policeContent4 = 'policeContent4';
+  static const String policeContent5 = 'policeContent5';
+
   static const String logout = 'logout';
   static const String logoutFromApp = 'logoutFromApp';
+  static const String goals = 'goals';
+  static const String goalsContent = 'goalsContent';
+  static const String vision = 'vision';
+  static const String visionContent = 'visionContent';
 
   static const String home = 'home';
   static const String menu = 'menu';
