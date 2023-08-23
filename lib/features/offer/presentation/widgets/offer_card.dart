@@ -8,7 +8,6 @@ import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_event.dart';
@@ -75,8 +74,7 @@ class OfferCard extends StatelessWidget {
                                 fit: BoxFit.cover,
                               )
                             : const DecorationImage(
-                                image:
-                                    AssetImage(AppAssets.logo1),
+                                image: AssetImage(AppAssets.logo1),
                                 fit: BoxFit.cover,
                               ),
                       ),
@@ -87,7 +85,7 @@ class OfferCard extends StatelessWidget {
                       color: AppColors.gray,
                     ),
                     SizedBox(
-                      width: Get.width*0.5,
+                      width: Get.width * 0.5,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

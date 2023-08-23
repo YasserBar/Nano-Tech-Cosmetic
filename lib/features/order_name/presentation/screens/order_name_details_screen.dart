@@ -10,7 +10,7 @@ import 'package:nano_tech_cosmetic/features/order/presentation/widgets/order_pro
 import 'package:nano_tech_cosmetic/features/order_name/domain/entities/order_name_entity.dart';
 
 class OrderNameDetailsScreen extends StatelessWidget {
-  final OrderName orderName=Get.arguments;
+  final OrderName orderName = Get.arguments;
   OrderNameDetailsScreen({Key? key}) : super(key: key);
 
   @override
@@ -54,11 +54,9 @@ class OrderNameDetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      (orderName.status as OrderStatus).getVale().tr,
+                      (orderName.status).getVale().tr,
                       style: TextStyle(
-                          color:
-                              (orderName.status as OrderStatus).getColor(),
-                          fontSize: 20),
+                          color: (orderName.status).getColor(), fontSize: 20),
                     ),
                     Text(
                       orderName.createdAt.toString().substring(0, 10),
@@ -99,8 +97,9 @@ class OrderNameDetailsScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      orderName.note??"",
-                      style: const TextStyle(color: AppColors.gray, fontSize: 16),
+                      orderName.note ?? "",
+                      style:
+                          const TextStyle(color: AppColors.gray, fontSize: 16),
                       maxLines: 3,
                     )
                   ],
