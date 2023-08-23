@@ -51,7 +51,7 @@ class SignInScreen extends StatelessWidget {
               if (state is OfflineFailureAuthState) {
                 return HandleStatesWidget(
                   isDialog: true,
-                  errorType: StateType.offline,
+                  stateType: StateType.offline,
                   onPressedTryAgain: () {
                     BlocProvider.of<AuthBloc>(context).add(
                       LoginEvent(
@@ -67,7 +67,7 @@ class SignInScreen extends StatelessWidget {
               if (state is UnexpectedFailureAuthState) {
                 return HandleStatesWidget(
                   isDialog: true,
-                  errorType: StateType.unexpectedProblem,
+                  stateType: StateType.unexpectedProblem,
                   onPressedTryAgain: () {
                     BlocProvider.of<AuthBloc>(context).add(
                       LoginEvent(
@@ -83,7 +83,7 @@ class SignInScreen extends StatelessWidget {
               if (state is InternalServerFailureAuthState) {
                 return HandleStatesWidget(
                   isDialog: true,
-                  errorType: StateType.internalServerProblem,
+                  stateType: StateType.internalServerProblem,
                   onPressedTryAgain: () {
                     BlocProvider.of<AuthBloc>(context).add(
                       LoginEvent(

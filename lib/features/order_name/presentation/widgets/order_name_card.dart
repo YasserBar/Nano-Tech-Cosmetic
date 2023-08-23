@@ -69,7 +69,7 @@ class OrderNameCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    orderName.response ?? '*******************',
+                    orderName.response ?? AppTranslationKeys.notResponse.tr,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(

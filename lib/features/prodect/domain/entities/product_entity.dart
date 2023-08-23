@@ -10,7 +10,7 @@ class Product extends Equatable {
   final int amount;
   final int categoryId;
   final String imageUrl;
-  final int rating;
+  final double rating;
   final int ratingNumber;
 
   const Product({

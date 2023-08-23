@@ -112,7 +112,6 @@ class _MainScreenState extends State<MainScreen> {
                 PopupMenuButton<OrderStatus>(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  tooltip: "Operation",
                   onSelected: (value) async {
                     setState(() {
                       orderStatusFilter = value;
@@ -567,11 +566,10 @@ class _MainScreenState extends State<MainScreen> {
             if (value == 2 && globalUser == null) {
               signInDialog(context, title: AppTranslationKeys.myOrders.tr);
             } else {
-              if (Get.previousRoute == AppPagesRoutes.productDetailsScreen) {
-                // Get.removeRoute(AppPagesRoutes.productDetailsScreen);//TODO
-              } else if (Get.previousRoute ==
-                  AppPagesRoutes.offerDetailsScreen) {
-                // Get.removeRoute(AppPagesRoutes.offerDetailsScreen);//TODO
+              if (value != indexNavBar &&
+                  (Get.previousRoute == AppPagesRoutes.productDetailsScreen ||
+                      Get.previousRoute == AppPagesRoutes.offerDetailsScreen)) {
+                Get.offAllNamed(AppPagesRoutes.mainScreen, arguments: value);
               }
               indexNavBar = value;
             }
@@ -634,7 +632,7 @@ class _MainScreenState extends State<MainScreen> {
               if (state is OfflineFailureAuthState) {
                 return HandleStatesWidget(
                   isDialog: true,
-                  errorType: StateType.offline,
+                  stateType: StateType.offline,
                   onPressedTryAgain: () {
                     BlocProvider.of<AuthBloc>(context).add(
                       const LogoutEvent(),
@@ -645,7 +643,7 @@ class _MainScreenState extends State<MainScreen> {
               if (state is UnexpectedFailureAuthState) {
                 return HandleStatesWidget(
                   isDialog: true,
-                  errorType: StateType.unexpectedProblem,
+                  stateType: StateType.unexpectedProblem,
                   onPressedTryAgain: () {
                     BlocProvider.of<AuthBloc>(context).add(
                       const LogoutEvent(),
@@ -656,7 +654,7 @@ class _MainScreenState extends State<MainScreen> {
               if (state is InternalServerFailureAuthState) {
                 return HandleStatesWidget(
                   isDialog: true,
-                  errorType: StateType.internalServerProblem,
+                  stateType: StateType.internalServerProblem,
                   onPressedTryAgain: () {
                     BlocProvider.of<AuthBloc>(context).add(
                       const LogoutEvent(),

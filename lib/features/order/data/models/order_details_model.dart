@@ -12,15 +12,15 @@ class OrderDetailsModel extends OrderDetails {
         );
 
   factory OrderDetailsModel.fromJson(Map<String, dynamic> json) {
-    List<ProductModel> products = json['products']
+    List<ProductModel> products = (json['products'] as List<dynamic>)
         .map((itemJson) => ProductModel.fromJson(itemJson))
         .toList();
-    List<OfferModel> offers = json['offers']
-        .map((itemJson) => OfferModel.fromJson(itemJson))
-        .toList();
+    // List<OfferModel> offers = (json['offers'] as List<dynamic>)
+    //     .map((itemJson) => OfferModel.fromJson(itemJson))
+    //     .toList();
     return OrderDetailsModel(
       products: products,
-      offers: offers,
+      offers: const []//offers,
     );
   }
 

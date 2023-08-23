@@ -8,7 +8,6 @@ import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/item_cart_bloc/item_cart_event.dart';
@@ -30,7 +29,7 @@ class ItemCard extends StatelessWidget {
             state.index != null &&
             state.index == index) {
           WidgetsUtils.showSnackBar(
-            title: "Failure",
+            title: AppTranslationKeys.failure.tr,
             message: state.message.tr,
             snackBarType: SnackBarType.error,
           );
@@ -39,7 +38,7 @@ class ItemCard extends StatelessWidget {
             state.index != null &&
             state.index == index) {
           WidgetsUtils.showSnackBar(
-            title: "Success Delete",
+            title: AppTranslationKeys.success.tr,
             message: state.message.tr,
             snackBarType: SnackBarType.info,
           );

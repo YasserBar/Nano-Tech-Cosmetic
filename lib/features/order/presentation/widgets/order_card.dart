@@ -68,7 +68,7 @@ class OrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    order.response ?? '*******************',
+                    order.response ?? AppTranslationKeys.notResponse.tr,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(

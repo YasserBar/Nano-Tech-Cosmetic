@@ -1,10 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
@@ -12,6 +9,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
+import 'package:nano_tech_cosmetic/core/widgets/handle_states_widget.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_event.dart';
@@ -42,10 +40,9 @@ class MyCartScreen extends StatelessWidget {
       ],
       child: BlocConsumer<CartBloc, CartState>(
         listener: (context, state) {
-          if (state is FailureCartState ||
-              state is EmptyCacheFailureCartState) {
+          if (state is FailureCartState) {
             WidgetsUtils.showSnackBar(
-              title: "Failure",
+              title: AppTranslationKeys.failure.tr,
               message: state.message.tr,
               snackBarType: SnackBarType.error,
             );
@@ -53,19 +50,12 @@ class MyCartScreen extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is LoadedCartState) {
-            if (kDebugMode) {
-              print(
-                  "000000  00000000000000000000${state.cart!.itemsCart.length}");
-            }
             return Scaffold(
               floatingActionButton: BlocProvider(
                 create: (context) => di.sl<OrderBloc>(),
                 child: BlocConsumer<OrderBloc, OrderState>(
                   listener: (context, state1) {
-                    if (state1 is FailureOrderState ||
-                        state is OfflineFailureOrderState ||
-                        state is InternalServerFailureOrderState ||
-                        state is UnexpectedFailureOrderState) {
+                    if (state1 is FailureOrderState) {
                       WidgetsUtils.showSnackBar(
                         title: AppTranslationKeys.failure.tr,
                         message: state1.message.tr,
@@ -74,7 +64,8 @@ class MyCartScreen extends StatelessWidget {
                     } else if (state1 is SuccessStoreOrderState) {
                       BlocProvider.of<CartBloc>(context)
                           .add(const DeleteCartEvent());
-                      Get.offAndToNamed(AppPagesRoutes.mainScreen,arguments: 2);
+                      Get.offAndToNamed(AppPagesRoutes.mainScreen,
+                          arguments: 2);
                       WidgetsUtils.showSnackBar(
                         title: AppTranslationKeys.success.tr,
                         message: state1.message.tr,
@@ -83,63 +74,171 @@ class MyCartScreen extends StatelessWidget {
                     }
                   },
                   builder: (context, state1) {
+                    if (state1 is OfflineFailureOrderState) {
+                      return HandleStatesWidget(
+                        stateType: StateType.offline,
+                        onPressedTryAgain: () {
+                          BlocProvider.of<OrderBloc>(context)
+                              .add(StoreOrderEvent(
+                                  requestOrder: RequestOrder(
+                            colorIds: (state.cart!.itemsCart
+                                    .where((element) => element.isProduct)
+                                    .toList())
+                                .map((e) => -1)
+                                .toList(),
+                            productIds: (state.cart!.itemsCart
+                                    .where((element) => element.isProduct)
+                                    .toList())
+                                .map((e) => e.id)
+                                .toList(),
+                            quantitiesProducts: (state.cart!.itemsCart
+                                    .where((element) => element.isProduct)
+                                    .toList())
+                                .map((e) => e.account)
+                                .toList(),
+                            offerIds: (state.cart!.itemsCart
+                                    .where((element) => !element.isProduct)
+                                    .toList())
+                                .map((e) => e.id)
+                                .toList(),
+                            quantitiesOffers: (state.cart!.itemsCart
+                                    .where((element) => !element.isProduct)
+                                    .toList())
+                                .map((e) => e.account)
+                                .toList(),
+                          )));
+                        },
+                      );
+                    }
+                    if (state1 is UnexpectedFailureOrderState) {
+                      return HandleStatesWidget(
+                        stateType: StateType.unexpectedProblem,
+                        onPressedTryAgain: () {
+                          BlocProvider.of<OrderBloc>(context)
+                              .add(StoreOrderEvent(
+                                  requestOrder: RequestOrder(
+                            colorIds: (state.cart!.itemsCart
+                                    .where((element) => element.isProduct)
+                                    .toList())
+                                .map((e) => -1)
+                                .toList(),
+                            productIds: (state.cart!.itemsCart
+                                    .where((element) => element.isProduct)
+                                    .toList())
+                                .map((e) => e.id)
+                                .toList(),
+                            quantitiesProducts: (state.cart!.itemsCart
+                                    .where((element) => element.isProduct)
+                                    .toList())
+                                .map((e) => e.account)
+                                .toList(),
+                            offerIds: (state.cart!.itemsCart
+                                    .where((element) => !element.isProduct)
+                                    .toList())
+                                .map((e) => e.id)
+                                .toList(),
+                            quantitiesOffers: (state.cart!.itemsCart
+                                    .where((element) => !element.isProduct)
+                                    .toList())
+                                .map((e) => e.account)
+                                .toList(),
+                          )));
+                        },
+                      );
+                    }
+                    if (state1 is InternalServerFailureOrderState) {
+                      return HandleStatesWidget(
+                        stateType: StateType.internalServerProblem,
+                        onPressedTryAgain: () {
+                          BlocProvider.of<OrderBloc>(context)
+                              .add(StoreOrderEvent(
+                                  requestOrder: RequestOrder(
+                            colorIds: (state.cart!.itemsCart
+                                    .where((element) => element.isProduct)
+                                    .toList())
+                                .map((e) => -1)
+                                .toList(),
+                            productIds: (state.cart!.itemsCart
+                                    .where((element) => element.isProduct)
+                                    .toList())
+                                .map((e) => e.id)
+                                .toList(),
+                            quantitiesProducts: (state.cart!.itemsCart
+                                    .where((element) => element.isProduct)
+                                    .toList())
+                                .map((e) => e.account)
+                                .toList(),
+                            offerIds: (state.cart!.itemsCart
+                                    .where((element) => !element.isProduct)
+                                    .toList())
+                                .map((e) => e.id)
+                                .toList(),
+                            quantitiesOffers: (state.cart!.itemsCart
+                                    .where((element) => !element.isProduct)
+                                    .toList())
+                                .map((e) => e.account)
+                                .toList(),
+                          )));
+                        },
+                      );
+                    }
                     return FloatingActionButton.extended(
                       onPressed: () {
                         globalUser != null
                             ? WidgetsUtils.showCustomDialog(
-                          context,
-                          title: AppTranslationKeys.total.tr,
-                          children: [
-                            Center(
-                              child: Text(
-                                "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                style: const TextStyle(
-                                    color: AppColors.secondary,
-                                    fontSize: 30),
-                              ),
-                            )
-                          ],
-                          okText: AppTranslationKeys.confirm.tr,
-                          btnOkOnPress: () {
-                            Get.back();
-                            BlocProvider.of<OrderBloc>(context)
-                                .add(StoreOrderEvent(
-                                requestOrder: RequestOrder(
-                                  colorIds: (state.cart!.itemsCart
-                                      .where(
-                                          (element) => element.isProduct)
-                                      .toList())
-                                      .map((e) => -1)
-                                      .toList(),
-                                  productIds: (state.cart!.itemsCart
-                                      .where(
-                                          (element) => element.isProduct)
-                                      .toList())
-                                      .map((e) => e.id)
-                                      .toList(),
-                                  quantitiesProducts: (state.cart!.itemsCart
-                                      .where(
-                                          (element) => element.isProduct)
-                                      .toList())
-                                      .map((e) => e.account)
-                                      .toList(),
-                                  offerIds: (state.cart!.itemsCart
-                                      .where(
-                                          (element) => !element.isProduct)
-                                      .toList())
-                                      .map((e) => e.id)
-                                      .toList(),
-                                  quantitiesOffers: (state.cart!.itemsCart
-                                      .where(
-                                          (element) => !element.isProduct)
-                                      .toList())
-                                      .map((e) => e.account)
-                                      .toList(),
-                                )));
-                          },
-                        )
+                                context,
+                                title: AppTranslationKeys.total.tr,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                                      style: const TextStyle(
+                                          color: AppColors.secondary,
+                                          fontSize: 30),
+                                    ),
+                                  )
+                                ],
+                                okText: AppTranslationKeys.confirm.tr,
+                                btnOkOnPress: () {
+                                  Get.back();
+                                  BlocProvider.of<OrderBloc>(context)
+                                      .add(StoreOrderEvent(
+                                          requestOrder: RequestOrder(
+                                    colorIds: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => element.isProduct)
+                                            .toList())
+                                        .map((e) => -1)
+                                        .toList(),
+                                    productIds: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => element.isProduct)
+                                            .toList())
+                                        .map((e) => e.id)
+                                        .toList(),
+                                    quantitiesProducts: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => element.isProduct)
+                                            .toList())
+                                        .map((e) => e.account)
+                                        .toList(),
+                                    offerIds: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => !element.isProduct)
+                                            .toList())
+                                        .map((e) => e.id)
+                                        .toList(),
+                                    quantitiesOffers: (state.cart!.itemsCart
+                                            .where(
+                                                (element) => !element.isProduct)
+                                            .toList())
+                                        .map((e) => e.account)
+                                        .toList(),
+                                  )));
+                                },
+                              )
                             : signInDialog(context,
-                            title: AppTranslationKeys.myOrders.tr);
+                                title: AppTranslationKeys.myOrders.tr);
                       },
                       label: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -167,117 +266,116 @@ class MyCartScreen extends StatelessWidget {
                       children: [
                         Text(
                           AppTranslationKeys.total.tr,
-                          style: const TextStyle(color: AppColors.gray, fontSize: 22),
+                          style: const TextStyle(
+                              color: AppColors.gray, fontSize: 22),
                         ),
                         BlocBuilder<ItemCartBloc, ItemCartState>(
-                            builder: (context, stateItem) {
-                              if (stateItem is SuccessDecreaseItemCartState) {
-                                if (stateItem.index != null) {
-                                  state.cart!.totalPrice -=
-                                      state.cart!.itemsCart[stateItem.index!].price;
-                                }
-                                return Text(
-                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                    fontSize: 26,
-                                    color: AppColors.primary,
-                                  ),
-                                );
-                              }
-                              if (stateItem is SuccessIncreaseItemCartState) {
-                                if (stateItem.index != null) {
-                                  state.cart!.totalPrice +=
-                                      state.cart!.itemsCart[stateItem.index!].price;
-                                }
-                                return Text(
-                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                    fontSize: 26,
-                                    color: AppColors.primary,
-                                  ),
-                                );
-                              }
-                              if (stateItem is SuccessDeleteItemCartState) {
-                                if (stateItem.index != null) {
-                                  state.cart!.totalPrice -= (state
-                                      .cart!.itemsCart[stateItem.index!].price *
-                                      state.cart!.itemsCart[stateItem.index!]
-                                          .account);
-                                }
-                                return Text(
-                                  "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                    fontSize: 26,
-                                    color: AppColors.primary,
-                                  ),
-                                );
+                          builder: (context, stateItem) {
+                            if (stateItem is SuccessDecreaseItemCartState) {
+                              if (stateItem.index != null) {
+                                state.cart!.totalPrice -= state
+                                    .cart!.itemsCart[stateItem.index!].price;
                               }
                               return Text(
                                 "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                  fontSize: 26,
-                                  color: AppColors.primary,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontSize: 26,
+                                      color: AppColors.primary,
+                                    ),
                               );
-                            })
+                            }
+                            if (stateItem is SuccessIncreaseItemCartState) {
+                              if (stateItem.index != null) {
+                                state.cart!.totalPrice += state
+                                    .cart!.itemsCart[stateItem.index!].price;
+                              }
+                              return Text(
+                                "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontSize: 26,
+                                      color: AppColors.primary,
+                                    ),
+                              );
+                            }
+                            if (stateItem is SuccessDeleteItemCartState) {
+                              if (stateItem.index != null) {
+                                state.cart!.totalPrice -= (state.cart!
+                                        .itemsCart[stateItem.index!].price *
+                                    state.cart!.itemsCart[stateItem.index!]
+                                        .account);
+                              }
+                              return Text(
+                                "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontSize: 26,
+                                      color: AppColors.primary,
+                                    ),
+                              );
+                            }
+                            return Text(
+                              "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontSize: 26,
+                                    color: AppColors.primary,
+                                  ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
                   const Divider(
                       height: 0, thickness: 2, indent: 15, endIndent: 15),
-                  SlidableAutoCloseBehavior(
-                    child: BlocBuilder<ItemCartBloc, ItemCartState>(
-                        builder: (context, stateItem) {
-                          if (stateItem is SuccessDeleteItemCartState) {
-                            state.cart!.itemsCart.removeAt(stateItem.index!);
-                            if (state.cart!.itemsCart.isEmpty) {
-                              state.cart = null;
-                              return SizedBox(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 100),
-                                  child: Center(
-                                      child: SvgPicture.asset(AppAssets.emptyCart)),
-                                ),
-                              );
-                            }
+                  if (state.cart!.itemsCart.isEmpty)
+                    const HandleStatesWidget(stateType: StateType.emptyCart),
+                  if (state.cart!.itemsCart.isNotEmpty)
+                    SlidableAutoCloseBehavior(
+                      child: BlocBuilder<ItemCartBloc, ItemCartState>(
+                          builder: (context, stateItem) {
+                        if (stateItem is SuccessDeleteItemCartState) {
+                          state.cart!.itemsCart.removeAt(stateItem.index!);
+                          if (state.cart!.itemsCart.isEmpty) {
+                            state.cart = null;
+                            return const HandleStatesWidget(
+                                stateType: StateType.emptyCart);
                           }
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: AppDimensions.appbarBodyPadding,
-                              horizontal: AppDimensions.sidesBodyPadding,
-                            ),
-                            child: Column(
-                              children: List.generate(
-                                  state.cart!.itemsCart.length,
-                                      (index) => ItemCard(
-                                    itemCart: state.cart!.itemsCart[index],
-                                    index: index,
-                                  )),
-                            ),
-                          );
-                        }),
-                  ),
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: AppDimensions.appbarBodyPadding,
+                            horizontal: AppDimensions.sidesBodyPadding,
+                          ),
+                          child: Column(
+                            children: List.generate(
+                                state.cart!.itemsCart.length,
+                                (index) => ItemCard(
+                                      itemCart: state.cart!.itemsCart[index],
+                                      index: index,
+                                    )),
+                          ),
+                        );
+                      }),
+                    ),
                 ],
               ),
             );
           } else if (state is EmptyCacheFailureCartState) {
-            return SizedBox(
-              child: Center(child: SvgPicture.asset(AppAssets.emptyCart)),
-            );
+            return const HandleStatesWidget(stateType: StateType.emptyCart);
           } else if (state is FailureCartState) {
-            return SizedBox(
-              child: Center(child: SvgPicture.asset(AppAssets.caution)),
-            );
+            return const HandleStatesWidget(
+                stateType: StateType.unexpectedProblem);
           }
           return const LoaderIndicator();
         },
@@ -285,4 +383,3 @@ class MyCartScreen extends StatelessWidget {
     );
   }
 }
-

@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -169,7 +168,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Electronic",
+                                    "${AppTranslationKeys.category.tr}${product.categoryId}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
@@ -243,7 +242,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       } else if (state
                                           is SuccessAddItemCartState) {
                                         WidgetsUtils.showSnackBar(
-                                          title: AppTranslationKeys.success,
+                                          title: AppTranslationKeys.success.tr,
                                           message: state.message.tr,
                                           snackBarType: SnackBarType.info,
                                         );
@@ -314,7 +313,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         } else if (state
                                             is SuccessAddItemCartState) {
                                           WidgetsUtils.showSnackBar(
-                                            title: AppTranslationKeys.success,
+                                            title: AppTranslationKeys.success.tr,
                                             message: state.message.tr,
                                             snackBarType: SnackBarType.info,
                                           );
@@ -436,7 +435,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 if (state is OfflineFailureProductState) {
                   return HandleStatesWidget(
                     isDialog: true,
-                    errorType: StateType.offline,
+                    stateType: StateType.offline,
                     onPressedTryAgain: () {
                       BlocProvider.of<ProductBloc>(context).add(
                         RateProductEvent(
@@ -452,7 +451,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 if (state is UnexpectedFailureProductState) {
                   return HandleStatesWidget(
                     isDialog: true,
-                    errorType: StateType.unexpectedProblem,
+                    stateType: StateType.unexpectedProblem,
                     onPressedTryAgain: () {
                       BlocProvider.of<ProductBloc>(context).add(
                         RateProductEvent(
@@ -468,7 +467,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 if (state is InternalServerFailureProductState) {
                   return HandleStatesWidget(
                     isDialog: true,
-                    errorType: StateType.internalServerProblem,
+                    stateType: StateType.internalServerProblem,
                     onPressedTryAgain: () {
                       BlocProvider.of<ProductBloc>(context).add(
                         RateProductEvent(
@@ -599,12 +598,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   message: state.message.tr,
                   snackBarType: SnackBarType.info,
                 );
+                Get.toNamed(AppPagesRoutes.mainScreen, arguments: 2);
               }
             },
             builder: (context, state) {
               if (state is OfflineFailureOrderNameState) {
                 return HandleStatesWidget(
-                  errorType: StateType.offline,
+                  stateType: StateType.offline,
                   onPressedTryAgain: () {
                     BlocProvider.of<OrderNameBloc>(context).add(
                       AddOrderNameEvent(
@@ -621,7 +621,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               }
               if (state is UnexpectedFailureOrderNameState) {
                 return HandleStatesWidget(
-                  errorType: StateType.unexpectedProblem,
+                  stateType: StateType.unexpectedProblem,
                   onPressedTryAgain: () {
                     BlocProvider.of<OrderNameBloc>(context).add(
                       AddOrderNameEvent(
@@ -638,7 +638,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               }
               if (state is InternalServerFailureOrderNameState) {
                 return HandleStatesWidget(
-                  errorType: StateType.internalServerProblem,
+                  stateType: StateType.internalServerProblem,
                   onPressedTryAgain: () {
                     BlocProvider.of<OrderNameBloc>(context).add(
                       AddOrderNameEvent(
@@ -763,12 +763,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   message: state.message.tr,
                   snackBarType: SnackBarType.info,
                 );
+                Get.toNamed(AppPagesRoutes.mainScreen, arguments: 2);
               }
             },
             builder: (context, state) {
               if (state is OfflineFailureOrderManufacturingState) {
                 return HandleStatesWidget(
-                  errorType: StateType.offline,
+                  stateType: StateType.offline,
                   onPressedTryAgain: () {
                     BlocProvider.of<OrderManufacturingBloc>(context).add(
                       AddOrderManufacturingEvent(
@@ -785,7 +786,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               }
               if (state is UnexpectedFailureOrderManufacturingState) {
                 return HandleStatesWidget(
-                  errorType: StateType.unexpectedProblem,
+                  stateType: StateType.unexpectedProblem,
                   onPressedTryAgain: () {
                     BlocProvider.of<OrderManufacturingBloc>(context).add(
                       AddOrderManufacturingEvent(
@@ -802,7 +803,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               }
               if (state is InternalServerFailureOrderManufacturingState) {
                 return HandleStatesWidget(
-                  errorType: StateType.internalServerProblem,
+                  stateType: StateType.internalServerProblem,
                   onPressedTryAgain: () {
                     BlocProvider.of<OrderManufacturingBloc>(context).add(
                       AddOrderManufacturingEvent(

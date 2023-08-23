@@ -5,7 +5,6 @@ import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
-import 'package:nano_tech_cosmetic/core/localization/local_controller.dart';
 import 'package:nano_tech_cosmetic/features/ad/domain/entities/ad_entity.dart';
 
 class AdCard extends StatelessWidget {

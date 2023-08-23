@@ -42,7 +42,7 @@ class _OffersScreenState extends State<OffersScreen> {
           if (state is LoadedOffersState) {
             if (state.offer!.isEmpty) {
               return const HandleStatesWidget(
-                errorType: StateType.noAnyProduct,
+                stateType: StateType.noAnyProduct,
               );
             }
             return RefreshIndicator(
@@ -64,7 +64,7 @@ class _OffersScreenState extends State<OffersScreen> {
           }
           if (state is OfflineFailureOfferState) {
             return HandleStatesWidget(
-              errorType: StateType.offline,
+              stateType: StateType.offline,
               onPressedTryAgain: () {
                 BlocProvider.of<OfferBloc>(context).add(ShowOffersEvent());
               },
@@ -72,7 +72,7 @@ class _OffersScreenState extends State<OffersScreen> {
           }
           if (state is UnexpectedFailureOfferState) {
             return HandleStatesWidget(
-              errorType: StateType.unexpectedProblem,
+              stateType: StateType.unexpectedProblem,
               onPressedTryAgain: () {
                 BlocProvider.of<OfferBloc>(context).add(ShowOffersEvent());
               },
@@ -80,7 +80,7 @@ class _OffersScreenState extends State<OffersScreen> {
           }
           if (state is InternalServerFailureOfferState) {
             return HandleStatesWidget(
-              errorType: StateType.internalServerProblem,
+              stateType: StateType.internalServerProblem,
               onPressedTryAgain: () {
                 BlocProvider.of<OfferBloc>(context).add(ShowOffersEvent());
               },

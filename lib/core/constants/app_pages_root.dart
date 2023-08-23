@@ -90,7 +90,7 @@ abstract class AppPagesRoutes {
     ),
     GetPage(
       name: orderDetailsScreen,
-      page: () => const OrderDetailsScreen(),
+      page: () => OrderDetailsScreen(),
       transition: Transition.fadeIn,
     ),
     GetPage(
