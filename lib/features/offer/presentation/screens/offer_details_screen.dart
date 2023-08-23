@@ -200,14 +200,14 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                     if (state is FailureCartState ||
                                         state is EmptyCacheFailureCartState) {
                                       WidgetsUtils.showSnackBar(
-                                        title: AppTranslationKeys.failure,
+                                        title: AppTranslationKeys.failure.tr,
                                         message: state.message.tr,
                                         snackBarType: SnackBarType.error,
                                       );
                                     } else if (state
                                         is SuccessAddItemCartState) {
                                       WidgetsUtils.showSnackBar(
-                                        title: AppTranslationKeys.success,
+                                        title: AppTranslationKeys.success.tr,
                                         message: state.message.tr,
                                         snackBarType: SnackBarType.info,
                                       );

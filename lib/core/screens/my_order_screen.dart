@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/features/order/presentation/widgets/order_list.dart';
 import 'package:nano_tech_cosmetic/features/order_manufacturing/presentation/widgets/order_manufacturing_list.dart';
@@ -26,6 +27,8 @@ class _MyOrderScreenState extends State<MyOrderScreen>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
+    tabController.index =
+        Get.previousRoute == AppPagesRoutes.productDetailsScreen ? 1 : 0;
     super.initState();
   }
 

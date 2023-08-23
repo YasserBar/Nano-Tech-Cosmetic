@@ -193,7 +193,7 @@ class _SearchScreenState extends State<SearchScreen>
                 if (state is LoadedProductsState) {
                   if (state.products!.isEmpty) {
                     return const HandleStatesWidget(
-                      errorType: StateType.noAnyProduct,
+                      stateType: StateType.noAnyProduct,
                     );
                   }
                   return Container(
@@ -219,7 +219,7 @@ class _SearchScreenState extends State<SearchScreen>
                 }
                 if (state is OfflineFailureProductState) {
                   return HandleStatesWidget(
-                    errorType: StateType.offline,
+                    stateType: StateType.offline,
                     onPressedTryAgain: () {
                       BlocProvider.of<ProductBloc>(context).add(
                         ShowAllProductsEvent(name: searchController.text),
@@ -229,7 +229,7 @@ class _SearchScreenState extends State<SearchScreen>
                 }
                 if (state is UnexpectedFailureProductState) {
                   return HandleStatesWidget(
-                    errorType: StateType.unexpectedProblem,
+                    stateType: StateType.unexpectedProblem,
                     onPressedTryAgain: () {
                       BlocProvider.of<ProductBloc>(context).add(
                         ShowAllProductsEvent(name: searchController.text),
@@ -239,7 +239,7 @@ class _SearchScreenState extends State<SearchScreen>
                 }
                 if (state is InternalServerFailureProductState) {
                   return HandleStatesWidget(
-                    errorType: StateType.internalServerProblem,
+                    stateType: StateType.internalServerProblem,
                     onPressedTryAgain: () {
                       BlocProvider.of<ProductBloc>(context).add(
                         ShowAllProductsEvent(name: searchController.text),
@@ -297,7 +297,7 @@ class _SearchScreenState extends State<SearchScreen>
                 }
                 if (state is OfflineFailureCategoryState) {
                   return HandleStatesWidget(
-                    errorType: StateType.offline,
+                    stateType: StateType.offline,
                     onPressedTryAgain: () {
                       BlocProvider.of<CategoryBloc>(context).add(
                           ShowAllCategoriesEvent(
@@ -307,7 +307,7 @@ class _SearchScreenState extends State<SearchScreen>
                 }
                 if (state is InternalServerFailureCategoryState) {
                   return HandleStatesWidget(
-                    errorType: StateType.unexpectedProblem,
+                    stateType: StateType.unexpectedProblem,
                     onPressedTryAgain: () {
                       BlocProvider.of<CategoryBloc>(context).add(
                           ShowAllCategoriesEvent(
@@ -317,7 +317,7 @@ class _SearchScreenState extends State<SearchScreen>
                 }
                 if (state is UnexpectedFailureCategoryState) {
                   return HandleStatesWidget(
-                    errorType: StateType.internalServerProblem,
+                    stateType: StateType.internalServerProblem,
                     onPressedTryAgain: () {
                       BlocProvider.of<CategoryBloc>(context).add(
                           ShowAllCategoriesEvent(

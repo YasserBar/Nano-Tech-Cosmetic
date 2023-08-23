@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
@@ -6,7 +7,7 @@ import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 class OrderProductCard extends StatelessWidget {
   final String image;
   final String name;
-  final String price;
+  final int price;
   final int count;
 
   const OrderProductCard(
@@ -51,11 +52,18 @@ class OrderProductCard extends StatelessWidget {
                     height: 85,
                     width: 85,
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.horizontal(
-                        left: Radius.circular(15),
+                      borderRadius: BorderRadius.horizontal(
+                        left: Get.locale!.languageCode == 'en'
+                            ? const Radius.circular(15)
+                            : const Radius.circular(0),
+                        right: Get.locale!.languageCode == 'ar'
+                            ? const Radius.circular(15)
+                            : const Radius.circular(0),
                       ),
                       image: DecorationImage(
-                        image: AssetImage(image),
+                        image: CachedNetworkImageProvider(
+                          image,
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -85,9 +93,10 @@ class OrderProductCard extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontSize: 20
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontSize: 20),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +109,7 @@ class OrderProductCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Count: $count",
+                          "${AppTranslationKeys.count.tr}: $count",
                           style: const TextStyle(
                             color: AppColors.gray,
                             fontSize: 16,

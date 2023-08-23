@@ -69,7 +69,7 @@ class OrderManufacturingCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    orderManufacturing.response ?? '*******************',
+                    orderManufacturing.response ?? AppTranslationKeys.notResponse.tr,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(

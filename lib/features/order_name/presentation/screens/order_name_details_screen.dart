@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
 import 'package:nano_tech_cosmetic/core/widgets/secondary_appbar.dart';
-import 'package:nano_tech_cosmetic/features/order/presentation/widgets/order_product_card.dart';
 import 'package:nano_tech_cosmetic/features/order_name/domain/entities/order_name_entity.dart';
 
 class OrderNameDetailsScreen extends StatelessWidget {
   final OrderName orderName = Get.arguments;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9612311fdd8b4b383eb5d3e63f2da0f43df1935c
   OrderNameDetailsScreen({Key? key}) : super(key: key);
 
   @override
@@ -71,6 +73,43 @@ class OrderNameDetailsScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      AppTranslationKeys.response.tr,
+                      style:
+                          const TextStyle(color: AppColors.black, fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      orderName.response ?? AppTranslationKeys.notResponse.tr,
+                      style:
+                          const TextStyle(color: AppColors.gray, fontSize: 16),
+                      maxLines: 3,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      AppTranslationKeys.amount.tr,
+                      style:
+                          const TextStyle(color: AppColors.black, fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      orderName.amount.toString(),
+                      style:
+                          const TextStyle(color: AppColors.gray, fontSize: 16),
+                      maxLines: 3,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -97,48 +136,20 @@ class OrderNameDetailsScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
+<<<<<<< HEAD
                       orderName.note ?? "",
+=======
+                      orderName.note ?? AppTranslationKeys.notNote.tr,
+>>>>>>> 9612311fdd8b4b383eb5d3e63f2da0f43df1935c
                       style:
                           const TextStyle(color: AppColors.gray, fontSize: 16),
                       maxLines: 3,
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  AppTranslationKeys.response.tr,
-                  style: const TextStyle(color: AppColors.black, fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  orderName.response ?? AppTranslationKeys.notResponse.tr,
-                  style: const TextStyle(color: AppColors.gray, fontSize: 16),
-                  maxLines: 3,
-                )
               ],
             ),
           ),
-          const Divider(height: 30, thickness: 2, indent: 15, endIndent: 15),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.sidesBodyPadding),
-            child: Column(
-              children: [
-                ...List.generate(
-                    10,
-                    (index) => const OrderProductCard(
-                          image: AppAssets.image1,
-                          name: "Cream Mini",
-                          price: "250",
-                          count: 3,
-                        )),
-              ],
-            ),
-          )
         ],
       ),
     );

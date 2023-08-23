@@ -42,7 +42,7 @@ class OrderManufacturingList extends StatelessWidget {
         builder: (context, state) {
           if (state is OfflineFailureOrderManufacturingState) {
             return HandleStatesWidget(
-              errorType: StateType.offline,
+              stateType: StateType.offline,
               onPressedTryAgain: () {
                 BlocProvider.of<OrderManufacturingBloc>(context)
                     .add(
@@ -54,7 +54,7 @@ class OrderManufacturingList extends StatelessWidget {
           }
           if (state is UnexpectedFailureOrderManufacturingState) {
             return HandleStatesWidget(
-              errorType: StateType.unexpectedProblem,
+              stateType: StateType.unexpectedProblem,
               onPressedTryAgain: () {
                 BlocProvider.of<OrderManufacturingBloc>(context)
                     .add(
@@ -68,7 +68,7 @@ class OrderManufacturingList extends StatelessWidget {
           if (state
           is InternalServerFailureOrderManufacturingState) {
             return HandleStatesWidget(
-              errorType: StateType.internalServerProblem,
+              stateType: StateType.internalServerProblem,
               onPressedTryAgain: () {
                 BlocProvider.of<OrderManufacturingBloc>(context)
                     .add(
@@ -81,7 +81,7 @@ class OrderManufacturingList extends StatelessWidget {
           if (state is LoadedOrdersManufacturingState) {
             if (state.ordersManufacturing!.isEmpty) {
               return const HandleStatesWidget(
-                errorType: StateType.noAnyOrder,
+                stateType: StateType.noAnyOrder,
               );
             }
             return RefreshIndicator(

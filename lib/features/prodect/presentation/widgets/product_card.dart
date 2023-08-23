@@ -119,14 +119,14 @@ class ProductCard extends StatelessWidget {
                         if (state is FailureCartState ||
                             state is EmptyCacheFailureCartState) {
                           WidgetsUtils.showSnackBar(
-                            title: "Failure",
+                            title: AppTranslationKeys.failure.tr,
                             message: state.message,
                             snackBarType: SnackBarType.error,
                           );
                         } else if (state is SuccessAddItemCartState) {
                           WidgetsUtils.showSnackBar(
-                            title: "Success add item to cart",
-                            message: state.message,
+                            title: AppTranslationKeys.addItemSuccessfully.tr,
+                            message: state.message.tr,
                             snackBarType: SnackBarType.info,
                           );
                           // Get.toNamed(AppPagesRoutes.mainScreen, arguments: 1);

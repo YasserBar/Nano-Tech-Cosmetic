@@ -11,7 +11,7 @@ class ProductModel extends Product {
     required int amount,
     required int categoryId,
     required String imageUrl,
-    required int rating,
+    required double rating,
     required int ratingNumber,
   }) : super(
           id: id,
@@ -38,7 +38,7 @@ class ProductModel extends Product {
       amount: json['ammount'] as int,
       categoryId: json['category_id'] as int,
       imageUrl: json['image_url'] as String,
-      rating: json['rating'] as int,
+      rating: double.parse(json['rating'].toString()),
       ratingNumber: json['rating_number'] as int,
     );
   }
