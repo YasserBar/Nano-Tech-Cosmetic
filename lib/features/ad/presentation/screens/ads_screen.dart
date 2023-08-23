@@ -66,7 +66,7 @@ class _AdsScreenState extends State<AdsScreen> {
             }
             if (state is OfflineFailureAdState) {
               return HandleStatesWidget(
-                errorType: StateType.offline,
+                stateType: StateType.offline,
                 onPressedTryAgain: () {
                   BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
                 },
@@ -74,7 +74,7 @@ class _AdsScreenState extends State<AdsScreen> {
             }
             if (state is UnexpectedFailureAdState) {
               return HandleStatesWidget(
-                errorType: StateType.unexpectedProblem,
+                stateType: StateType.unexpectedProblem,
                 onPressedTryAgain: () {
                   BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
                 },
@@ -82,7 +82,7 @@ class _AdsScreenState extends State<AdsScreen> {
             }
             if (state is InternalServerFailureAdState) {
               return HandleStatesWidget(
-                errorType: StateType.internalServerProblem,
+                stateType: StateType.internalServerProblem,
                 onPressedTryAgain: () {
                   BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
                 },

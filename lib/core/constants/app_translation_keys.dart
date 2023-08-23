@@ -56,6 +56,7 @@ class AppTranslationKeys {
   static const String allAds = 'allAds';
   static const String products = 'product';
   static const String categories = 'categories';
+  static const String category = 'category';
   static const String rating = 'rating';
   static const String ratingProduct = 'ratingProduct';
   static const String di = 'DI';
@@ -63,6 +64,7 @@ class AppTranslationKeys {
   static const String myCart = 'myCart';
   static const String total = 'total';
   static const String amount = 'amount';
+  static const String count = 'count';
   static const String order = 'order';
   static const String specialOrders = 'specialOrders';
   static const String cartOrders = 'cartOrders';
@@ -76,6 +78,7 @@ class AppTranslationKeys {
   static const String orderDetails = 'orderDetails';
   static const String response = 'response';
   static const String notResponse = 'not response';
+  static const String notNote = 'notNote';
   static const String orderManufacturing = 'orderManufacturing';
   static const String orderByName = 'orderByName';
   static const String notes = 'notes';

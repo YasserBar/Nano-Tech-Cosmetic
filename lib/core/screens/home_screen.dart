@@ -6,7 +6,6 @@ import 'package:nano_tech_cosmetic/core/constants/app_dimensions.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_pages_root.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_translation_keys.dart';
-import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/handle_states_widget.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
@@ -251,28 +250,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
                 if (productState is OfflineFailureProductState) {
                   return HandleStatesWidget(
-                    errorType: StateType.offline,
+                    stateType: StateType.offline,
                     onPressedTryAgain: () {
-                      BlocProvider.of<AdBloc>(context)
-                          .add(const DisplayAdsEvent());
+                      BlocProvider.of<ProductBloc>(context)
+                          .add(ShowAllProductsEvent());
                     },
                   );
                 }
                 if (productState is UnexpectedFailureProductState) {
                   return HandleStatesWidget(
-                    errorType: StateType.unexpectedProblem,
+                    stateType: StateType.unexpectedProblem,
                     onPressedTryAgain: () {
-                      BlocProvider.of<AdBloc>(context)
-                          .add(const DisplayAdsEvent());
+                      BlocProvider.of<ProductBloc>(context)
+                          .add(ShowAllProductsEvent());
                     },
                   );
                 }
                 if (productState is InternalServerFailureProductState) {
                   return HandleStatesWidget(
-                    errorType: StateType.internalServerProblem,
+                    stateType: StateType.internalServerProblem,
                     onPressedTryAgain: () {
-                      BlocProvider.of<AdBloc>(context)
-                          .add(const DisplayAdsEvent());
+                      BlocProvider.of<ProductBloc>(context)
+                          .add(ShowAllProductsEvent());
                     },
                   );
                 }
@@ -282,15 +281,17 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           if (adState is OfflineFailureAdState) {
             return HandleStatesWidget(
-              errorType: StateType.offline,
+              stateType: StateType.offline,
               onPressedTryAgain: () {
                 BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
+                BlocProvider.of<ProductBloc>(context)
+                    .add(ShowAllProductsEvent());
               },
             );
           }
           if (adState is UnexpectedFailureAdState) {
             return HandleStatesWidget(
-              errorType: StateType.unexpectedProblem,
+              stateType: StateType.unexpectedProblem,
               onPressedTryAgain: () {
                 BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
               },
@@ -298,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           if (adState is InternalServerFailureAdState) {
             return HandleStatesWidget(
-              errorType: StateType.internalServerProblem,
+              stateType: StateType.internalServerProblem,
               onPressedTryAgain: () {
                 BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
               },

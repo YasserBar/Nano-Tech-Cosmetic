@@ -49,7 +49,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             if (state is LoadedProductsState) {
               if(state.products!.isEmpty){
                 return const HandleStatesWidget(
-                  errorType: StateType.noAnyProduct,
+                  stateType: StateType.noAnyProduct,
                 );
               }
               return RefreshIndicator(
@@ -72,7 +72,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             }
             if (state is OfflineFailureProductState) {
               return HandleStatesWidget(
-                errorType: StateType.offline,
+                stateType: StateType.offline,
                 onPressedTryAgain: () {
                   BlocProvider.of<ProductBloc>(context)
                       .add(ShowAllProductsEvent(categoryId: Get.arguments.id));
@@ -81,7 +81,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             }
             if (state is UnexpectedFailureProductState) {
               return HandleStatesWidget(
-                errorType: StateType.unexpectedProblem,
+                stateType: StateType.unexpectedProblem,
                 onPressedTryAgain: () {
                   BlocProvider.of<ProductBloc>(context)
                       .add(ShowAllProductsEvent(categoryId: Get.arguments.id));
@@ -90,7 +90,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             }
             if (state is InternalServerFailureProductState) {
               return HandleStatesWidget(
-                errorType: StateType.internalServerProblem,
+                stateType: StateType.internalServerProblem,
                 onPressedTryAgain: () {
                   BlocProvider.of<ProductBloc>(context)
                       .add(ShowAllProductsEvent(categoryId: Get.arguments.id));

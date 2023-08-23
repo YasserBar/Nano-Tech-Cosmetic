@@ -69,7 +69,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             }
             if (state is OfflineFailureCategoryState) {
               return HandleStatesWidget(
-                errorType: StateType.offline,
+                stateType: StateType.offline,
                 onPressedTryAgain: () {
                   BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
                 },
@@ -77,7 +77,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             }
             if (state is UnexpectedFailureCategoryState) {
               return HandleStatesWidget(
-                errorType: StateType.unexpectedProblem,
+                stateType: StateType.unexpectedProblem,
                 onPressedTryAgain: () {
                   BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
                 },
@@ -85,7 +85,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             }
             if (state is InternalServerFailureCategoryState) {
               return HandleStatesWidget(
-                errorType: StateType.internalServerProblem,
+                stateType: StateType.internalServerProblem,
                 onPressedTryAgain: () {
                   BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
                 },

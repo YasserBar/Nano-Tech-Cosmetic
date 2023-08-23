@@ -13,8 +13,10 @@ import 'package:nano_tech_cosmetic/main.dart';
 
 abstract class OrderRemoteDataSource {
   Future<List<OrderModel>> displayOrders({required int page, int? status});
+
   Future<OrderDetailsModel> displayOrderDetails(
       {required int page, required int orderId});
+
   Future<Unit> storeOrder({required RequestOrderModel requestOrderModel});
 }
 
@@ -73,7 +75,7 @@ class OrderRemoteDataSourceImplWithHttp extends OrderRemoteDataSource {
   @override
   Future<OrderDetailsModel> displayOrderDetails(
       {required int page, required int orderId}) async {
-    final response = await client.get(
+    final response = await client.post(
         Uri.parse(AppRoutes.baseUrl + AppRoutes.displayOrderDetails).replace(
             queryParameters: {
           "page": page,
@@ -84,7 +86,8 @@ class OrderRemoteDataSourceImplWithHttp extends OrderRemoteDataSource {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message'];
       switchStatusCode(response);
-      final OrderDetailsModel orderDetailsModel = bodyJson["data"];
+      final OrderDetailsModel orderDetailsModel =
+          OrderDetailsModel.fromJson(bodyJson);
       return Future.value(orderDetailsModel);
     } catch (e) {
       rethrow;

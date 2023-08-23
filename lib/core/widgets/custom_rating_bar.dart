@@ -24,7 +24,6 @@ class CustomRatingBar extends StatelessWidget {
       child: RatingBar(
         initialRating: rating,
         direction: Axis.horizontal,
-        allowHalfRating: true,
         itemCount: 5,
         ratingWidget: RatingWidget(
           full: const Icon(
