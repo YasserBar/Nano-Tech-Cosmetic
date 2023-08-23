@@ -9,10 +9,6 @@ import 'package:nano_tech_cosmetic/features/order_name/domain/entities/order_nam
 
 class OrderNameDetailsScreen extends StatelessWidget {
   final OrderName orderName = Get.arguments;
-<<<<<<< HEAD
-=======
-
->>>>>>> 9612311fdd8b4b383eb5d3e63f2da0f43df1935c
   OrderNameDetailsScreen({Key? key}) : super(key: key);
 
   @override
@@ -136,11 +132,7 @@ class OrderNameDetailsScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-<<<<<<< HEAD
-                      orderName.note ?? "",
-=======
                       orderName.note ?? AppTranslationKeys.notNote.tr,
->>>>>>> 9612311fdd8b4b383eb5d3e63f2da0f43df1935c
                       style:
                           const TextStyle(color: AppColors.gray, fontSize: 16),
                       maxLines: 3,
