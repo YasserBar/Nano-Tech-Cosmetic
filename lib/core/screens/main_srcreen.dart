@@ -520,6 +520,10 @@ class _MainScreenState extends State<MainScreen> {
                       ListTile(
                         leading: SvgPicture.asset(AppAssets.about),
                         title: Text(AppTranslationKeys.about.tr),
+                        onTap: () {
+                          scaffoldKey.currentState!.closeDrawer();
+                          Get.toNamed(AppPagesRoutes.aboutUsScreen);
+                        },
                       ),
                       const Divider(
                         height: 0,
@@ -528,8 +532,26 @@ class _MainScreenState extends State<MainScreen> {
                         endIndent: 20,
                       ),
                       ListTile(
-                        leading: SvgPicture.asset(AppAssets.support),
+                        leading: const Icon(Icons.local_police_outlined,size: 30,),
+                        title: Text(AppTranslationKeys.policies.tr),
+                        onTap: () {
+                          scaffoldKey.currentState!.closeDrawer();
+                          Get.toNamed(AppPagesRoutes.policiesScreen);
+                        },
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      ListTile(
+                        leading: SvgPicture.asset(AppAssets.support,height: 35,),
                         title: Text(AppTranslationKeys.support.tr),
+                        onTap: () {
+                          scaffoldKey.currentState!.closeDrawer();
+                          Get.toNamed(AppPagesRoutes.supportScreen);
+                        },
                       ),
                       const Divider(
                         height: 0,

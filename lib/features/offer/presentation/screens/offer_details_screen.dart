@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -46,11 +47,12 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
           child: Scaffold(
             body: Stack(
               children: [
+                // TODO handle offer null
                 if (offer.imageUrl == null)
                   Positioned(
                     top: -Get.statusBarHeight - 5,
                     child: Image.asset(
-                      AppAssets.image1,
+                      AppAssets.logo1,
                       width: Get.width,
                       height: Get.height * 0.6,
                     ),
@@ -245,8 +247,10 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                                       ),
                                       child: Text(
                                         AppTranslationKeys.addToCart.tr,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 16,
                                             color: AppColors.gray),
                                       ),
                                     );

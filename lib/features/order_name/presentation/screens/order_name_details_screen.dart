@@ -9,6 +9,7 @@ import 'package:nano_tech_cosmetic/features/order_name/domain/entities/order_nam
 
 class OrderNameDetailsScreen extends StatelessWidget {
   final OrderName orderName = Get.arguments;
+
   OrderNameDetailsScreen({Key? key}) : super(key: key);
 
   @override

@@ -131,7 +131,7 @@ class ItemCard extends StatelessWidget {
                                   fit: BoxFit.cover,
                                 )
                                     : const DecorationImage(
-                                  image: AssetImage(AppAssets.image1),
+                                  image: AssetImage(AppAssets.logo1),
                                   fit: BoxFit.cover,
                                 ),
                               ),

@@ -74,7 +74,8 @@ class OfferCard extends StatelessWidget {
                                 fit: BoxFit.cover,
                               )
                             : const DecorationImage(
-                                image: AssetImage(AppAssets.logo1),
+                                image:
+                                    AssetImage(AppAssets.logo1),
                                 fit: BoxFit.cover,
                               ),
                       ),
@@ -85,7 +86,7 @@ class OfferCard extends StatelessWidget {
                       color: AppColors.gray,
                     ),
                     SizedBox(
-                      width: Get.width * 0.5,
+                      width: Get.width*0.35,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

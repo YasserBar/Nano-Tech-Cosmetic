@@ -55,7 +55,7 @@ class AdCard extends StatelessWidget {
                       ? DecorationImage(
                           image: CachedNetworkImageProvider(ad.imageUrl!))
                       : const DecorationImage(
-                          image: AssetImage(AppAssets.image1),
+                          image: AssetImage(AppAssets.logo1),
                           fit: BoxFit.cover,
                         ),
                 ),

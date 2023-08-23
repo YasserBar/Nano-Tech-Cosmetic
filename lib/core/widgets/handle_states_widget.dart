@@ -23,7 +23,7 @@ class HandleStatesWidget extends StatelessWidget {
       shrinkWrap: true,
       children: [
         const SizedBox(
-          height: 140,
+          height: 70,
         ),
         Center(
           child: SvgPicture.asset(

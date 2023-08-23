@@ -14,6 +14,9 @@ import 'package:nano_tech_cosmetic/features/cart/presentation/screens/my_cart_sc
 import 'package:nano_tech_cosmetic/features/order/presentation/screens/order_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/order_manufacturing/presentation/screens/order_manufacturing_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/order_name/presentation/screens/order_name_details_screen.dart';
+import 'package:nano_tech_cosmetic/features/policies/presentation/screens/about_us_screen.dart';
+import 'package:nano_tech_cosmetic/features/policies/presentation/screens/policies_screen.dart';
+import 'package:nano_tech_cosmetic/features/policies/presentation/screens/support_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/product_details_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/products_screen.dart';
 import 'package:nano_tech_cosmetic/features/prodect/presentation/screens/search_screen.dart';
@@ -36,11 +39,15 @@ abstract class AppPagesRoutes {
   static const String myOrderScreen = "/myOrderScreen";
   static const String orderDetailsScreen = "/orderDetailsScreen";
   static const String orderNameDetailsScreen = "/orderNameDetailsScreen";
-  static const String orderManufacturingDetailsScreen = "/orderManufacturingDetailsScreen";
+  static const String orderManufacturingDetailsScreen =
+      "/orderManufacturingDetailsScreen";
   static const String categoriesScreen = "/categoriesScreen";
   static const String productsScreen = "/productsScreen";
   static const String productDetailsScreen = "/productDetailsScreen";
   static const String offerDetailsScreen = "/offerDetailsScreen";
+  static const String aboutUsScreen = "/aboutUsScreen";
+  static const String policiesScreen = "/policiesScreen";
+  static const String supportScreen = "/supportScreen";
 
   static List<GetPage<dynamic>> appPages = [
     GetPage(
@@ -131,6 +138,21 @@ abstract class AppPagesRoutes {
     GetPage(
       name: offerDetailsScreen,
       page: () => const OfferDetailsScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: aboutUsScreen,
+      page: () => const AboutUsScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: policiesScreen,
+      page: () => const PoliciesScreen(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: supportScreen,
+      page: () => const SupportScreen(),
       transition: Transition.fadeIn,
     ),
   ];
