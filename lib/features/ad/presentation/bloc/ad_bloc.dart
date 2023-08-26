@@ -22,6 +22,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
     on<AdEvent>((event, emit) async {
       if (event is DisplayAdsEvent) {
         emit(const LoadingAdState(null, true, true, message: 'loading'));
+        page = 1;
         final failureOrAds = await displayAdsUsecase(page);
         failureOrAds.fold((failure) {
           emit(switchFailure(failure));

@@ -25,7 +25,7 @@ class ItemCard extends StatelessWidget {
     return BlocConsumer<ItemCartBloc, ItemCartState>(
       listener: (context, state) {
         if ((state is FailureItemCartState ||
-            state is EmptyCacheFailureItemCartState) &&
+                state is EmptyCacheFailureItemCartState) &&
             state.index != null &&
             state.index == index) {
           WidgetsUtils.showSnackBar(
@@ -126,14 +126,14 @@ class ItemCard extends StatelessWidget {
                                 ),
                                 image: itemCart.imageUrl != null
                                     ? DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                      itemCart.imageUrl!),
-                                  fit: BoxFit.cover,
-                                )
+                                        image: CachedNetworkImageProvider(
+                                            itemCart.imageUrl!),
+                                        fit: BoxFit.cover,
+                                      )
                                     : const DecorationImage(
-                                  image: AssetImage(AppAssets.logo1),
-                                  fit: BoxFit.cover,
-                                ),
+                                        image: AssetImage(AppAssets.logo1),
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
                               // Positioned(
                               //   bottom: -4,
@@ -165,15 +165,15 @@ class ItemCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                         Get.locale!.languageCode == 'ar'
+                                Get.locale!.languageCode == 'ar'
                                     ? itemCart.title
                                     : itemCart.titleEn,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge!
                                     .copyWith(
-                                  fontSize: 20,
-                                ),
+                                      fontSize: 20,
+                                    ),
                               ),
                               Text(
                                 "${itemCart.price} ${AppTranslationKeys.di.tr}",
@@ -199,40 +199,40 @@ class ItemCard extends StatelessWidget {
                               ),
                               BlocBuilder<ItemCartBloc, ItemCartState>(
                                   builder: (context, state) {
-                                    if (state is SuccessDecreaseItemCartState) {
-                                      if (state.index != null &&
-                                          state.index == index) {
-                                        itemCart.account -= 1;
-                                      }
-                                      return Text(
-                                        itemCart.account.toString(),
-                                        style: const TextStyle(
-                                          color: AppColors.secondary,
-                                          fontSize: 16,
-                                        ),
-                                      );
-                                    }
-                                    if (state is SuccessIncreaseItemCartState) {
-                                      if (state.index != null &&
-                                          state.index == index) {
-                                        itemCart.account += 1;
-                                      }
-                                      return Text(
-                                        itemCart.account.toString(),
-                                        style: const TextStyle(
-                                          color: AppColors.secondary,
-                                          fontSize: 16,
-                                        ),
-                                      );
-                                    }
-                                    return Text(
-                                      itemCart.account.toString(),
-                                      style: const TextStyle(
-                                        color: AppColors.secondary,
-                                        fontSize: 16,
-                                      ),
-                                    );
-                                  }),
+                                if (state is SuccessDecreaseItemCartState) {
+                                  if (state.index != null &&
+                                      state.index == index) {
+                                    // itemCart.account -= 1;
+                                  }
+                                  return Text(
+                                    itemCart.account.toString(),
+                                    style: const TextStyle(
+                                      color: AppColors.secondary,
+                                      fontSize: 16,
+                                    ),
+                                  );
+                                }
+                                if (state is SuccessIncreaseItemCartState) {
+                                  if (state.index != null &&
+                                      state.index == index) {
+                                    // itemCart.account += 1;
+                                  }
+                                  return Text(
+                                    itemCart.account.toString(),
+                                    style: const TextStyle(
+                                      color: AppColors.secondary,
+                                      fontSize: 16,
+                                    ),
+                                  );
+                                }
+                                return Text(
+                                  itemCart.account.toString(),
+                                  style: const TextStyle(
+                                    color: AppColors.secondary,
+                                    fontSize: 16,
+                                  ),
+                                );
+                              }),
                               InkWell(
                                 onTap: () {
                                   if (itemCart.account > 1) {

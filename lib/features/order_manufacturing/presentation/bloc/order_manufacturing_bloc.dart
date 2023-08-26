@@ -45,6 +45,7 @@ class OrderManufacturingBloc
     on<DisplayOrdersManufacturingEvent>((event, emit) async {
       emit(const LoadingOrderManufacturingState(null, true, true,
           message: "loading"));
+      page = 1;
       final failureOrOrders = await displayOrdersManufacturingUsecase(
           page: page, orderStatus: orderStatus);
       failureOrOrders.fold((failure) {

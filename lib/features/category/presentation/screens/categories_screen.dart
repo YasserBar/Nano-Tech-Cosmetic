@@ -47,31 +47,53 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             if (state is LoadedCategoriesState) {
               return RefreshIndicator(
                 onRefresh: () async {
-                  BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
+                  BlocProvider.of<CategoryBloc>(context)
+                      .add(ShowAllCategoriesEvent());
                 },
                 child: GridView.builder(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: AppDimensions.appbarBodyPadding,
-                    horizontal: AppDimensions.sidesBodyPadding,
-                  ),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: .9,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 15),
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: state.categories!.length,
-                  itemBuilder: (context, index) => CategoryCard(
-                    category: state.categories![index],
-                  ),
-                ),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppDimensions.appbarBodyPadding,
+                      horizontal: AppDimensions.sidesBodyPadding,
+                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: .9,
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 15),
+                    physics: const BouncingScrollPhysics(),
+                    controller: context.read<CategoryBloc>().scrollController,
+                    itemCount: state.categories!.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index < state.categories!.length) {
+                        return CategoryCard(
+                          category: state.categories![index],
+                        );
+                      } else {
+                        return state.loaded
+                            ? const SizedBox()
+                            : Container(
+                                padding: const EdgeInsets.all(10),
+                                child: state.hasMore
+                                    ? const LoaderIndicator(
+                                        size: 30,
+                                        lineWidth: 3,
+                                      )
+                                    : Center(
+                                        child: Text(AppTranslationKeys
+                                            .noMoreCategories.tr),
+                                      ),
+                              );
+                      }
+                    }),
               );
             }
             if (state is OfflineFailureCategoryState) {
               return HandleStatesWidget(
                 stateType: StateType.offline,
                 onPressedTryAgain: () {
-                  BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
+                  BlocProvider.of<CategoryBloc>(context)
+                      .add(ShowAllCategoriesEvent());
                 },
               );
             }
@@ -79,7 +101,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               return HandleStatesWidget(
                 stateType: StateType.unexpectedProblem,
                 onPressedTryAgain: () {
-                  BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
+                  BlocProvider.of<CategoryBloc>(context)
+                      .add(ShowAllCategoriesEvent());
                 },
               );
             }
@@ -87,7 +110,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               return HandleStatesWidget(
                 stateType: StateType.internalServerProblem,
                 onPressedTryAgain: () {
-                  BlocProvider.of<CategoryBloc>(context).add(ShowAllCategoriesEvent());
+                  BlocProvider.of<CategoryBloc>(context)
+                      .add(ShowAllCategoriesEvent());
                 },
               );
             }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+// import 'package:nano_tech_cosmetic/core/Icon_data/sale_icon_icons.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_assets.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
@@ -85,14 +86,20 @@ class _MainScreenState extends State<MainScreen> {
                 onTap: () {
                   globalUser != null
                       ? scaffoldKey.currentState!.openDrawer()
-                      : signInDialog(context,
-                          title: AppTranslationKeys.profile.tr);
+                      : scaffoldKey.currentState!.openDrawer();
+                  // : signInDialog(context,
+                  //     title: AppTranslationKeys.profile.tr);
                 },
-                child: SvgPicture.asset(
-                  AppTranslationKeys.menu.tr,
-                  height: 35,
-                  width: 35,
+                child: const Icon(
+                  Icons.menu,
+                  size: 35,
+                  color: Colors.white,
                 ),
+                // child: SvgPicture.asset(
+                //   AppTranslationKeys.menu.tr,
+                //   height: 35,
+                //   width: 35,
+                // ),
               ),
               SvgPicture.asset(
                 AppAssets.logoAppBar,
@@ -173,7 +180,184 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       drawer: globalUser == null
-          ? null
+          ? Drawer(
+              child: SafeArea(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.white,
+                        offset: Offset(-10, -20),
+                        spreadRadius: 10,
+                        blurRadius: 10,
+                      ),
+                      BoxShadow(
+                        color: AppColors.white,
+                        offset: Offset(-10, 20),
+                        spreadRadius: 10,
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: ListView(
+                    children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Get.back();
+                          Get.toNamed(AppPagesRoutes.signInScreen);
+                        },
+                        leading: SvgPicture.asset(AppAssets.resetPassword),
+                        title: Text(
+                          AppTranslationKeys.singIn.tr,
+                          style: const TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Get.back();
+                          Get.toNamed(AppPagesRoutes.chooseGardScreen);
+                        },
+                        leading: SvgPicture.asset(AppAssets.resetPassword),
+                        title: Text(
+                          AppTranslationKeys.singUp.tr,
+                          style: const TextStyle(
+                            color: AppColors.secondary,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      DropdownButtonFormField<String>(
+                        hint: Padding(
+                          padding: Get.locale!.languageCode == 'en'
+                              ? const EdgeInsets.only(left: 25)
+                              : const EdgeInsets.only(right: 25),
+                          child: Text(
+                            Get.locale!.languageCode == 'ar'
+                                ? AppTranslationKeys.arabic.tr
+                                : AppTranslationKeys.english.tr,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ),
+                        decoration: InputDecoration(
+                          prefixIcon: SvgPicture.asset(
+                            AppAssets.translate,
+                            height: 20,
+                            width: 20,
+                          ),
+                          prefixIconConstraints: const BoxConstraints(
+                              maxHeight: 40,
+                              maxWidth: 40,
+                              minHeight: 30,
+                              minWidth: 30),
+                          border: InputBorder.none,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        items: localeController.languagesCodes
+                            .map(
+                              (e) => DropdownMenuItem<String>(
+                                value: e,
+                                child: SizedBox(
+                                  width: Get.width * 0.4,
+                                  child: Padding(
+                                    padding: Get.locale!.languageCode == 'en'
+                                        ? const EdgeInsets.only(left: 25)
+                                        : const EdgeInsets.only(right: 25),
+                                    child: Text(
+                                      e == 'ar'
+                                          ? AppTranslationKeys.arabic.tr
+                                          : AppTranslationKeys.english.tr,
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        value: localeController.language!.countryCode,
+                        onChanged: (value) {
+                          setState(() {
+                            localeController.changeLang(value!);
+                          });
+                        },
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      ListTile(
+                        leading: SvgPicture.asset(AppAssets.about),
+                        title: Text(AppTranslationKeys.about.tr),
+                        onTap: () {
+                          scaffoldKey.currentState!.closeDrawer();
+                          Get.toNamed(AppPagesRoutes.aboutUsScreen);
+                        },
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      ListTile(
+                        leading: const Icon(
+                          Icons.local_police_outlined,
+                          size: 30,
+                        ),
+                        title: Text(AppTranslationKeys.policies.tr),
+                        onTap: () {
+                          scaffoldKey.currentState!.closeDrawer();
+                          Get.toNamed(AppPagesRoutes.policiesScreen);
+                        },
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      ListTile(
+                        leading: SvgPicture.asset(
+                          AppAssets.support,
+                          height: 35,
+                        ),
+                        title: Text(AppTranslationKeys.support.tr),
+                        onTap: () {
+                          scaffoldKey.currentState!.closeDrawer();
+                          Get.toNamed(AppPagesRoutes.supportScreen);
+                        },
+                      ),
+                      const Divider(
+                        height: 0,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           : Drawer(
               child: SafeArea(
                 child: Container(
@@ -532,7 +716,10 @@ class _MainScreenState extends State<MainScreen> {
                         endIndent: 20,
                       ),
                       ListTile(
-                        leading: const Icon(Icons.local_police_outlined,size: 30,),
+                        leading: const Icon(
+                          Icons.local_police_outlined,
+                          size: 30,
+                        ),
                         title: Text(AppTranslationKeys.policies.tr),
                         onTap: () {
                           scaffoldKey.currentState!.closeDrawer();
@@ -546,7 +733,10 @@ class _MainScreenState extends State<MainScreen> {
                         endIndent: 20,
                       ),
                       ListTile(
-                        leading: SvgPicture.asset(AppAssets.support,height: 35,),
+                        leading: SvgPicture.asset(
+                          AppAssets.support,
+                          height: 35,
+                        ),
                         title: Text(AppTranslationKeys.support.tr),
                         onTap: () {
                           scaffoldKey.currentState!.closeDrawer();
@@ -615,6 +805,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               label: AppTranslationKeys.myOrders.tr),
           BottomNavigationBarItem(
+              // icon: Icon(SaleIcon.sale),
               icon: SvgPicture.asset(
                 AppAssets.sale,
                 color: indexNavBar == 3 ? AppColors.primary : AppColors.gray,

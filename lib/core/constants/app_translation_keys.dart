@@ -1,4 +1,10 @@
 class AppTranslationKeys {
+  static const String noMoreCategories = 'noMoreCategories';
+  static const String noMoreOffers = 'noMoreOffers';
+  static const String noMoreOrders = 'noMoreOrder';
+  static const String noMoreProdects = 'noMoreProdects';
+  static const String noMoreAds = 'noMoreAds';
+
   static const String singIn = 'singIn';
   static const String email = 'email';
   static const String password = 'password';
@@ -21,6 +27,12 @@ class AppTranslationKeys {
   static const String buyYourCosmetics = 'buyYourCosmetics';
   static const String enjoyUniqueShopping = 'enjoyUniqueShopping';
   static const String getDirectService = 'getDirectService';
+  static const String buyYourCosmeticsSalon = 'buyYourCosmeticsSalon';
+  static const String enjoyUniqueShoppingSalon = 'enjoyUniqueShoppingSalon';
+  static const String getDirectServiceSalon = 'getDirectServiceSalon';
+  static const String buyYourCosmeticsCompany = 'buyYourCosmeticsCompany';
+  static const String enjoyUniqueShoppingCompany = 'enjoyUniqueShoppingCompany';
+  static const String getDirectServiceCompany = 'getDirectServiceCompany';
   static const String next = 'next';
 
   static const String singUp = 'singUp';

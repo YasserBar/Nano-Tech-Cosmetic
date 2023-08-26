@@ -23,6 +23,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     });
     on<ShowAllProductsEvent>((event, emit) async {
       emit(const LoadingProductState(null, true, true,message: 'loading'));
+      page = 1;
       final failureOrproducts =
           await showAllProductUsecase(page, categoryId: event.categoryId, name: event.name);
 

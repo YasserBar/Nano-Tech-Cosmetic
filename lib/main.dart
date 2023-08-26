@@ -10,6 +10,7 @@ import 'package:nano_tech_cosmetic/features/auth/data/data_sources/auth_local_da
 import 'package:nano_tech_cosmetic/core/constants/app_translations.dart';
 import 'package:nano_tech_cosmetic/features/auth/domain/entities/user_entity.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
+// import 'dart:io';
 
 User?
     globalUser; //TODO: يجب وضعها  فارغة عند كل حدث في الرموت و الوكل في البداية مباشرة
@@ -20,6 +21,7 @@ void main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // HttpOverrides.global = MyHttpOverrides();
   await di.init();
   initializeTokenAndCustomer();
   runApp(const MyApp());
@@ -56,6 +58,15 @@ void initializeTokenAndCustomer() async {
     }
   }
 }
+
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext? context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback =
+//           (X509Certificate cert, String host, int port) => true;
+//   }
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

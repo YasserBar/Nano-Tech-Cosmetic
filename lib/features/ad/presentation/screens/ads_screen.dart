@@ -47,21 +47,41 @@ class _AdsScreenState extends State<AdsScreen> {
                   BlocProvider.of<AdBloc>(context).add(const DisplayAdsEvent());
                 },
                 child: GridView.builder(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: AppDimensions.appbarBodyPadding,
-                    horizontal: AppDimensions.sidesBodyPadding,
-                  ),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.8,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 15),
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: state.ads?.length,
-                  itemBuilder: (context, index) => AdCard(
-                    ad: state.ads![index],
-                  ),
-                ),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppDimensions.appbarBodyPadding,
+                      horizontal: AppDimensions.sidesBodyPadding,
+                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.8,
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 15),
+                    physics: const BouncingScrollPhysics(),
+                    controller: context.read<AdBloc>().scrollController,
+                    itemCount: state.ads!.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index < state.ads!.length) {
+                        return AdCard(
+                          ad: state.ads![index],
+                        );
+                      } else {
+                        return state.loaded
+                            ? const SizedBox()
+                            : Container(
+                                padding: const EdgeInsets.all(10),
+                                child: state.hasMore
+                                    ? const LoaderIndicator(
+                                        size: 30,
+                                        lineWidth: 3,
+                                      )
+                                    : Center(
+                                        child: Text(
+                                            AppTranslationKeys.noMoreAds.tr),
+                                      ),
+                              );
+                      }
+                    }),
               );
             }
             if (state is OfflineFailureAdState) {

@@ -31,11 +31,11 @@ class _SearchScreenState extends State<SearchScreen>
     with TickerProviderStateMixin {
   ProductBloc productBloc = di.sl<ProductBloc>();
   CategoryBloc categoryBloc = di.sl<CategoryBloc>();
-  Key searchProductsKey=const Key('searchProductsKey');
-  Key searchCategoriesKey=const Key('searchCategoriesKey');
+  Key searchProductsKey = const Key('searchProductsKey');
+  Key searchCategoriesKey = const Key('searchCategoriesKey');
 
   final FocusNode focusNode = FocusNode();
-  String filterType = 'product';
+  // String filterType = 'product';
   TextEditingController searchController = TextEditingController();
   late TabController tabController;
 
@@ -47,6 +47,10 @@ class _SearchScreenState extends State<SearchScreen>
 
   @override
   Widget build(BuildContext context) {
+    tabController.addListener(() {
+      setState(() {});
+    });
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<ProductBloc>(
@@ -62,9 +66,20 @@ class _SearchScreenState extends State<SearchScreen>
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              searchController.text == ''
-                  ? Get.back()
-                  : searchController.text = '';
+              if (searchController.text != '') {
+                searchController.text = '';
+                if (tabController.index == 0) {
+                  productBloc.add(
+                    ShowAllProductsEvent(name: searchController.text),
+                  );
+                } else {
+                  categoryBloc.add(
+                    ShowAllCategoriesEvent(name: searchController.text),
+                  );
+                }
+              } else {
+                Get.back();
+              }
               setState(() {});
             },
             icon: Icon(
@@ -75,8 +90,8 @@ class _SearchScreenState extends State<SearchScreen>
           title: TextFormField(
             controller: searchController,
             onChanged: (value) {
-              if (searchController.text != '') {
-                if (filterType == 'product') {
+              if (searchController.text == '') {
+                if (tabController.index == 0) {
                   productBloc.add(
                     ShowAllProductsEvent(name: searchController.text),
                   );
@@ -85,13 +100,13 @@ class _SearchScreenState extends State<SearchScreen>
                     ShowAllCategoriesEvent(name: searchController.text),
                   );
                 }
+                setState(() {});
               }
-              setState(() {});
             },
             onFieldSubmitted: (value) {
               if (searchController.text != '') {
                 FocusScope.of(context).unfocus();
-                if (filterType == 'product') {
+                if (tabController.index == 0) {
                   productBloc.add(
                     ShowAllProductsEvent(name: searchController.text),
                   );
@@ -105,7 +120,7 @@ class _SearchScreenState extends State<SearchScreen>
             textInputAction: TextInputAction.search,
             autofocus: true,
             decoration: InputDecoration(
-              hintText: filterType == 'product'
+              hintText: (tabController.index == 0)
                   ? AppTranslationKeys.findProduct.tr
                   : AppTranslationKeys.findCategory.tr,
               border: const OutlineInputBorder(
@@ -114,7 +129,7 @@ class _SearchScreenState extends State<SearchScreen>
             ),
           ),
           actions: [
-            if (filterType == 'product')
+            if (tabController.index == 0)
               BlocBuilder<ProductBloc, ProductState>(
                 builder: (context, state) {
                   return IconButton(
@@ -131,7 +146,7 @@ class _SearchScreenState extends State<SearchScreen>
                   );
                 },
               ),
-            if (filterType == 'category')
+            if (tabController.index == 1)
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   return IconButton(
@@ -153,10 +168,10 @@ class _SearchScreenState extends State<SearchScreen>
             unselectedLabelColor: AppColors.gray,
             dividerColor: AppColors.black,
             controller: tabController,
-            onTap: (value) {
-              filterType = value == 0 ? 'product' : 'category';
-              setState(() {});
-            },
+            // onTap: (value) {
+            //   filterType = value == 0 ? 'product' : 'category';
+            //   setState(() {});
+            // },
             isScrollable: false,
             unselectedLabelStyle:
                 Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -199,17 +214,38 @@ class _SearchScreenState extends State<SearchScreen>
                   return Container(
                     color: AppColors.white,
                     child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: AppDimensions.appbarBodyPadding,
-                        horizontal: AppDimensions.sidesBodyPadding,
-                      ),
-                      physics: const BouncingScrollPhysics(),
-                      itemCount:
-                          state.products != null ? state.products!.length : 0,
-                      itemBuilder: (context, index) => ProductCard(
-                        product: state.products![index],
-                      ),
-                    ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppDimensions.appbarBodyPadding,
+                          horizontal: AppDimensions.sidesBodyPadding,
+                        ),
+                        controller:
+                            context.read<ProductBloc>().scrollController,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: state.products != null
+                            ? state.products!.length + 1
+                            : 0,
+                        itemBuilder: (context, index) {
+                          if (index < state.products!.length) {
+                            return ProductCard(
+                              product: state.products![index],
+                            );
+                          } else {
+                            return state.loaded
+                                ? const SizedBox()
+                                : Container(
+                                    padding: const EdgeInsets.all(10),
+                                    child: state.hasMore
+                                        ? const LoaderIndicator(
+                                            size: 30,
+                                            lineWidth: 3,
+                                          )
+                                        : Center(
+                                            child: Text(AppTranslationKeys
+                                                .noMoreProdects.tr),
+                                          ),
+                                  );
+                          }
+                        }),
                   );
                 }
                 if (state is LoadingProductState) {
@@ -270,24 +306,44 @@ class _SearchScreenState extends State<SearchScreen>
                   return Container(
                     color: AppColors.white,
                     child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: .9,
-                              mainAxisSpacing: 15,
-                              crossAxisSpacing: 15),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: AppDimensions.appbarBodyPadding,
-                        horizontal: AppDimensions.sidesBodyPadding,
-                      ),
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: state.categories != null
-                          ? state.categories!.length
-                          : 0,
-                      itemBuilder: (context, index) => CategoryCard(
-                        category: state.categories![index],
-                      ),
-                    ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: .9,
+                                mainAxisSpacing: 15,
+                                crossAxisSpacing: 15),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppDimensions.appbarBodyPadding,
+                          horizontal: AppDimensions.sidesBodyPadding,
+                        ),
+                        controller:
+                            context.read<CategoryBloc>().scrollController,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: state.categories != null
+                            ? state.categories!.length + 1
+                            : 0,
+                        itemBuilder: (context, index) {
+                          if (index < state.categories!.length) {
+                            return CategoryCard(
+                              category: state.categories![index],
+                            );
+                          } else {
+                            return state.loaded
+                                ? const SizedBox()
+                                : Container(
+                                    padding: const EdgeInsets.all(10),
+                                    child: state.hasMore
+                                        ? const LoaderIndicator(
+                                            size: 30,
+                                            lineWidth: 3,
+                                          )
+                                        : Center(
+                                            child: Text(AppTranslationKeys
+                                                .noMoreCategories.tr),
+                                          ),
+                                  );
+                          }
+                        }),
                   );
                 }
                 if (state is LoadingCategoryState) {
@@ -300,8 +356,7 @@ class _SearchScreenState extends State<SearchScreen>
                     stateType: StateType.offline,
                     onPressedTryAgain: () {
                       BlocProvider.of<CategoryBloc>(context).add(
-                          ShowAllCategoriesEvent(
-                              name: searchController.text));
+                          ShowAllCategoriesEvent(name: searchController.text));
                     },
                   );
                 }
@@ -310,8 +365,7 @@ class _SearchScreenState extends State<SearchScreen>
                     stateType: StateType.unexpectedProblem,
                     onPressedTryAgain: () {
                       BlocProvider.of<CategoryBloc>(context).add(
-                          ShowAllCategoriesEvent(
-                              name: searchController.text));
+                          ShowAllCategoriesEvent(name: searchController.text));
                     },
                   );
                 }
@@ -320,8 +374,7 @@ class _SearchScreenState extends State<SearchScreen>
                     stateType: StateType.internalServerProblem,
                     onPressedTryAgain: () {
                       BlocProvider.of<CategoryBloc>(context).add(
-                          ShowAllCategoriesEvent(
-                              name: searchController.text));
+                          ShowAllCategoriesEvent(name: searchController.text));
                     },
                   );
                 }

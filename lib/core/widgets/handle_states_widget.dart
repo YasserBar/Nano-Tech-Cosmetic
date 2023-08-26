@@ -23,7 +23,7 @@ class HandleStatesWidget extends StatelessWidget {
       shrinkWrap: true,
       children: [
         const SizedBox(
-          height: 70,
+          height: 50,
         ),
         Center(
           child: SvgPicture.asset(
@@ -31,7 +31,7 @@ class HandleStatesWidget extends StatelessWidget {
           ),
         ),
           const SizedBox(
-            height: 50,
+            height: 40,
           ),
         if (stateType == StateType.offline ||
             stateType == StateType.unexpectedProblem ||
