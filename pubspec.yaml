@@ -56,10 +56,10 @@ flutter:
     - assets/svgs/
     - shorebird.yaml
 
-fonts:
-  - family: SaleIcon
-    fonts:
-      - asset: fonts/SaleIcon.ttf
+# fonts:
+#   - family: SaleIcon
+#     fonts:
+#       - asset: fonts/SaleIcon.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

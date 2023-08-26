@@ -273,8 +273,8 @@ class MyCartScreen extends StatelessWidget {
                           builder: (context, stateItem) {
                             if (stateItem is SuccessDecreaseItemCartState) {
                               if (stateItem.index != null) {
-                                // state.cart!.totalPrice -= state
-                                //     .cart!.itemsCart[stateItem.index!].price;
+                                state.cart!.totalPrice -= state
+                                    .cart!.itemsCart[stateItem.index!].price;
                               }
                               return Text(
                                 "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
@@ -289,8 +289,8 @@ class MyCartScreen extends StatelessWidget {
                             }
                             if (stateItem is SuccessIncreaseItemCartState) {
                               if (stateItem.index != null) {
-                                // state.cart!.totalPrice += state
-                                //     .cart!.itemsCart[stateItem.index!].price;
+                                state.cart!.totalPrice += state
+                                    .cart!.itemsCart[stateItem.index!].price;
                               }
                               return Text(
                                 "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
@@ -305,10 +305,10 @@ class MyCartScreen extends StatelessWidget {
                             }
                             if (stateItem is SuccessDeleteItemCartState) {
                               if (stateItem.index != null) {
-                                // state.cart!.totalPrice -= (state.cart!
-                                //         .itemsCart[stateItem.index!].price *
-                                //     state.cart!.itemsCart[stateItem.index!]
-                                //         .account);
+                                state.cart!.totalPrice -= (state.cart!
+                                        .itemsCart[stateItem.index!].price *
+                                    state.cart!.itemsCart[stateItem.index!]
+                                        .account);
                               }
                               return Text(
                                 "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
@@ -345,9 +345,9 @@ class MyCartScreen extends StatelessWidget {
                       child: BlocBuilder<ItemCartBloc, ItemCartState>(
                           builder: (context, stateItem) {
                         if (stateItem is SuccessDeleteItemCartState) {
-                          // state.cart!.itemsCart.removeAt(stateItem.index!);
+                          state.cart!.itemsCart.removeAt(stateItem.index!);
                           if (state.cart!.itemsCart.isEmpty) {
-                            // state.cart = null;
+                            state.cart = null;
                             return const HandleStatesWidget(
                                 stateType: StateType.emptyCart);
                           }
