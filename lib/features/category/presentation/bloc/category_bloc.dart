@@ -23,6 +23,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     });
     on<ShowAllCategoriesEvent>((event, emit) async {
       emit(const LoadingCategoryState(null, true, true, message: "loading"));
+      page = 1;
       final failureOrCategories =
           await showAllCategoryUsecase(page, name: event.name);
       failureOrCategories.fold((failure) {

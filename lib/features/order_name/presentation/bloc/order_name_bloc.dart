@@ -41,6 +41,7 @@ class OrderNameBloc extends Bloc<OrderNameEvent, OrderNameState> {
     });
     on<DisplayOrdersNameEvent>((event, emit) async {
       emit(const LoadingOrderNameState(null, true, true, message: "loading"));
+      page = 1;
       final failureOrOrders =
           await displayOrdersNameUsecase(page: page, orderStatus: orderStatus);
       failureOrOrders.fold((failure) {

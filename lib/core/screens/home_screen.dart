@@ -73,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.symmetric(
                         vertical: AppDimensions.appbarBodyPadding,
                       ),
+                      controller: context.read<ProductBloc>().scrollController,
                       physics: const BouncingScrollPhysics(),
                       children: [
                         Padding(
@@ -167,12 +168,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   physics: const BouncingScrollPhysics(),
-                                  children: List.generate(
-                                    state.ads!.length,
-                                    (index) => AdCard(
-                                      ad: state.ads![index],
-                                    ),
-                                  ),
+                                  controller:
+                                      context.read<AdBloc>().scrollController,
+                                  children: List.generate(state.ads!.length + 1,
+                                      (index) {
+                                    if (index < state.ads!.length) {
+                                      return AdCard(
+                                        ad: state.ads![index],
+                                      );
+                                    } else {
+                                      return state.loaded
+                                          ? const SizedBox()
+                                          : Container(
+                                              padding: const EdgeInsets.all(10),
+                                              child: state.hasMore
+                                                  ? const LoaderIndicator(
+                                                      size: 30,
+                                                      lineWidth: 3,
+                                                    )
+                                                  : Center(
+                                                      child: Text(
+                                                        AppTranslationKeys
+                                                            .noMoreAds.tr,
+                                                      ),
+                                                    ),
+                                            );
+                                    }
+                                  }),
                                 );
                               }
                               return const LoaderIndicator(
@@ -225,17 +247,35 @@ class _HomeScreenState extends State<HomeScreen> {
                             if (state is LoadedProductsState) {
                               return Column(
                                 children: List.generate(
-                                  state.loaded ? state.products!.length : 0,
-                                  (index) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal:
-                                          AppDimensions.sidesBodyPadding,
-                                    ),
-                                    child: ProductCard(
-                                      product: state.products![index],
-                                    ),
-                                  ),
-                                ),
+                                    state.products!.length + 1, (index) {
+                                  if (index < state.products!.length) {
+                                    return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal:
+                                              AppDimensions.sidesBodyPadding,
+                                        ),
+                                        child: ProductCard(
+                                          product: state.products![index],
+                                        ));
+                                  } else {
+                                    return state.loaded
+                                        ? const SizedBox()
+                                        : Container(
+                                            padding: const EdgeInsets.all(10),
+                                            child: state.hasMore
+                                                ? const LoaderIndicator(
+                                                    size: 30,
+                                                    lineWidth: 3,
+                                                  )
+                                                : Center(
+                                                    child: Text(
+                                                      AppTranslationKeys
+                                                          .noMoreProdects.tr,
+                                                    ),
+                                                  ),
+                                          );
+                                  }
+                                }),
                               );
                             }
                             return const Padding(

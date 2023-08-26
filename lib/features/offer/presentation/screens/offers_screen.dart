@@ -50,16 +50,35 @@ class _OffersScreenState extends State<OffersScreen> {
                 BlocProvider.of<OfferBloc>(context).add(ShowOffersEvent());
               },
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppDimensions.appbarBodyPadding,
-                  horizontal: AppDimensions.sidesBodyPadding,
-                ),
-                physics: const BouncingScrollPhysics(),
-                itemCount: state.offer != null ? state.offer!.length : 0,
-                itemBuilder: (context, index) => OfferCard(
-                  offer: state.offer![index],
-                ),
-              ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: AppDimensions.appbarBodyPadding,
+                    horizontal: AppDimensions.sidesBodyPadding,
+                  ),
+                  physics: const BouncingScrollPhysics(),
+                  controller: context.read<OfferBloc>().scrollController,
+                  itemCount: state.offer != null ? state.offer!.length + 1 : 0,
+                  itemBuilder: (context, index) {
+                    if (index < state.offer!.length) {
+                      return OfferCard(
+                        offer: state.offer![index],
+                      );
+                    } else {
+                      return state.loaded
+                          ? const SizedBox()
+                          : Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: state.hasMore
+                                  ? const LoaderIndicator(
+                                      size: 30,
+                                      lineWidth: 3,
+                                    )
+                                  : Center(
+                                      child: Text(
+                                          AppTranslationKeys.noMoreOffers.tr),
+                                    ),
+                            );
+                    }
+                  }),
             );
           }
           if (state is OfflineFailureOfferState) {

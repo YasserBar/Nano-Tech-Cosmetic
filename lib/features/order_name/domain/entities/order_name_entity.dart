@@ -7,8 +7,8 @@ class OrderName extends Equatable {
   final String? note;
   final int amount;
   final OrderStatus status;
-  final double? cost;
-  final double? costPrinting;
+  final int cost;
+  final int? costPrinting;
   final String? response;
   final String? startProcessing;
   final String? endProcessing;

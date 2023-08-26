@@ -131,15 +131,15 @@ extension RoleExtension on Role {
         ];
       case Role.salon:
         return [
-          AppTranslationKeys.buyYourCosmetics.tr,
-          AppTranslationKeys.enjoyUniqueShopping.tr,
-          AppTranslationKeys.getDirectService.tr,
+          AppTranslationKeys.buyYourCosmeticsSalon.tr,
+          AppTranslationKeys.enjoyUniqueShoppingSalon.tr,
+          AppTranslationKeys.getDirectServiceSalon.tr,
         ];
       case Role.company:
         return [
-          AppTranslationKeys.buyYourCosmetics.tr,
-          AppTranslationKeys.enjoyUniqueShopping.tr,
-          AppTranslationKeys.getDirectService.tr,
+          AppTranslationKeys.buyYourCosmeticsCompany.tr,
+          AppTranslationKeys.enjoyUniqueShoppingCompany.tr,
+          AppTranslationKeys.getDirectServiceCompany.tr,
         ];
     }
   }

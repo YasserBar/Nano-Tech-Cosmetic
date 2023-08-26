@@ -6,6 +6,11 @@ class AppTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en': {
+          AppTranslationKeys.noMoreCategories: 'There are no more Categories',
+          AppTranslationKeys.noMoreOffers: 'There are no more Offers',
+          AppTranslationKeys.noMoreOrders: 'There are no more Orders',
+          AppTranslationKeys.noMoreProdects: 'There are no more Prodects',
+          AppTranslationKeys.noMoreAds: 'There are no more Ads',
           AppTranslationKeys.singIn: 'Sing in',
           AppTranslationKeys.email: 'Email',
           AppTranslationKeys.password: 'Password',
@@ -28,6 +33,18 @@ class AppTranslations extends Translations {
           AppTranslationKeys.enjoyUniqueShopping:
               'Enjoy unique GardDescription shopping',
           AppTranslationKeys.getDirectService: 'Get direct service',
+          AppTranslationKeys.buyYourCosmeticsSalon:
+              'Experience luxury and pampering like never before at our salon.',
+          AppTranslationKeys.enjoyUniqueShoppingSalon:
+              'Indulge in top-notch beauty treatments and relaxation services.',
+          AppTranslationKeys.getDirectServiceSalon:
+              'Elevate your style and rejuvenate your spirit with us.',
+          AppTranslationKeys.buyYourCosmeticsCompany:
+              'Discover the future of cosmetics with us.',
+          AppTranslationKeys.enjoyUniqueShoppingCompany:
+              'We\'re committed to innovation, quality, and your beauty needs.',
+          AppTranslationKeys.getDirectServiceCompany:
+              'Join us to explore groundbreaking products and redefine your beauty routine.',
           AppTranslationKeys.next: 'next',
           AppTranslationKeys.singUp: 'Sing up',
           AppTranslationKeys.firstName: 'First name',
@@ -59,18 +76,24 @@ class AppTranslations extends Translations {
           AppTranslationKeys.police3: 'Transparency and Labeling Policy:',
           AppTranslationKeys.police4: 'Environmental Responsibility Policy:',
           AppTranslationKeys.police5: 'Consumer Education Policy:',
-          AppTranslationKeys.policeContent1: 'We prioritize the safety of our customers. All cosmetic products developed using nanotechnology will undergo rigorous testing to ensure their safety for human use. We will follow international regulatory guidelines and standards for nanomaterial safety assessments.',
-          AppTranslationKeys.policeContent2: 'Our company is committed to using nanotechnology in cosmetics in an ethical and responsible manner. We will not use nanomaterials that are known to have negative impacts on health or the environment. We will continuously monitor advancements in nanotechnology and adjust our practices accordingly.',
-          AppTranslationKeys.policeContent3: 'We will provide clear and accurate labeling for all cosmetic products that contain nanomaterials. This includes providing information about the nanomaterials used, their purpose, and any potential benefits or risks associated with their use.',
-          AppTranslationKeys.policeContent4: 'We will strive to minimize the environmental impact of our nanotechnology-based cosmetic products. This includes efforts to reduce waste, use sustainable packaging materials, and adhere to eco-friendly manufacturing processes.',
-          AppTranslationKeys.policeContent5: 'Our company believes in educating consumers about the benefits and safe use of nanotechnology in cosmetics. We will provide accessible information about nanotechnology, its applications in cosmetics, and any precautions customers should take when using our products.',
+          AppTranslationKeys.policeContent1:
+              'We prioritize the safety of our customers. All cosmetic products developed using nanotechnology will undergo rigorous testing to ensure their safety for human use. We will follow international regulatory guidelines and standards for nanomaterial safety assessments.',
+          AppTranslationKeys.policeContent2:
+              'Our company is committed to using nanotechnology in cosmetics in an ethical and responsible manner. We will not use nanomaterials that are known to have negative impacts on health or the environment. We will continuously monitor advancements in nanotechnology and adjust our practices accordingly.',
+          AppTranslationKeys.policeContent3:
+              'We will provide clear and accurate labeling for all cosmetic products that contain nanomaterials. This includes providing information about the nanomaterials used, their purpose, and any potential benefits or risks associated with their use.',
+          AppTranslationKeys.policeContent4:
+              'We will strive to minimize the environmental impact of our nanotechnology-based cosmetic products. This includes efforts to reduce waste, use sustainable packaging materials, and adhere to eco-friendly manufacturing processes.',
+          AppTranslationKeys.policeContent5:
+              'Our company believes in educating consumers about the benefits and safe use of nanotechnology in cosmetics. We will provide accessible information about nanotechnology, its applications in cosmetics, and any precautions customers should take when using our products.',
           AppTranslationKeys.logout: 'Logout',
           AppTranslationKeys.logoutFromApp: 'Logout From app',
           AppTranslationKeys.goals: 'Our Goals:',
           AppTranslationKeys.goalsContent:
               '''We at Nano Tech are interested in meeting the needs of consumers by providing the best products on a personal level by providing a diverse and comprehensive range of products that meet all consumer needs with high quality.\nOur goal is to ensure that we provide the best product in an ideal manner in all areas of our specialization.''',
           AppTranslationKeys.vision: 'Vision:',
-          AppTranslationKeys.visionContent: 'Nano Tech is one of the companies that contribute significantly to the development of all areas of its competence to reach the best in the world and always achieve the slogan of excellence.',
+          AppTranslationKeys.visionContent:
+              'Nano Tech is one of the companies that contribute significantly to the development of all areas of its competence to reach the best in the world and always achieve the slogan of excellence.',
           AppTranslationKeys.home: 'Home',
           AppTranslationKeys.menu: AppAssets.menuEn,
           AppTranslationKeys.welcome: 'Welcome!',
@@ -155,6 +178,11 @@ class AppTranslations extends Translations {
           AppTranslationKeys.thereIsNoMatch: 'There is no match',
         },
         'ar': {
+          AppTranslationKeys.noMoreCategories: 'لا يوجد المزيد من التصنيفات',
+          AppTranslationKeys.noMoreOffers: "لا يوجد المزيد من العروض",
+          AppTranslationKeys.noMoreOrders: "لا يوجد المزيد من الطلبات",
+          AppTranslationKeys.noMoreProdects: "لا يوجد المزيد من المنتجات",
+          AppTranslationKeys.noMoreAds: "لا يوجد المزيد من الاعلانات",
           AppTranslationKeys.singIn: 'تسجيل دخول',
           AppTranslationKeys.email: 'بريد إلكتروني',
           AppTranslationKeys.password: 'كلمة المرور',
@@ -177,6 +205,18 @@ class AppTranslations extends Translations {
           AppTranslationKeys.enjoyUniqueShopping:
               'استمتع بالتسوق الفريد من نوعه',
           AppTranslationKeys.getDirectService: 'احصل على خدمة مباشرة',
+          AppTranslationKeys.buyYourCosmeticsSalon:
+              'استمتع بالفخامة والتدليل كما لم يحدث من قبل في صالوننا.',
+          AppTranslationKeys.enjoyUniqueShoppingSalon:
+              'انغمس في علاجات التجميل وخدمات الاسترخاء من الدرجة الأولى.',
+          AppTranslationKeys.getDirectServiceSalon:
+              'ارتقي بأسلوبك وجدد روحك معنا.',
+          AppTranslationKeys.buyYourCosmeticsCompany:
+              'اكتشف مستقبل مستحضرات التجميل معنا.',
+          AppTranslationKeys.enjoyUniqueShoppingCompany:
+              'نحن ملتزمون بالابتكار والجودة واحتياجات جمالك.',
+          AppTranslationKeys.getDirectServiceCompany:
+              'انضم إلينا لاستكشاف المنتجات الرائدة وإعادة تعريف روتين جمالك.',
           AppTranslationKeys.next: 'التالي',
           AppTranslationKeys.singUp: 'إنشاء حساب',
           AppTranslationKeys.firstName: 'الاسم الأول',
@@ -204,26 +244,33 @@ class AppTranslations extends Translations {
           AppTranslationKeys.tearmCondition: 'الشروط و الأحكام',
           AppTranslationKeys.policies: 'السياسات والشروط',
           AppTranslationKeys.police1: 'سياسة سلامة المنتج واختباره:',
-          AppTranslationKeys.police2: 'الاستخدام الأخلاقي لسياسة تكنولوجيا النانو:',
+          AppTranslationKeys.police2:
+              'الاستخدام الأخلاقي لسياسة تكنولوجيا النانو:',
           AppTranslationKeys.police3: 'سياسة الشفافية ووضع العلامات:',
           AppTranslationKeys.police4: 'سياسة المسؤولية البيئية:',
           AppTranslationKeys.police5: 'سياسة تعليم المستهلك:',
-          AppTranslationKeys.policeContent1: 'نحن نعطي الأولوية لسلامة عملائنا. ستخضع جميع مستحضرات التجميل التي تم تطويرها باستخدام تقنية النانو لاختبارات صارمة لضمان سلامتها للاستخدام البشري. وسوف نتبع المبادئ التوجيهية والمعايير التنظيمية الدولية لتقييمات سلامة المواد النانوية.',
-          AppTranslationKeys.policeContent2: 'تلتزم شركتنا باستخدام تقنية النانو في مستحضرات التجميل بطريقة أخلاقية ومسؤولة. لن نستخدم المواد النانوية المعروفة بتأثيراتها السلبية على الصحة أو البيئة. وسوف نقوم باستمرار بمراقبة التطورات في مجال تكنولوجيا النانو وتعديل ممارساتنا وفقًا لذلك.',
-          AppTranslationKeys.policeContent3: 'سنوفر علامات واضحة ودقيقة لجميع مستحضرات التجميل التي تحتوي على مواد نانوية. ويتضمن ذلك تقديم معلومات حول المواد النانوية المستخدمة والغرض منها وأي فوائد أو مخاطر محتملة مرتبطة باستخدامها.',
-          AppTranslationKeys.policeContent4: 'سنسعى جاهدين لتقليل التأثير البيئي لمنتجاتنا التجميلية القائمة على تقنية النانو. ويشمل ذلك الجهود المبذولة لتقليل النفايات، واستخدام مواد التعبئة والتغليف المستدامة، والالتزام بعمليات التصنيع الصديقة للبيئة.',
-          AppTranslationKeys.policeContent5: 'تؤمن شركتنا بتثقيف المستهلكين حول فوائد تكنولوجيا النانو والاستخدام الآمن لها في مستحضرات التجميل. سنوفر معلومات يمكن الوصول إليها حول تقنية النانو وتطبيقاتها في مستحضرات التجميل وأي احتياطات يجب على العملاء اتخاذها عند استخدام منتجاتنا.',
+          AppTranslationKeys.policeContent1:
+              'نحن نعطي الأولوية لسلامة عملائنا. ستخضع جميع مستحضرات التجميل التي تم تطويرها باستخدام تقنية النانو لاختبارات صارمة لضمان سلامتها للاستخدام البشري. وسوف نتبع المبادئ التوجيهية والمعايير التنظيمية الدولية لتقييمات سلامة المواد النانوية.',
+          AppTranslationKeys.policeContent2:
+              'تلتزم شركتنا باستخدام تقنية النانو في مستحضرات التجميل بطريقة أخلاقية ومسؤولة. لن نستخدم المواد النانوية المعروفة بتأثيراتها السلبية على الصحة أو البيئة. وسوف نقوم باستمرار بمراقبة التطورات في مجال تكنولوجيا النانو وتعديل ممارساتنا وفقًا لذلك.',
+          AppTranslationKeys.policeContent3:
+              'سنوفر علامات واضحة ودقيقة لجميع مستحضرات التجميل التي تحتوي على مواد نانوية. ويتضمن ذلك تقديم معلومات حول المواد النانوية المستخدمة والغرض منها وأي فوائد أو مخاطر محتملة مرتبطة باستخدامها.',
+          AppTranslationKeys.policeContent4:
+              'سنسعى جاهدين لتقليل التأثير البيئي لمنتجاتنا التجميلية القائمة على تقنية النانو. ويشمل ذلك الجهود المبذولة لتقليل النفايات، واستخدام مواد التعبئة والتغليف المستدامة، والالتزام بعمليات التصنيع الصديقة للبيئة.',
+          AppTranslationKeys.policeContent5:
+              'تؤمن شركتنا بتثقيف المستهلكين حول فوائد تكنولوجيا النانو والاستخدام الآمن لها في مستحضرات التجميل. سنوفر معلومات يمكن الوصول إليها حول تقنية النانو وتطبيقاتها في مستحضرات التجميل وأي احتياطات يجب على العملاء اتخاذها عند استخدام منتجاتنا.',
           AppTranslationKeys.logout: 'تسجيل خروج',
           AppTranslationKeys.logoutFromApp: 'تسجيل خروج من التطبيق',
           AppTranslationKeys.goals: 'أهدافنا:',
           AppTranslationKeys.goalsContent:
               '''نحن في نانو تك نهتم بتلبية احتياجات المستهلكين بتوفير افضل المنتجات على الصعيد الشخصي من خلال توفير مجموعة متنوعة و شاملة من المنتجات التي تلبي جميع احتياجات المستهلك بجودة عالية.\nهدفنا هو ضمان تقديم افضل منتج بالشكل المثالي في جميع مجالات تخصصنا.''',
           AppTranslationKeys.vision: 'الرؤية:',
-          AppTranslationKeys.visionContent: 'شركة نانو تك من احد الشركات اللتي تساهم بشكل كبير في تطوير كافة مجالات اختصاصها للوصول الى الافضل عالمياً و احراز شعار التميز دائماً.',
+          AppTranslationKeys.visionContent:
+              'شركة نانو تك من احد الشركات اللتي تساهم بشكل كبير في تطوير كافة مجالات اختصاصها للوصول الى الافضل عالمياً و احراز شعار التميز دائماً.',
           AppTranslationKeys.home: 'الرئيسية',
           AppTranslationKeys.menu: AppAssets.menuAr,
           AppTranslationKeys.welcome: 'مرحباً!',
-          AppTranslationKeys.findProduct: 'ابحث عن المنتج',
+          AppTranslationKeys.findProduct: 'ابحث عن منتج',
           AppTranslationKeys.findCategory: 'ابحث عن تصنيف',
           AppTranslationKeys.doNotHaveAnAccount: 'ليس لديك حساب؟',
           AppTranslationKeys.ads: 'الإعلانات',

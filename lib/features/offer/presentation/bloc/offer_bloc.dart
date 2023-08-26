@@ -22,6 +22,7 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
     });
     on<ShowOffersEvent>((event, emit) async {
       emit(const LoadingOfferState(null, true, true, message: "loading"));
+      page = 1;
       final failureOrOffer = await showOffersUsecase(page);
       failureOrOffer.fold((failure) {
         emit(switchFailure(failure));

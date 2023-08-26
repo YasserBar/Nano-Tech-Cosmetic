@@ -114,63 +114,70 @@ class _ChooseGardScreenState extends State<ChooseGardScreen> {
                                 isAcceptPolicies = !isAcceptPolicies;
                               });
                             },
-                            child: Row(
-                              children: [
-                                Checkbox(
-                                  value: isAcceptPolicies,
-                                  side: const BorderSide(
-                                    color: AppColors.secondary,
-                                    width: 2,
+                            child: SizedBox(
+                              width: Get.width,
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  Checkbox(
+                                    value: isAcceptPolicies,
+                                    side: const BorderSide(
+                                      color: AppColors.secondary,
+                                      width: 2,
+                                    ),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        isAcceptPolicies = !isAcceptPolicies;
+                                      });
+                                    },
                                   ),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      isAcceptPolicies = !isAcceptPolicies;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  "${AppTranslationKeys.iAgreeOn.tr} ",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: AppColors.gray,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.toNamed(AppPagesRoutes.policiesScreen);
-                                  },
-                                  child: Text(
-                                    AppTranslationKeys.privacyPolicies.tr,
+                                  Text(
+                                    "${AppTranslationKeys.iAgreeOn.tr} ",
                                     style: const TextStyle(
                                       fontSize: 16,
-                                      color: AppColors.secondary,
+                                      color: AppColors.gray,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                ),
-                                Text(
-                                  " ${AppTranslationKeys.and.tr} ",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: AppColors.gray,
-                                    fontWeight: FontWeight.w600,
+                                  InkWell(
+                                    onTap: () {
+                                      Get.toNamed(
+                                          AppPagesRoutes.policiesScreen);
+                                    },
+                                    child: Text(
+                                      AppTranslationKeys.privacyPolicies.tr,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: AppColors.secondary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.toNamed(AppPagesRoutes.policiesScreen);
-                                  },
-                                  child: Text(
-                                    AppTranslationKeys.tearmCondition.tr,
+                                  Text(
+                                    " ${AppTranslationKeys.and.tr} ",
                                     style: const TextStyle(
                                       fontSize: 16,
-                                      color: AppColors.secondary,
+                                      color: AppColors.gray,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                ),
-                              ],
+                                  InkWell(
+                                    onTap: () {
+                                      Get.toNamed(
+                                          AppPagesRoutes.policiesScreen);
+                                    },
+                                    child: Text(
+                                      AppTranslationKeys.tearmCondition.tr,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: AppColors.secondary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

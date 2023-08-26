@@ -83,16 +83,35 @@ class OrderNameList extends StatelessWidget {
                 );
               },
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppDimensions.appbarBodyPadding,
-                  horizontal: AppDimensions.sidesBodyPadding,
-                ),
-                physics: const BouncingScrollPhysics(),
-                itemCount: state.ordersName!.length,
-                itemBuilder: (context, index) => OrderNameCard(
-                  orderName: state.ordersName![index],
-                ),
-              ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: AppDimensions.appbarBodyPadding,
+                    horizontal: AppDimensions.sidesBodyPadding,
+                  ),
+                  controller: context.read<OrderNameBloc>().scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: state.ordersName!.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index < state.ordersName!.length) {
+                      return OrderNameCard(
+                        orderName: state.ordersName![index],
+                      );
+                    } else {
+                      return state.loaded
+                          ? const SizedBox()
+                          : Container(
+                              padding: const EdgeInsets.all(10),
+                              child: state.hasMore
+                                  ? const LoaderIndicator(
+                                      size: 30,
+                                      lineWidth: 3,
+                                    )
+                                  : Center(
+                                      child: Text(
+                                          AppTranslationKeys.noMoreOrders.tr),
+                                    ),
+                            );
+                    }
+                  }),
             );
           }
           return const LoaderIndicator();
