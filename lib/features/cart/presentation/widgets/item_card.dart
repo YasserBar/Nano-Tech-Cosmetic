@@ -45,12 +45,6 @@ class ItemCard extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is SuccessDeleteItemCartState &&
-            state.index != null &&
-            state.index == index) {
-          return const SizedBox();
-        }
-
         return Container(
           padding: const EdgeInsets.all(5),
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -202,7 +196,7 @@ class ItemCard extends StatelessWidget {
                                 if (state is SuccessDecreaseItemCartState) {
                                   if (state.index != null &&
                                       state.index == index) {
-                                    // itemCart.account -= 1;
+                                    itemCart.account -= 1;
                                   }
                                   return Text(
                                     itemCart.account.toString(),
@@ -215,7 +209,7 @@ class ItemCard extends StatelessWidget {
                                 if (state is SuccessIncreaseItemCartState) {
                                   if (state.index != null &&
                                       state.index == index) {
-                                    // itemCart.account += 1;
+                                    itemCart.account += 1;
                                   }
                                   return Text(
                                     itemCart.account.toString(),

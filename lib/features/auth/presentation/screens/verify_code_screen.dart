@@ -155,6 +155,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     borderRadius: BorderRadius.circular(15),
                     autoFocus: true,
+                    clearText: true,
                     onCodeChanged: (String code) {},
                     onSubmit: (String verificationCode) {
                       BlocProvider.of<AuthBloc>(context).add(
