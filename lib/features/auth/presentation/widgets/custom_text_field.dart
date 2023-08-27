@@ -4,6 +4,7 @@ import 'package:nano_tech_cosmetic/core/helpers/regex.dart';
 
 class CustomTextField extends StatefulWidget {
   final String labelText;
+  final String? hintText;
   final bool isObscureText;
   final bool isTextArea;
   final bool autofocus;
@@ -24,6 +25,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.textInputAction = TextInputAction.next,
     this.autofocus = false,
+    this.hintText,
   }) : super(key: key);
 
   @override
@@ -59,12 +61,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onChanged: (value) {
             setState(() {});
           },
-          textDirection: widget.controller.text.isNotEmpty && !AppValidator.isOnlySpaces(widget.controller.text)
-              ? AppValidator.startsWithEnglishChar(widget.controller.text)
-                  ? TextDirection.ltr
-                  : TextDirection.rtl
-              : null,
+          textDirection: widget.inputType == TextInputType.phone
+              ? TextDirection.ltr
+              : widget.controller.text.isNotEmpty &&
+                      !AppValidator.isOnlySpaces(widget.controller.text)
+                  ? AppValidator.startsWithEnglishChar(widget.controller.text)
+                      ? TextDirection.ltr
+                      : TextDirection.rtl
+                  : null,
           decoration: InputDecoration(
+            hintText: widget.hintText,
+            hintTextDirection: widget.inputType == TextInputType.phone
+                ? TextDirection.ltr
+                : null,
+            hintStyle: TextStyle(color: AppColors.gray.withOpacity(0.5)),
+            errorMaxLines: 3,
             filled: false,
             suffixIcon: widget.isObscureText
                 ? IconButton(

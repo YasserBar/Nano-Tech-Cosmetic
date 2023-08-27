@@ -34,14 +34,22 @@ class AppValidator {
   }
 
   static String? validatePhone(String? inputNumber) {
-    if (inputNumber == null || inputNumber.isEmpty) {
-      return AppTranslationKeys.phoneNumberIsRequired.tr;
-    } else if (inputNumber.length != 9) {
-      return AppTranslationKeys.thePhoneNumberShouldConsistOf9Digits.tr;
-    } else if (!RegExp(phoneRegex).hasMatch(inputNumber)) {
-      return AppTranslationKeys.phoneIsNotInvalid.tr;
+    if (inputNumber == null ||
+        inputNumber.isEmpty) {
+      return AppTranslationKeys
+          .phoneNumberIsRequired.tr;
     }
-    return null;
+    if (inputNumber.length == 9||inputNumber.length == 10) {
+      if((inputNumber.length == 9 && inputNumber.startsWith('9'))||(inputNumber.length == 10 && inputNumber.startsWith('09'))){
+        return null;
+      }
+      return AppTranslationKeys
+          .phonePatternIsNotInvalid
+          .tr;
+    }
+    return AppTranslationKeys
+        .thePhoneNumberShouldConsistOf9Digits
+        .tr;
   }
 
   static String? validatePassword(String? inputPassword) {
@@ -62,13 +70,16 @@ class AppValidator {
     }
     return null;
   }
+
   static bool startsWithEnglishChar(String input) {
     RegExp englishCharRegex = RegExp(r'^[a-zA-Z0-9٠-٩]');
     return englishCharRegex.hasMatch(input);
   }
+
   static bool isOnlySpaces(String input) {
     return input.trim().isEmpty;
   }
+
   static bool isValidIraqPhoneNumber(String input) {
     RegExp phoneNumberRegex = RegExp(r'^(00|\+ ?964|0 ?964)(-? ?\d{9,13})$');
     return phoneNumberRegex.hasMatch(input);

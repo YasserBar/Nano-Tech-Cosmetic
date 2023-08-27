@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -10,14 +11,14 @@ import 'package:nano_tech_cosmetic/features/order_name/domain/entities/order_nam
 class OrderNameCard extends StatelessWidget {
   final OrderName orderName;
 
-  const OrderNameCard({Key? key, required this.orderName})
-      : super(key: key);
+  const OrderNameCard({Key? key, required this.orderName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed(AppPagesRoutes.orderNameDetailsScreen, arguments: orderName);
+        Get.toNamed(AppPagesRoutes.orderNameDetailsScreen,
+            arguments: orderName);
       },
       child: Container(
         padding: const EdgeInsets.all(5),
@@ -46,12 +47,26 @@ class OrderNameCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "${orderName.cost} ${AppTranslationKeys.di.tr}",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  Row(
+                    children: [
+                      Text(
+                        "${orderName.cost ?? "  ? "}",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontSize: 22,
+                          color: AppColors.primary,
+                          decoration: orderName.cost == null
+                              ? TextDecoration.underline
+                              : null,
+                        ),
+                      ),
+                      Text(
+                        "${AppTranslationKeys.di.tr}",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: 22,
                           color: AppColors.primary,
                         ),
+                      ),
+                    ],
                   ),
                   Text(
                     orderName.createdAt.substring(0, 10),

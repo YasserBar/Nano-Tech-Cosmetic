@@ -8,7 +8,7 @@ class ItemCartModel extends ItemCart {
     required int price,
     required String? imageUrl,
     required int account,
-    bool isProduct = true,
+    required bool isProduct,
   }) : super(
           id: id,
           title: title,
@@ -27,7 +27,7 @@ class ItemCartModel extends ItemCart {
       price: json['price'] as int,
       imageUrl: json['image_url'] as String?,
       account: json['account'] as int,
-      isProduct: json['isProduct'] as bool? ?? true,
+      isProduct: json['isProduct'] as bool,
     );
   }
 

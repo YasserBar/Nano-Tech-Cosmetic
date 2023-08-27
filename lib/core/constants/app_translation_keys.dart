@@ -150,6 +150,7 @@ class AppTranslationKeys {
   static const String phoneNumberIsRequired = 'phoneNumberIsRequired';
   static const String thePhoneNumberShouldConsistOf9Digits =
       'thePhoneNumberShouldConsistOf9Digits';
+  static const String phonePatternIsNotInvalid = 'phonePatternIsNotInvalid';
   static const String phoneIsNotInvalid = 'phoneIsNotInvalid';
   static const String passwordIsRequired = 'passwordIsRequired';
   static const String itShouldBeAtLeast8CharactersLong =

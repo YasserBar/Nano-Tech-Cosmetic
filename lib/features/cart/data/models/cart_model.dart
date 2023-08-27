@@ -14,9 +14,6 @@ class CartModel extends Cart {
     List<ItemCartModel> parsedItemsCart = (json['itemsCart'] as List<dynamic>)
         .map<ItemCartModel>((itemJson) => ItemCartModel.fromJson(itemJson))
         .toList();
-    // List<ItemCartModel> parsedItemsCart = json['itemsCart']
-    //     .map((itemJson) => ItemCartModel.fromJson(itemJson))
-    //     .toList();
     return CartModel(
       totalPrice: json['totalPrice'] as int,
       itemsCart: parsedItemsCart,

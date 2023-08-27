@@ -26,6 +26,7 @@ class CartRepoImpl extends CartRepo {
         title: itemCart.title,
         titleEn: itemCart.titleEn,
         price: itemCart.price,
+        isProduct: itemCart.isProduct,
         imageUrl: itemCart.imageUrl,
         account: itemCart.account);
     try {

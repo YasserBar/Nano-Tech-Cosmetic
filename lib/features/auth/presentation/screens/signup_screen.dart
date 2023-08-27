@@ -19,7 +19,9 @@ import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/custom_tex
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen
+
+  ({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -34,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController facebookController = TextEditingController();
   final TextEditingController twitterController = TextEditingController();
   final TextEditingController instagramController = TextEditingController();
@@ -206,7 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       AppValidator.validateRequired(val),
                                   onTap: () async {
                                     String? date =
-                                        await Pickers.choseDate(context);
+                                    await Pickers.choseDate(context);
                                     if (date != null) {
                                       birthdayController.text = date;
                                     }
@@ -333,7 +335,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                                 CustomTextField(
                                   labelText:
-                                      AppTranslationKeys.confirmPassword.tr,
+                                  AppTranslationKeys.confirmPassword.tr,
                                   controller: confirmPasswordController,
                                   isObscureText: true,
                                   validator: (val) =>
@@ -346,6 +348,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 CustomTextField(
                                   labelText: AppTranslationKeys.phoneNumber.tr,
                                   controller: phoneController,
+                                  hintText: "0999666777",
                                   validator: (val) =>
                                       AppValidator.validatePhone(val),
                                   inputType: TextInputType.phone,
@@ -405,7 +408,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   gender: isMail ? 'male' : 'female',
                                   birthday: birthdayController.text,
                                   address: addressController.text,
-                                  phone: phoneController.text,
+                                  phone: getPhone(phoneController.text),
                                   email: emailController.text,
                                   password: passwordController.text,
                                   facebook: facebookController.text,
@@ -428,5 +431,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  getPhone(String inputNumber) {
+    if (inputNumber.length == 9 && inputNumber.startsWith('9')) {
+      return "+964$inputNumber";
+    } else {
+      return "+964${inputNumber.substring(1,10)}";
+    }
   }
 }

@@ -11,6 +11,7 @@ import 'package:nano_tech_cosmetic/core/helpers/widgets_utils.dart';
 import 'package:nano_tech_cosmetic/core/widgets/dialog_guest.dart';
 import 'package:nano_tech_cosmetic/core/widgets/handle_states_widget.dart';
 import 'package:nano_tech_cosmetic/core/widgets/loader_indicator.dart';
+import 'package:nano_tech_cosmetic/features/cart/domain/entities/item_cart_entity.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_bloc.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_event.dart';
 import 'package:nano_tech_cosmetic/features/cart/presentation/bloc/cart_bloc/cart_state.dart';
@@ -185,58 +186,7 @@ class MyCartScreen extends StatelessWidget {
                     return FloatingActionButton.extended(
                       onPressed: () {
                         globalUser != null
-                            ? WidgetsUtils.showCustomDialog(
-                                context,
-                                title: AppTranslationKeys.total.tr,
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
-                                      style: const TextStyle(
-                                          color: AppColors.secondary,
-                                          fontSize: 30),
-                                    ),
-                                  )
-                                ],
-                                okText: AppTranslationKeys.confirm.tr,
-                                btnOkOnPress: () {
-                                  BlocProvider.of<OrderBloc>(context)
-                                      .add(StoreOrderEvent(
-                                          requestOrder: RequestOrder(
-                                    colorIds: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => element.isProduct)
-                                            .toList())
-                                        .map((e) => -1)
-                                        .toList(),
-                                    productIds: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => element.isProduct)
-                                            .toList())
-                                        .map((e) => e.id)
-                                        .toList(),
-                                    quantitiesProducts: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => element.isProduct)
-                                            .toList())
-                                        .map((e) => e.account)
-                                        .toList(),
-                                    offerIds: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => !element.isProduct)
-                                            .toList())
-                                        .map((e) => e.id)
-                                        .toList(),
-                                    quantitiesOffers: (state.cart!.itemsCart
-                                            .where(
-                                                (element) => !element.isProduct)
-                                            .toList())
-                                        .map((e) => e.account)
-                                        .toList(),
-                                  )));
-                                  Get.back();
-                                },
-                              )
+                            ? showOrderDialog(context, state)
                             : signInDialog(context,
                                 title: AppTranslationKeys.myOrders.tr);
                       },
@@ -380,6 +330,57 @@ class MyCartScreen extends StatelessWidget {
           return const LoaderIndicator();
         },
       ),
+    );
+  }
+
+  showOrderDialog(context, state) {
+    return WidgetsUtils.showCustomDialog(
+      context,
+      title: AppTranslationKeys.total.tr,
+      children: [
+        Center(
+          child: Text(
+            "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+            style: const TextStyle(color: AppColors.secondary, fontSize: 30),
+          ),
+        )
+      ],
+      okText: AppTranslationKeys.confirm.tr,
+      btnOkOnPress: () {
+        print(state.cart!.itemsCart);
+        BlocProvider.of<OrderBloc>(context).add(
+          StoreOrderEvent(
+            requestOrder: RequestOrder(
+              colorIds: ((state.cart!.itemsCart as List<ItemCart>)
+                      .where((element) => element.isProduct)
+                      .toList())
+                  .map((e) => -1)
+                  .toList(),
+              productIds: ((state.cart!.itemsCart as List<ItemCart>)
+                      .where((element) => element.isProduct)
+                      .toList())
+                  .map((e) => e.id)
+                  .toList(),
+              quantitiesProducts: ((state.cart!.itemsCart as List<ItemCart>)
+                      .where((element) => element.isProduct)
+                      .toList())
+                  .map((e) => e.account)
+                  .toList(),
+              offerIds: ((state.cart!.itemsCart as List<ItemCart>)
+                      .where((element) => !element.isProduct)
+                      .toList())
+                  .map((e) => e.id)
+                  .toList(),
+              quantitiesOffers: ((state.cart!.itemsCart as List<ItemCart>)
+                      .where((element) => !element.isProduct)
+                      .toList())
+                  .map((e) => e.account)
+                  .toList(),
+            ),
+          ),
+        );
+        Get.back();
+      },
     );
   }
 }
