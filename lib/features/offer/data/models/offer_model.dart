@@ -8,6 +8,7 @@ class OfferModel extends Offer {
     required String description,
     required String descriptionEn,
     required int oldPrice,
+    required int? ammount,
     required String price,
     required String? imageUrl,
     required String? videoUrl,
@@ -19,6 +20,7 @@ class OfferModel extends Offer {
           descriptionEn: descriptionEn,
           oldPrice: oldPrice,
           price: price,
+          ammount: ammount,
           imageUrl: imageUrl,
           videoUrl: videoUrl,
         );
@@ -31,6 +33,7 @@ class OfferModel extends Offer {
       description: json['description'] as String,
       descriptionEn: json['description_en'] as String,
       oldPrice: json['old_price'] as int,
+      ammount: json.containsKey('ammount')?json['ammount']:null as int?,
       price: json['price'] as String,
       imageUrl: json['image_url'] as String?,
       videoUrl: json['video_url'] as String?,
