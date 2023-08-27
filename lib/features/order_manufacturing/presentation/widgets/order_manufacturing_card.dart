@@ -46,12 +46,26 @@ class OrderManufacturingCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "${orderManufacturing.cost} ${AppTranslationKeys.di.tr}",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  Row(
+                    children: [
+                      Text(
+                        "${orderManufacturing.cost ?? "  ? "}",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontSize: 22,
+                          color: AppColors.primary,
+                          decoration: orderManufacturing.cost == null
+                              ? TextDecoration.underline
+                              : null,
+                        ),
+                      ),
+                      Text(
+                        "${AppTranslationKeys.di.tr}",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: 22,
                           color: AppColors.primary,
                         ),
+                      ),
+                    ],
                   ),
                   Text(
                     orderManufacturing.createdAt.substring(0, 10),

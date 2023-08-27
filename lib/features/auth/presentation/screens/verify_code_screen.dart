@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
@@ -15,6 +14,8 @@ import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_bloc.dar
 import 'package:nano_tech_cosmetic/features/auth/presentation/bloc/auth_event.dart';
 import 'package:nano_tech_cosmetic/features/auth/presentation/widgets/background_auth.dart';
 import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/style.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
   const VerifyCodeScreen({super.key});
@@ -25,6 +26,9 @@ class VerifyCodeScreen extends StatefulWidget {
 
 class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   String email = '';
+  final FocusNode focusNode = FocusNode();
+  OtpFieldController otpFieldController = OtpFieldController();
+  String otp = '';
 
   @override
   void initState() {
@@ -58,8 +62,14 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 if (Get.previousRoute == AppPagesRoutes.signUpScreen) {
                   Get.offAllNamed(AppPagesRoutes.mainScreen);
                 } else {
-                  Get.toNamed(AppPagesRoutes.resetPasswordScreen);
+                  Get.offAllNamed(AppPagesRoutes.resetPasswordScreen);
                 }
+                WidgetsUtils.showSnackBar(
+                  title: AppTranslationKeys.success.tr,
+                  message: state.message.tr,
+                  snackBarType: SnackBarType.info,
+                );
+              } else if (state is SuccessResendOTPState) {
                 WidgetsUtils.showSnackBar(
                   title: AppTranslationKeys.success.tr,
                   message: state.message.tr,
@@ -147,23 +157,48 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  OtpTextField(
-                    numberOfFields: 6,
-                    borderWidth: 3,
-                    borderColor: AppColors.gray,
-                    showFieldAsBox: true,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    borderRadius: BorderRadius.circular(15),
-                    autoFocus: true,
-                    clearText: true,
-                    onCodeChanged: (String code) {},
-                    onSubmit: (String verificationCode) {
-                      BlocProvider.of<AuthBloc>(context).add(
-                        VerifyOTPEvent(
-                          VerifyOTP(otp: verificationCode),
-                        ),
-                      );
-                    }, // end onSubmit
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: RawKeyboardListener(
+                      focusNode: focusNode,
+                      onKey: (value) {
+                        if (value.data.logicalKey.keyLabel == "Backspace"&& otp.isNotEmpty) {
+                          [0,1,2,3,4,5].forEach((element) {
+                            otpFieldController.setValue('', element);
+                          });
+                          otpFieldController.setFocus(0);
+
+                          // otpFieldController.setValue('', otp.length-1);
+                          print('ddd');
+                          // otpFieldController.setFocus(otp.length);
+                          // List<String> otpList=[];
+                          // for(int i=0;i<otp.length-2;i++){
+                          //   otpList[i]=otp[i];
+                          // }
+                          // otpFieldController.set(otpList);
+                        }
+                      },
+                      child: OTPTextField(
+                          controller: otpFieldController,
+                          length: 6,
+                          width: MediaQuery.of(context).size.width,
+                          textFieldAlignment: MainAxisAlignment.spaceAround,
+                          fieldWidth: 35,
+                          fieldStyle: FieldStyle.box,
+                          outlineBorderRadius: 8,
+                          style: TextStyle(fontSize: 17),
+                          onChanged: (pin) {
+                            otp=pin;
+                            print("|$pin|");
+                          },
+                          onCompleted: (pin) {
+                            BlocProvider.of<AuthBloc>(context).add(
+                              VerifyOTPEvent(
+                                VerifyOTP(otp: pin),
+                              ),
+                            );
+                          }),
+                    ),
                   ),
                   const SizedBox(
                     height: 15,
@@ -202,3 +237,30 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     );
   }
 }
+
+/*
+OtpTextField(
+                        numberOfFields: 6,
+                        borderWidth: 3,
+                        borderColor: AppColors.gray,
+                        showFieldAsBox: true,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        borderRadius: BorderRadius.circular(15),
+                        autoFocus: true,
+                        clearText: false,
+                        handleControllers: (controllers) {
+                          listControllers = controllers;
+                        },
+                        focusNodes: [],
+                        onCodeChanged: (String code) {
+                          print('|$code|');
+                        },
+                        onSubmit: (String verificationCode) {
+                          BlocProvider.of<AuthBloc>(context).add(
+                            VerifyOTPEvent(
+                              VerifyOTP(otp: verificationCode),
+                            ),
+                          );
+                        }, // end onSubmit
+                      ),
+ */

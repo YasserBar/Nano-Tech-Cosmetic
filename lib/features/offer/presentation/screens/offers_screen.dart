@@ -59,6 +59,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   itemCount: state.offer != null ? state.offer!.length + 1 : 0,
                   itemBuilder: (context, index) {
                     if (index < state.offer!.length) {
+                      print(state.offer);
                       return OfferCard(
                         offer: state.offer![index],
                       );

@@ -1,5 +1,6 @@
 class AppRoutes {
-  static const baseUrl = 'http://192.168.43.93:8000/mobile/';
+  // static const baseUrl = 'http://192.168.248.10:8000/mobile/';
+  static const String baseUrl = "http://10.0.2.2:8000/mobile/"; // For Emulator
 
   //Auth
   static const registerUser = 'registerUser';

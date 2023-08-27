@@ -7,7 +7,7 @@ class OrderManufacturing extends Equatable {
   final String? note;
   final int amount;
   final OrderStatus status;
-  final int cost;
+  final int? cost;
   final int? costManufacture;
   final String? response;
   final String? startProcessing;

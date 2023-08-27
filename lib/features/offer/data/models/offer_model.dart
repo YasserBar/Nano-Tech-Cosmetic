@@ -25,7 +25,7 @@ class OfferModel extends Offer {
 
   factory OfferModel.fromJson(Map<String, dynamic> json) {
     return OfferModel(
-      id: 5,
+      id: json['id'] as int,
       title: json['title'] as String,
       titleEn: json['title_en'] as String,
       description: json['description'] as String,

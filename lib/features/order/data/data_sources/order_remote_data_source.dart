@@ -37,7 +37,7 @@ class OrderRemoteDataSourceImplWithHttp extends OrderRemoteDataSource {
       final bodyJson = json.decode(response.body);
       globalMessage = bodyJson['message'];
       switchStatusCode(response);
-      final dataJson = bodyJson["order"];
+      final dataJson = bodyJson["order"]["data"];
       if (kDebugMode) {
         print("step 1========= $bodyJson");
       }

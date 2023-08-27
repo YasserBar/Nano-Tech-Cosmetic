@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_colors.dart';
@@ -37,13 +38,28 @@ class OrderNameDetailsScreen extends StatelessWidget {
                       style:
                           const TextStyle(color: AppColors.black, fontSize: 20),
                     ),
-                    Text(
-                      "${orderName.cost} ${AppTranslationKeys.di.tr}",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontSize: 26,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "${orderName.cost ?? "  ? "}",
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontSize: 22,
+                            color: AppColors.primary,
+                            decoration: orderName.cost == null
+                                ? TextDecoration.underline
+                                : null,
+                          ),
+                        ),
+                        Text(
+                          "${AppTranslationKeys.di.tr}",
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontSize: 22,
                             color: AppColors.primary,
                           ),
-                    )
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 const SizedBox(

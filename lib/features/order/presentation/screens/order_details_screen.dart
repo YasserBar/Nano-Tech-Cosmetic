@@ -149,28 +149,27 @@ class OrderDetailsScreen extends StatelessWidget {
                   if (state is LoadedOrdersState) {
                     return Column(
                       children: [
-                        ...List.generate(
-                          state.orderProducts!.length,
-                          (index) => OrderProductCard(
-                            image: state.orderProducts![index].imageUrl,
-                            name: Get.locale!.languageCode == 'ar'
-                                ? state.orderProducts![index].name
-                                : state.orderProducts![index].nameEn,
-                            price: state.orderProducts![index].price,
-                            count: state.orderProducts![index].amount,
-                          ),
-                        ),
-                        ...List.generate(
-                          state.orderOffers!.length,
-                          (index) => OrderProductCard(
-                            image: state.orderOffers![index].imageUrl!,
-                            name: Get.locale!.languageCode == 'ar'
-                                ? state.orderOffers![index].title
-                                : state.orderOffers![index].titleEn,
-                            price: int.parse(state.orderOffers![index].price),
-                            count: state.orderOffers![index].oldPrice,
-                          ),
-                        ),
+                        for (int i = 0, j = 0, k = 0;
+                            i < state.orderProducts!.length ||
+                                    j < state.orderOffers!.length;
+                            k++, k.isEven ? i++ : j++)
+                          k.isEven
+                              ? OrderProductCard(
+                                  image: state.orderProducts![i].imageUrl,
+                                  name: Get.locale!.languageCode == 'ar'
+                                      ? state.orderProducts![i].name
+                                      : state.orderProducts![i].nameEn,
+                                  price: state.orderProducts![i].price,
+                                  count: state.orderProducts![i].amount,
+                                )
+                              : OrderProductCard(
+                                  image: state.orderOffers![j].imageUrl!,
+                                  name: Get.locale!.languageCode == 'ar'
+                                      ? state.orderOffers![j].title
+                                      : state.orderOffers![j].titleEn,
+                                  price: int.parse(state.orderOffers![j].price),
+                                  count: state.orderOffers![j].oldPrice,
+                                ),
                       ],
                     );
                   }
