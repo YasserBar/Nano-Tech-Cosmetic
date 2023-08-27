@@ -19,31 +19,33 @@ class HandleStatesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      children: [
-        const SizedBox(
-          height: 50,
-        ),
-        Center(
-          child: SvgPicture.asset(
-            stateType.getIcon(),
-          ),
-        ),
+    return Center(
+      child: ListView(
+        shrinkWrap: true,
+        children: [
           const SizedBox(
-            height: 40,
+            height: 50,
           ),
-        if (stateType == StateType.offline ||
-            stateType == StateType.unexpectedProblem ||
-            stateType == StateType.internalServerProblem)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: CustomButtonAuth(
-              text: AppTranslationKeys.tryAgain.tr,
-              onPressed: onPressedTryAgain,
+          Center(
+            child: SvgPicture.asset(
+              stateType.getIcon(),
             ),
           ),
-      ],
+            const SizedBox(
+              height: 40,
+            ),
+          if (stateType == StateType.offline ||
+              stateType == StateType.unexpectedProblem ||
+              stateType == StateType.internalServerProblem)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: CustomButtonAuth(
+                text: AppTranslationKeys.tryAgain.tr,
+                onPressed: onPressedTryAgain,
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

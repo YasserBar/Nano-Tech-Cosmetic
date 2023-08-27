@@ -348,7 +348,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 CustomTextField(
                                   labelText: AppTranslationKeys.phoneNumber.tr,
                                   controller: phoneController,
-                                  hintText: "0999666777",
+                                  hintText: "07998887777",
                                   validator: (val) =>
                                       AppValidator.validatePhone(val),
                                   inputType: TextInputType.phone,

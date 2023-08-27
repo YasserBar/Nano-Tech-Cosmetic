@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -148,28 +149,41 @@ class OrderDetailsScreen extends StatelessWidget {
                   }
                   if (state is LoadedOrdersState) {
                     return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (int i = 0, j = 0, k = 0;
-                            i < state.orderProducts!.length ||
-                                    j < state.orderOffers!.length;
-                            k++, k.isEven ? i++ : j++)
-                          k.isEven
-                              ? OrderProductCard(
-                                  image: state.orderProducts![i].imageUrl,
-                                  name: Get.locale!.languageCode == 'ar'
-                                      ? state.orderProducts![i].name
-                                      : state.orderProducts![i].nameEn,
-                                  price: state.orderProducts![i].price,
-                                  count: state.orderProducts![i].amount,
-                                )
-                              : OrderProductCard(
-                                  image: state.orderOffers![j].imageUrl!,
-                                  name: Get.locale!.languageCode == 'ar'
-                                      ? state.orderOffers![j].title
-                                      : state.orderOffers![j].titleEn,
-                                  price: int.parse(state.orderOffers![j].price),
-                                  count: state.orderOffers![j].oldPrice,
-                                ),
+                        if(state.orderProducts!.isNotEmpty)
+                          Text(
+                          AppTranslationKeys.products.tr,
+                          style: const TextStyle(
+                              color: AppColors.primary, fontSize: 20),
+                        ),
+                        for (int i = 0; i < state.orderProducts!.length; i++)
+                          OrderProductCard(
+                            image: state.orderProducts![i].imageUrl,
+                            name: Get.locale!.languageCode == 'ar'
+                                ? state.orderProducts![i].name
+                                : state.orderProducts![i].nameEn,
+                            price: state.orderProducts![i].price,
+                            count: state.orderProducts![i].amount,
+                          ),
+                        if(state.orderOffers!.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: Text(
+                            AppTranslationKeys.offers.tr,
+                            style: const TextStyle(
+                                color: AppColors.primary, fontSize: 20),
+                          ),
+                        ),
+                        for (int j = 0; j < state.orderOffers!.length; j++)
+                          OrderProductCard(
+                            image: state.orderOffers![j].imageUrl!,
+                            name: Get.locale!.languageCode == 'ar'
+                                ? state.orderOffers![j].title
+                                : state.orderOffers![j].titleEn,
+                            price: int.parse(state.orderOffers![j].price),
+                            count: state.orderOffers![j].ammount!,
+                          ),
                       ],
                     );
                   }

@@ -7,6 +7,7 @@ class Offer extends Equatable {
   final String description;
   final String descriptionEn;
   final int oldPrice;
+  final int? ammount;
   final String price;
   final String? imageUrl;
   final String? videoUrl;
@@ -18,6 +19,7 @@ class Offer extends Equatable {
     required this.description,
     required this.descriptionEn,
     required this.oldPrice,
+    required this.ammount,
     required this.price,
     required this.imageUrl,
     required this.videoUrl,

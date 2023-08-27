@@ -34,6 +34,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   void initState() {
     email = Get.arguments;
     super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => otpFieldController.setFocus(0));
   }
 
   @override
@@ -162,20 +164,12 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     child: RawKeyboardListener(
                       focusNode: focusNode,
                       onKey: (value) {
-                        if (value.data.logicalKey.keyLabel == "Backspace"&& otp.isNotEmpty) {
-                          [0,1,2,3,4,5].forEach((element) {
+                        if (value.data.logicalKey.keyLabel == "Backspace" &&
+                            otp.isNotEmpty) {
+                          [0, 1, 2, 3, 4, 5].forEach((element) {
                             otpFieldController.setValue('', element);
                           });
                           otpFieldController.setFocus(0);
-
-                          // otpFieldController.setValue('', otp.length-1);
-                          print('ddd');
-                          // otpFieldController.setFocus(otp.length);
-                          // List<String> otpList=[];
-                          // for(int i=0;i<otp.length-2;i++){
-                          //   otpList[i]=otp[i];
-                          // }
-                          // otpFieldController.set(otpList);
                         }
                       },
                       child: OTPTextField(
@@ -188,7 +182,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                           outlineBorderRadius: 8,
                           style: TextStyle(fontSize: 17),
                           onChanged: (pin) {
-                            otp=pin;
+                            otp = pin;
                             print("|$pin|");
                           },
                           onCompleted: (pin) {

@@ -171,7 +171,7 @@ class AppTranslations extends Translations {
               'The phone number should consist of 9 or 10 digits',
           AppTranslationKeys.phoneIsNotInvalid: 'The phone is not valid',
           AppTranslationKeys.phonePatternIsNotInvalid:
-              'The phone number should be as 0999888777 or 999888777',
+              'The phone number should be as 07998887777 or 7998887777',
           AppTranslationKeys.passwordIsRequired: 'Password is required',
           AppTranslationKeys.itShouldBeAtLeast8CharactersLong:
               'It should be at least 8 characters long',
@@ -345,7 +345,7 @@ class AppTranslations extends Translations {
               'رقم الهاتف ينبغي أن يتألف من 9 او 10 خانات',
           AppTranslationKeys.phoneIsNotInvalid: 'رقم الهاتف غير صالح',
           AppTranslationKeys.phonePatternIsNotInvalid:
-              'رقم الهاتف ينبغي أن يكون من الشكل 0999888777 أو 999888777',
+              'رقم الهاتف ينبغي أن يكون من الشكل 07998887777 أو 7998887777',
           AppTranslationKeys.passwordIsRequired: 'كلمة المرور مطلوبة',
           AppTranslationKeys.itShouldBeAtLeast8CharactersLong:
               'ينبغي أن تتألف من 8 خانات على الأقل',

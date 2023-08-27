@@ -40,7 +40,7 @@ class AppValidator {
           .phoneNumberIsRequired.tr;
     }
     if (inputNumber.length == 9||inputNumber.length == 10) {
-      if((inputNumber.length == 9 && inputNumber.startsWith('9'))||(inputNumber.length == 10 && inputNumber.startsWith('09'))){
+      if((inputNumber.length == 9 && inputNumber.startsWith('7'))||(inputNumber.length == 10 && inputNumber.startsWith('07'))){
         return null;
       }
       return AppTranslationKeys
