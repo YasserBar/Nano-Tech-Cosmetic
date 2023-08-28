@@ -91,6 +91,7 @@ class _SearchScreenState extends State<SearchScreen>
           title: TextFormField(
             controller: searchController,
             onChanged: (value) {
+              setState(() {});
               if (searchController.text == '') {
                 if (tabController.index == 0) {
                   productBloc.add(

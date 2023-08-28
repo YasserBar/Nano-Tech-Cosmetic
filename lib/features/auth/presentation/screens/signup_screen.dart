@@ -316,6 +316,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 CustomTextField(
                                   labelText: AppTranslationKeys.email.tr,
                                   controller: emailController,
+                                  hintText: "------- @gmail.com",
                                   inputType: TextInputType.emailAddress,
                                   validator: (val) =>
                                       AppValidator.validateEmail(val),

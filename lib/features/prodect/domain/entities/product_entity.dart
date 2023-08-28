@@ -9,6 +9,8 @@ class Product extends Equatable {
   final String descriptionEn;
   final int amount;
   final int categoryId;
+  final String categoryName;
+  final String categoryNameEn;
   final String imageUrl;
   final double rating;
   final int ratingNumber;
@@ -22,6 +24,8 @@ class Product extends Equatable {
     required this.descriptionEn,
     required this.amount,
     required this.categoryId,
+    required this.categoryName,
+    required this.categoryNameEn,
     required this.imageUrl,
     required this.rating,
     required this.ratingNumber,

@@ -47,7 +47,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           },
           builder: (context, state) {
             if (state is LoadedProductsState) {
-              if(state.products!.isEmpty){
+              if (state.products!.isEmpty) {
                 return const HandleStatesWidget(
                   stateType: StateType.noAnyProduct,
                 );
@@ -62,11 +62,32 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     vertical: AppDimensions.appbarBodyPadding,
                     horizontal: AppDimensions.sidesBodyPadding,
                   ),
+                  controller: context.read<ProductBloc>().scrollController,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: state.products!.length,
-                  itemBuilder: (context, index) => ProductCard(
-                    product: state.products![index],
-                  ),
+                  itemCount: state.products!.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index < state.products!.length) {
+                      return ProductCard(
+                        product: state.products![index],
+                      );
+                    } else {
+                      return state.loaded
+                          ? const SizedBox()
+                          : Container(
+                              padding: const EdgeInsets.all(10),
+                              child: state.hasMore
+                                  ? const LoaderIndicator(
+                                      size: 30,
+                                      lineWidth: 3,
+                                    )
+                                  : Center(
+                                      child: Text(
+                                        AppTranslationKeys.noMoreProdects.tr,
+                                      ),
+                                    ),
+                            );
+                    }
+                  },
                 ),
               );
             }

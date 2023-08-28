@@ -159,7 +159,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "${AppTranslationKeys.category.tr}${product.categoryId}",
+                                    Get.locale!.languageCode == 'ar'
+                                        ? product.categoryName
+                                        : product.categoryNameEn,
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
@@ -306,7 +308,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         } else if (state
                                             is SuccessAddItemCartState) {
                                           WidgetsUtils.showSnackBar(
-                                            title: AppTranslationKeys.success.tr,
+                                            title:
+                                                AppTranslationKeys.success.tr,
                                             message: state.message.tr,
                                             snackBarType: SnackBarType.info,
                                           );
@@ -666,7 +669,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       labelText: AppTranslationKeys.amount.tr,
                       inputType: TextInputType.number,
                       controller: amountFieldController,
-                      validator: (val) => AppValidator.validateRequired(val),
+                      validator: (val) => AppValidator.validateNumber(val),
                     ),
                     const SizedBox(
                       height: 25,
@@ -832,7 +835,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       labelText: AppTranslationKeys.amount.tr,
                       inputType: TextInputType.number,
                       controller: amountFieldController,
-                      validator: (val) => AppValidator.validateRequired(val),
+                      validator: (val) => AppValidator.validateNumber(val),
                     ),
                     const SizedBox(
                       height: 25,

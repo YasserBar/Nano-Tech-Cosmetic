@@ -14,6 +14,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   int page = 1;
   ScrollController scrollController = ScrollController();
   bool isLoadingMore = false;
+  int? categoryId;
 
   ProductBloc(
       {required this.showAllProductUsecase, required this.rateProductUsecase})
@@ -22,10 +23,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       if (!isLoadingMore) add(LoadMoreProductsEvent());
     });
     on<ShowAllProductsEvent>((event, emit) async {
-      emit(const LoadingProductState(null, true, true,message: 'loading'));
+      emit(const LoadingProductState(null, true, true, message: 'loading'));
       page = 1;
-      final failureOrproducts =
-          await showAllProductUsecase(page, categoryId: event.categoryId, name: event.name);
+      categoryId=event.categoryId;
+      final failureOrproducts = await showAllProductUsecase(page,
+          categoryId: event.categoryId, name: event.name);
 
       failureOrproducts.fold((failure) {
         emit(switchFailure(failure));
@@ -43,7 +45,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             message: globalMessage!));
         page++;
         final failureOrproducts = await showAllProductUsecase(page,
-            categoryId: event.categoryId, name: event.name);
+            categoryId: categoryId, name: event.name);
         failureOrproducts.fold((failure) {
           page--;
           emit(switchFailure(failure));
@@ -62,9 +64,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       isLoadingMore = false;
     });
     on<RateProductEvent>((event, emit) async {
-      emit(const LoadingProductState(null, true, true,message: 'loading'));
-      final failureOrproducts =
-          await rateProductUsecase(event.rateProduct);
+      emit(const LoadingProductState(null, true, true, message: 'loading'));
+      final failureOrproducts = await rateProductUsecase(event.rateProduct);
       failureOrproducts.fold((failure) {
         emit(switchFailure(failure));
       }, (products) {
