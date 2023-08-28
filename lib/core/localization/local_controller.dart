@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nano_tech_cosmetic/core/constants/app_enums.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_keys.dart';
 import 'package:nano_tech_cosmetic/core/constants/app_themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,9 +8,11 @@ import 'package:nano_tech_cosmetic/injection_countainer.dart' as di;
 
 class LocaleController extends GetxController {
   Locale? language;
+  OrderStatus orderStatusFilter = OrderStatus.all ;
+  bool isRequested=false;
   SharedPreferences sharedPreferences = di.sl<SharedPreferences>();
   ThemeData appTheme = AppThemes.themeEnglish;
-  List<String> languagesCodes = ['ar','en'];
+  List<String> languagesCodes = ['ar', 'en'];
 
   @override
   void onInit() {

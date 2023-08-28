@@ -11,7 +11,7 @@ abstract class OrderEvent extends Equatable {
 
 class DisplayOrderEvent extends OrderEvent {
   OrderStatus? orderStatus;
-  DisplayOrderEvent({this.orderStatus});
+  DisplayOrderEvent({this.orderStatus}):super();
 }
 
 class StoreOrderEvent extends OrderEvent {

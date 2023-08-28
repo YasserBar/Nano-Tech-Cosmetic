@@ -36,7 +36,6 @@ class _MainScreenState extends State<MainScreen> {
   bool isLogoutTap = false;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   LocaleController localeController = Get.find();
-  OrderStatus orderStatusFilter = OrderStatus.all;
   List<Widget> tabs = [];
 
   @override
@@ -45,7 +44,7 @@ class _MainScreenState extends State<MainScreen> {
     tabs = [
       const HomeScreen(),
       const MyCartScreen(),
-      MyOrderScreen(orderStatusFilter: orderStatusFilter),
+      MyOrderScreen(),
       const OffersScreen()
     ];
     super.initState();
@@ -121,17 +120,13 @@ class _MainScreenState extends State<MainScreen> {
                       borderRadius: BorderRadius.circular(10)),
                   onSelected: (value) async {
                     setState(() {
-                      orderStatusFilter = value;
-                      tabs = [
-                        const HomeScreen(),
-                        const MyCartScreen(),
-                        MyOrderScreen(orderStatusFilter: orderStatusFilter),
-                        const OffersScreen()
-                      ];
+                      localeController.orderStatusFilter = value;
+                      localeController.isRequested = true;
+                      localeController.update();
                     });
                   },
-                  initialValue: orderStatusFilter,
-                  icon: SvgPicture.asset(orderStatusFilter.getLightIcon()),
+                  initialValue: localeController.orderStatusFilter,
+                  icon: SvgPicture.asset(localeController.orderStatusFilter.getLightIcon()),
                   itemBuilder: (context) => [
                     PopupMenuItem<OrderStatus>(
                         value: OrderStatus.all,
