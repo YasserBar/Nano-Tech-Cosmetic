@@ -5,6 +5,7 @@ class AppValidator {
   static const emailRegex =
       r'^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$';
   static const phoneRegex = r'^\d{9}$';
+  static const numberRegex = r'^[0-9]+$';
   static const passwordRegex8CharactersInLength = r'^.{8,}';
   static const nameRegex = r'^[\u0600-\u06FFa-zA-Z\s]+$';
 
@@ -13,6 +14,8 @@ class AppValidator {
       return AppTranslationKeys.emailIsRequired.tr;
     } else if (!RegExp(emailRegex).hasMatch(inputEmail)) {
       return AppTranslationKeys.emailIsNotInvalid.tr;
+    } else if (!inputEmail.endsWith('@gmail.com')) {
+      return AppTranslationKeys.emailMustEndGmail.tr;
     }
     return null;
   }
@@ -29,6 +32,16 @@ class AppValidator {
   static String? validateRequired(String? inputEmail) {
     if (inputEmail == null || inputEmail.isEmpty) {
       return AppTranslationKeys.thisFieldIsRequired.tr;
+    }
+    return null;
+  }
+
+  static String? validateNumber(String? inputEmail) {
+    if (inputEmail == null || inputEmail.isEmpty) {
+      return AppTranslationKeys.thisFieldIsRequired.tr;
+    }
+    if (!RegExp(numberRegex).hasMatch(inputEmail)) {
+      return AppTranslationKeys.thisFieldIsNotNumber.tr;
     }
     return null;
   }

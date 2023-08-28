@@ -144,9 +144,11 @@ class AppTranslationKeys {
 
   static const String emailIsRequired = 'emailIsRequired';
   static const String emailIsNotInvalid = 'emailIsNotInvalid';
+  static const String emailMustEndGmail = 'emailMustEndGmail';
   static const String nameIsRequired = 'nameIsRequired';
   static const String nameIsNotInvalid = 'nameIsNotInvalid';
   static const String thisFieldIsRequired = 'thisFieldIsRequired';
+  static const String thisFieldIsNotNumber = 'thisFieldIsNotNumber';
   static const String phoneNumberIsRequired = 'phoneNumberIsRequired';
   static const String thePhoneNumberShouldConsistOf9Digits =
       'thePhoneNumberShouldConsistOf9Digits';
