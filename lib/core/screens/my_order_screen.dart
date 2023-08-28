@@ -11,9 +11,8 @@ import 'package:nano_tech_cosmetic/features/order_name/presentation/widgets/orde
 import 'package:nano_tech_cosmetic/main.dart';
 
 class MyOrderScreen extends StatefulWidget {
-  final OrderStatus orderStatusFilter;
 
-  const MyOrderScreen({Key? key, required this.orderStatusFilter})
+  const MyOrderScreen({Key? key})
       : super(key: key);
 
   @override
@@ -46,9 +45,7 @@ class _MyOrderScreenState extends State<MyOrderScreen>
                   dividerColor: AppColors.black,
                   controller: tabController,
                   onTap: (value) {
-                    if (kDebugMode) {
-                      print(widget.orderStatusFilter);
-                    }
+
                   },
                   isScrollable: false,
                   unselectedLabelStyle:
@@ -70,14 +67,13 @@ class _MyOrderScreenState extends State<MyOrderScreen>
               ),
             ),
             body: TabBarView(controller: tabController, children: [
-              OrderList(orderStatusFilter: widget.orderStatusFilter),
+              OrderList(),
               if (globalUser!.role == Role.company)
-                OrderManufacturingList(
-                    orderStatusFilter: widget.orderStatusFilter),
+                OrderManufacturingList(),
               if (globalUser!.role == Role.salon)
-                OrderNameList(orderStatusFilter: widget.orderStatusFilter)
+                OrderNameList()
             ]),
           )
-        : OrderList(orderStatusFilter: widget.orderStatusFilter);
+        : OrderList();
   }
 }

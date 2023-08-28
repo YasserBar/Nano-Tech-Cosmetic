@@ -47,6 +47,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(const LoadingOrderState(null, null, null, true, true,
           message: "loading"));
       page = 1;
+      orderStatus = event.orderStatus;
       final failureOrOrders = await displayOrdersUsecase(
           page: page, orderStatus: event.orderStatus);
       failureOrOrders.fold((failure) {
@@ -64,8 +65,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         emit(LoadedOrdersState(null, null, state.orders, true, false,
             message: globalMessage!));
         page++;
-        final failureOrOrders =
-            await displayOrdersUsecase(page: page, orderStatus: orderStatus);
+        orderStatus = event.orderStatus;
+        final failureOrOrders = await displayOrdersUsecase(
+            page: page, orderStatus: event.orderStatus);
         failureOrOrders.fold((failure) {
           page--;
           emit(switchFailure(failure));

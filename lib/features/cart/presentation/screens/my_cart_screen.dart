@@ -52,157 +52,23 @@ class MyCartScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is LoadedCartState) {
             return Scaffold(
-              floatingActionButton: BlocProvider(
-                create: (context) => di.sl<OrderBloc>(),
-                child: BlocConsumer<OrderBloc, OrderState>(
-                  listener: (context, state1) {
-                    if (state1 is FailureOrderState) {
-                      WidgetsUtils.showSnackBar(
-                        title: AppTranslationKeys.failure.tr,
-                        message: state1.message.tr,
-                        snackBarType: SnackBarType.error,
-                      );
-                    } else if (state1 is SuccessStoreOrderState) {
-                      BlocProvider.of<CartBloc>(context)
-                          .add(const DeleteCartEvent());
-                      Get.offAndToNamed(AppPagesRoutes.mainScreen,
-                          arguments: 2);
-                      WidgetsUtils.showSnackBar(
-                        title: AppTranslationKeys.success.tr,
-                        message: state1.message.tr,
-                        snackBarType: SnackBarType.info,
-                      );
-                    }
-                  },
-                  builder: (context, state1) {
-                    if (state1 is OfflineFailureOrderState) {
-                      return HandleStatesWidget(
-                        stateType: StateType.offline,
-                        onPressedTryAgain: () {
-                          BlocProvider.of<OrderBloc>(context)
-                              .add(StoreOrderEvent(
-                                  requestOrder: RequestOrder(
-                            colorIds: (state.cart!.itemsCart
-                                    .where((element) => element.isProduct)
-                                    .toList())
-                                .map((e) => -1)
-                                .toList(),
-                            productIds: (state.cart!.itemsCart
-                                    .where((element) => element.isProduct)
-                                    .toList())
-                                .map((e) => e.id)
-                                .toList(),
-                            quantitiesProducts: (state.cart!.itemsCart
-                                    .where((element) => element.isProduct)
-                                    .toList())
-                                .map((e) => e.account)
-                                .toList(),
-                            offerIds: (state.cart!.itemsCart
-                                    .where((element) => !element.isProduct)
-                                    .toList())
-                                .map((e) => e.id)
-                                .toList(),
-                            quantitiesOffers: (state.cart!.itemsCart
-                                    .where((element) => !element.isProduct)
-                                    .toList())
-                                .map((e) => e.account)
-                                .toList(),
-                          )));
-                        },
-                      );
-                    }
-                    if (state1 is UnexpectedFailureOrderState) {
-                      return HandleStatesWidget(
-                        stateType: StateType.unexpectedProblem,
-                        onPressedTryAgain: () {
-                          BlocProvider.of<OrderBloc>(context)
-                              .add(StoreOrderEvent(
-                                  requestOrder: RequestOrder(
-                            colorIds: (state.cart!.itemsCart
-                                    .where((element) => element.isProduct)
-                                    .toList())
-                                .map((e) => -1)
-                                .toList(),
-                            productIds: (state.cart!.itemsCart
-                                    .where((element) => element.isProduct)
-                                    .toList())
-                                .map((e) => e.id)
-                                .toList(),
-                            quantitiesProducts: (state.cart!.itemsCart
-                                    .where((element) => element.isProduct)
-                                    .toList())
-                                .map((e) => e.account)
-                                .toList(),
-                            offerIds: (state.cart!.itemsCart
-                                    .where((element) => !element.isProduct)
-                                    .toList())
-                                .map((e) => e.id)
-                                .toList(),
-                            quantitiesOffers: (state.cart!.itemsCart
-                                    .where((element) => !element.isProduct)
-                                    .toList())
-                                .map((e) => e.account)
-                                .toList(),
-                          )));
-                        },
-                      );
-                    }
-                    if (state1 is InternalServerFailureOrderState) {
-                      return HandleStatesWidget(
-                        stateType: StateType.internalServerProblem,
-                        onPressedTryAgain: () {
-                          BlocProvider.of<OrderBloc>(context)
-                              .add(StoreOrderEvent(
-                                  requestOrder: RequestOrder(
-                            colorIds: (state.cart!.itemsCart
-                                    .where((element) => element.isProduct)
-                                    .toList())
-                                .map((e) => -1)
-                                .toList(),
-                            productIds: (state.cart!.itemsCart
-                                    .where((element) => element.isProduct)
-                                    .toList())
-                                .map((e) => e.id)
-                                .toList(),
-                            quantitiesProducts: (state.cart!.itemsCart
-                                    .where((element) => element.isProduct)
-                                    .toList())
-                                .map((e) => e.account)
-                                .toList(),
-                            offerIds: (state.cart!.itemsCart
-                                    .where((element) => !element.isProduct)
-                                    .toList())
-                                .map((e) => e.id)
-                                .toList(),
-                            quantitiesOffers: (state.cart!.itemsCart
-                                    .where((element) => !element.isProduct)
-                                    .toList())
-                                .map((e) => e.account)
-                                .toList(),
-                          )));
-                        },
-                      );
-                    }
-                    return FloatingActionButton.extended(
-                      onPressed: () {
-                        globalUser != null
-                            ? showOrderDialog(context, state)
-                            : signInDialog(context,
-                                title: AppTranslationKeys.myOrders.tr);
-                      },
-                      label: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          AppTranslationKeys.order.tr,
-                          style: const TextStyle(
-                            color: AppColors.white,
-                          ),
-                        ),
-                      ),
-                      elevation: 10,
-                    );
-                  },
+              floatingActionButton: FloatingActionButton.extended(
+                onPressed: () {
+                  globalUser != null
+                      ? showOrderDialog(context, state)
+                      : signInDialog(context,
+                          title: AppTranslationKeys.myOrders.tr);
+                },
+                label: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    AppTranslationKeys.order.tr,
+                    style: const TextStyle(
+                      color: AppColors.white,
+                    ),
+                  ),
                 ),
+                elevation: 10,
               ),
               body: ListView(
                 physics: const BouncingScrollPhysics(),
@@ -333,54 +199,155 @@ class MyCartScreen extends StatelessWidget {
     );
   }
 
-  showOrderDialog(context, state) {
+  showOrderDialog(context1, cartState) {
     return WidgetsUtils.showCustomDialog(
-      context,
+      context1,
       title: AppTranslationKeys.total.tr,
+      hasBtns: false,
       children: [
         Center(
           child: Text(
-            "${state.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
+            "${cartState.cart!.totalPrice} ${AppTranslationKeys.di.tr}",
             style: const TextStyle(color: AppColors.secondary, fontSize: 30),
           ),
-        )
-      ],
-      okText: AppTranslationKeys.confirm.tr,
-      btnOkOnPress: () {
-        print(state.cart!.itemsCart);
-        BlocProvider.of<OrderBloc>(context).add(
-          StoreOrderEvent(
-            requestOrder: RequestOrder(
-              colorIds: ((state.cart!.itemsCart as List<ItemCart>)
-                      .where((element) => element.isProduct)
-                      .toList())
-                  .map((e) => -1)
-                  .toList(),
-              productIds: ((state.cart!.itemsCart as List<ItemCart>)
-                      .where((element) => element.isProduct)
-                      .toList())
-                  .map((e) => e.id)
-                  .toList(),
-              quantitiesProducts: ((state.cart!.itemsCart as List<ItemCart>)
-                      .where((element) => element.isProduct)
-                      .toList())
-                  .map((e) => e.account)
-                  .toList(),
-              offerIds: ((state.cart!.itemsCart as List<ItemCart>)
-                      .where((element) => !element.isProduct)
-                      .toList())
-                  .map((e) => e.id)
-                  .toList(),
-              quantitiesOffers: ((state.cart!.itemsCart as List<ItemCart>)
-                      .where((element) => !element.isProduct)
-                      .toList())
-                  .map((e) => e.account)
-                  .toList(),
-            ),
+        ),
+        const SizedBox(
+          height: 25,
+        ),
+        BlocProvider(
+          create: (context) => di.sl<OrderBloc>(),
+          child: BlocConsumer<OrderBloc, OrderState>(
+            listener: (context, orderState) {
+              if (orderState is FailureOrderState) {
+                WidgetsUtils.showSnackBar(
+                  title: AppTranslationKeys.failure.tr,
+                  message: orderState.message.tr,
+                  snackBarType: SnackBarType.error,
+                );
+              } else if (orderState is SuccessStoreOrderState) {
+                BlocProvider.of<CartBloc>(context1).add(const DeleteCartEvent());
+                Get.offAndToNamed(AppPagesRoutes.mainScreen, arguments: 2);
+                WidgetsUtils.showSnackBar(
+                  title: AppTranslationKeys.success.tr,
+                  message: orderState.message.tr,
+                  snackBarType: SnackBarType.info,
+                );
+              }
+            },
+            builder: (context, orderState) {
+              if (orderState is OfflineFailureOrderState) {
+                return HandleStatesWidget(
+                  stateType: StateType.offline,
+                  onPressedTryAgain: () {
+                    onOrderPressed(context, cartState);
+                  },
+                );
+              }
+              if (orderState is UnexpectedFailureOrderState) {
+                return HandleStatesWidget(
+                  stateType: StateType.unexpectedProblem,
+                  onPressedTryAgain: () {
+                    onOrderPressed(context, cartState);
+                  },
+                );
+              }
+              if (orderState is InternalServerFailureOrderState) {
+                return HandleStatesWidget(
+                  stateType: StateType.internalServerProblem,
+                  onPressedTryAgain: () {
+                    onOrderPressed(context, cartState);
+                  },
+                );
+              }
+              if (orderState is LoadingOrderState||orderState is SuccessStoreOrderState) {
+                return LoaderIndicator();
+              }
+              return Padding(
+                padding: const EdgeInsets.all(30).copyWith(bottom: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: MaterialButton(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        onPressed: () {
+                          onOrderPressed(context, cartState);
+                        },
+                        color: AppColors.primary,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          side: BorderSide(width: 1, color: AppColors.gray),
+                        ),
+                        child: Text(
+                          AppTranslationKeys.confirm.tr,
+                          style: const TextStyle(
+                              fontSize: 20, color: AppColors.white),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: MaterialButton(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        onPressed: () {
+                          Get.back();
+                        },
+                        color: AppColors.white,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          side: BorderSide(width: 1, color: AppColors.gray),
+                        ),
+                        child: Text(
+                          AppTranslationKeys.cancel.tr,
+                          style: const TextStyle(
+                              fontSize: 20, color: AppColors.gray),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
-        );
-        Get.back();
-      },
+        ),
+      ],
+    );
+  }
+
+  onOrderPressed(context, cartState) {
+    BlocProvider.of<OrderBloc>(context).add(
+      StoreOrderEvent(
+        requestOrder: RequestOrder(
+          colorIds: ((cartState.cart!.itemsCart as List<ItemCart>)
+                  .where((element) => element.isProduct)
+                  .toList())
+              .map((e) => -1)
+              .toList(),
+          productIds: ((cartState.cart!.itemsCart as List<ItemCart>)
+                  .where((element) => element.isProduct)
+                  .toList())
+              .map((e) => e.id)
+              .toList(),
+          quantitiesProducts: ((cartState.cart!.itemsCart as List<ItemCart>)
+                  .where((element) => element.isProduct)
+                  .toList())
+              .map((e) => e.account)
+              .toList(),
+          offerIds: ((cartState.cart!.itemsCart as List<ItemCart>)
+                  .where((element) => !element.isProduct)
+                  .toList())
+              .map((e) => e.id)
+              .toList(),
+          quantitiesOffers: ((cartState.cart!.itemsCart as List<ItemCart>)
+                  .where((element) => !element.isProduct)
+                  .toList())
+              .map((e) => e.account)
+              .toList(),
+        ),
+      ),
     );
   }
 }

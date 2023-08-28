@@ -29,7 +29,7 @@ class OrderManufacturingRemoteDataSourceImplWithHttp
     final response = await client.get(
         Uri.parse(AppRoutes.baseUrl + AppRoutes.displayOrderManufacturing)
             .replace(
-                queryParameters: {"page": page, "status": status}
+                queryParameters: {"page": page, "state": status}
                     .map((key, value) => MapEntry(key, value.toString()))),
         headers: setHeadersWithToken());
     try {

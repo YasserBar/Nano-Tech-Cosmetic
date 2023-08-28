@@ -46,8 +46,9 @@ class OrderManufacturingBloc
       emit(const LoadingOrderManufacturingState(null, true, true,
           message: "loading"));
       page = 1;
+      orderStatus=event.orderStatus;
       final failureOrOrders = await displayOrdersManufacturingUsecase(
-          page: page, orderStatus: orderStatus);
+          page: page, orderStatus: event.orderStatus);
       failureOrOrders.fold((failure) {
         emit(switchFailure(failure));
       }, (ordersManufacturing) {
@@ -64,8 +65,9 @@ class OrderManufacturingBloc
             state.ordersManufacturing, true, false,
             message: globalMessage!));
         page++;
+        orderStatus=event.orderStatus;
         final failureOrOrders = await displayOrdersManufacturingUsecase(
-            page: page, orderStatus: orderStatus);
+            page: page, orderStatus: event.orderStatus);
         failureOrOrders.fold((failure) {
           page--;
           emit(switchFailure(failure));
